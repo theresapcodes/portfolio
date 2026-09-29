@@ -1,25 +1,67 @@
-function initTestimonialCarousel() {
-  const carousel = document.querySelector('.testimonial-carousel');
-  if (!carousel) return;
+function initTestimonialCycler() {
+  const cycler = document.querySelector('.testimonial-cycler');
+  if (!cycler) return;
 
-  const slides = [...carousel.querySelectorAll('.testimonial-slide')];
-  if (slides.length <= 1) return;
+  const items = [...cycler.querySelectorAll('.testimonial-item')];
+  if (items.length <= 1) return;
 
-  const intervalMs = 5000;
+  const intervalMs = 4000;
+  const fadeMs = 300;
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  let index = slides.findIndex((slide) => slide.classList.contains('is-active'));
-  if (index === -1) index = 0;
+  let index = Math.max(items.findIndex((item) => item.classList.contains('is-active')), 0);
   let timer = null;
 
+  // Reserve height for the tallest quote so switching items never shifts
+  // the page content below the section.
+  function syncHeight() {
+    const width = cycler.getBoundingClientRect().width;
+    let maxHeight = 0;
+    items.forEach((item) => {
+      const prev = { display: item.style.display, position: item.style.position, visibility: item.style.visibility, width: item.style.width };
+      item.style.position = 'absolute';
+      item.style.visibility = 'hidden';
+      item.style.display = 'block';
+      item.style.width = width + 'px';
+      maxHeight = Math.max(maxHeight, item.getBoundingClientRect().height);
+      item.style.display = prev.display;
+      item.style.position = prev.position;
+      item.style.visibility = prev.visibility;
+      item.style.width = prev.width;
+    });
+    cycler.style.minHeight = maxHeight + 'px';
+  }
+
+  syncHeight();
+  let resizeTimer = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(syncHeight, 150);
+  });
+
   function show(nextIndex) {
-    slides[index].classList.remove('is-active');
-    index = (nextIndex + slides.length) % slides.length;
-    slides[index].classList.add('is-active');
+    const current = items[index];
+    const next = items[nextIndex];
+
+    if (prefersReducedMotion) {
+      current.classList.remove('is-active');
+      next.classList.add('is-active');
+      index = nextIndex;
+      return;
+    }
+
+    current.classList.add('is-leaving');
+    window.setTimeout(() => {
+      current.classList.remove('is-active', 'is-leaving');
+      next.classList.add('is-active', 'is-entering');
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => next.classList.remove('is-entering'));
+      });
+      index = nextIndex;
+    }, fadeMs);
   }
 
   function next() {
-    show(index + 1);
+    show((index + 1) % items.length);
   }
 
   function stop() {
@@ -28,15 +70,14 @@ function initTestimonialCarousel() {
   }
 
   function start() {
-    if (prefersReducedMotion) return;
     stop();
-    timer = setInterval(next, intervalMs);
+    timer = window.setInterval(next, intervalMs);
   }
 
-  carousel.addEventListener('mouseenter', stop);
-  carousel.addEventListener('mouseleave', start);
-  carousel.addEventListener('focusin', stop);
-  carousel.addEventListener('focusout', start);
+  cycler.addEventListener('mouseenter', stop);
+  cycler.addEventListener('mouseleave', start);
+  cycler.addEventListener('focusin', stop);
+  cycler.addEventListener('focusout', start);
 
   start();
 }
@@ -47,22 +88,43 @@ function initScrollReveal() {
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (prefersReducedMotion) {
-    elements.forEach((el) => el.classList.add('is-visible'));
+    elements.forEach((el) => el.classList.add('is-visible', 'is-settled'));
     return;
+  }
+
+  // Cards (case-card, archive-card) ease up into place on reveal, then hand
+  // their transform/box-shadow transition back to the card's own (much
+  // quicker) hover transition once settled, so hover afterward isn't sluggish.
+  const revealMs = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-reveal')) || 1100;
+
+  function reveal(el) {
+    el.classList.add('is-visible');
+    window.setTimeout(() => el.classList.add('is-settled'), revealMs + 60);
   }
 
   const observer = new IntersectionObserver(
     (entries, obs) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-visible');
+        reveal(entry.target);
         obs.unobserve(entry.target);
       });
     },
     { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
   );
 
-  elements.forEach((el) => observer.observe(el));
+  elements.forEach((el) => {
+    // Anything already in view at load time (e.g. above-the-fold cards)
+    // reveals immediately, rather than waiting on the observer's first
+    // (asynchronous) callback, which would otherwise show a blank flash.
+    const rect = el.getBoundingClientRect();
+    const alreadyVisible = rect.top < window.innerHeight && rect.bottom > 0;
+    if (alreadyVisible) {
+      reveal(el);
+      return;
+    }
+    observer.observe(el);
+  });
 }
 
 function initStatCounters() {
@@ -120,10 +182,19 @@ function initHeroCanvas() {
   if (prefersReducedMotion) return;
 
   const ctx = canvas.getContext('2d');
-  const dotColor = '193, 185, 198';
-  const gridSpacing = 28;
-  const dotSize = 2;
-  const glowRadius = 110;
+  const gridSpacing = 16;
+  const minDotRadius = 0.35;
+  const maxDotRadius = 3.1;
+  const TEXT_FADE_DISTANCE = 200; // px beyond the text box over which dots fade back in
+
+  // Three soft, brand-colored ink clouds. Each one drifts and breathes on
+  // its own independent, very slow period, so the field never falls into a
+  // visible loop and never reads as a spinner or a particle system.
+  const ZONE_DEFS = [
+    { color: [150, 147, 154], baseXRatio: 0.22, baseYRatio: 0.4, ampXRatio: 0.16, ampYRatio: 0.16, driftPeriodX: 35, driftPeriodY: 46, phaseX: 0.6, phaseY: 2.1, pulsePeriod: 26, pulsePhase: 0.8, radiusRatio: 0.36, pulseAmpRatio: 0.09, strength: 0.85 },
+    { color: [150, 147, 154], baseXRatio: 0.55, baseYRatio: 0.62, ampXRatio: 0.18, ampYRatio: 0.14, driftPeriodX: 41, driftPeriodY: 31, phaseX: 3.4, phaseY: 0.4, pulsePeriod: 33, pulsePhase: 3.1, radiusRatio: 0.4, pulseAmpRatio: 0.1, strength: 0.72 },
+    { color: [150, 147, 154], baseXRatio: 0.8, baseYRatio: 0.3, ampXRatio: 0.14, ampYRatio: 0.18, driftPeriodX: 49, driftPeriodY: 38, phaseX: 1.7, phaseY: 4.2, pulsePeriod: 21, pulsePhase: 5.0, radiusRatio: 0.32, pulseAmpRatio: 0.08, strength: 0.65 },
+  ];
 
   let width = 0;
   let height = 0;
@@ -132,8 +203,46 @@ function initHeroCanvas() {
   let rows = 0;
   let offsetX = 0;
   let offsetY = 0;
-  let pointer = { x: -9999, y: -9999, active: false };
   let rafId = null;
+  let zones = [];
+
+  // The dot field shouldn't render behind the headline text, so we track its
+  // bounding box (in hero-local coordinates) and fade dots out near it.
+  const textEls = [...hero.querySelectorAll('.eyebrow, .h1, .subhead')];
+  let textRect = null;
+
+  function updateTextRect() {
+    if (!textEls.length) return;
+    const heroRect = hero.getBoundingClientRect();
+    let left = Infinity, top = Infinity, right = -Infinity, bottom = -Infinity;
+    textEls.forEach((el) => {
+      const r = el.getBoundingClientRect();
+      left = Math.min(left, r.left);
+      top = Math.min(top, r.top);
+      right = Math.max(right, r.right);
+      bottom = Math.max(bottom, r.bottom);
+    });
+    const pad = 20;
+    textRect = {
+      left: left - heroRect.left - pad,
+      top: top - heroRect.top - pad,
+      right: right - heroRect.left + pad,
+      bottom: bottom - heroRect.top + pad,
+    };
+  }
+
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+  }
+
+  function seedZones() {
+    const minDim = Math.min(width, height);
+    zones = ZONE_DEFS.map((z) => ({
+      ...z,
+      baseRadius: minDim * z.radiusRatio,
+      pulseAmp: minDim * z.pulseAmpRatio,
+    }));
+  }
 
   function resize() {
     const rect = hero.getBoundingClientRect();
@@ -150,57 +259,157 @@ function initHeroCanvas() {
     offsetX = (width - (cols - 1) * gridSpacing) / 2;
     offsetY = (height - (rows - 1) * gridSpacing) / 2;
 
-    draw();
+    seedZones();
+    updateTextRect();
   }
 
-  function draw() {
+  function draw(now) {
     ctx.clearRect(0, 0, width, height);
+
+    const time = now / 1000; // seconds, for readable periods below
+
+    // Advance each zone's center (a slow Lissajous drift) and radius (a
+    // slow expand/contract breathe) for this frame.
+    const live = zones.map((z) => {
+      const cx = width * z.baseXRatio + Math.sin((time / z.driftPeriodX) * Math.PI * 2 + z.phaseX) * width * z.ampXRatio;
+      const cy = height * z.baseYRatio + Math.cos((time / z.driftPeriodY) * Math.PI * 2 + z.phaseY) * height * z.ampYRatio;
+      const radius = z.baseRadius + Math.sin((time / z.pulsePeriod) * Math.PI * 2 + z.pulsePhase) * z.pulseAmp;
+      return { color: z.color, strength: z.strength, cx, cy, radius };
+    });
 
     for (let row = 0; row < rows; row++) {
       for (let col = 0; col < cols; col++) {
         const x = offsetX + col * gridSpacing;
         const y = offsetY + row * gridSpacing;
 
-        let alpha = 0.06;
-        let size = dotSize;
-
-        if (pointer.active) {
-          const dx = pointer.x - x;
-          const dy = pointer.y - y;
+        let textFade = 1;
+        if (textRect) {
+          const dx = Math.max(textRect.left - x, 0, x - textRect.right);
+          const dy = Math.max(textRect.top - y, 0, y - textRect.bottom);
           const dist = Math.sqrt(dx * dx + dy * dy);
-          const proximity = Math.max(0, 1 - dist / glowRadius);
-          alpha = 0.06 + proximity * 0.5;
-          size = dotSize + proximity * 1.6;
+          const t = clamp(dist / TEXT_FADE_DISTANCE, 0, 1);
+          textFade = t * t * t * (t * (t * 6 - 15) + 10); // smootherstep: a gentler, longer-tailed fade than smoothstep
+          if (textFade <= 0) continue;
         }
 
-        ctx.fillStyle = `rgba(${dotColor}, ${alpha})`;
-        ctx.fillRect(x - size / 2, y - size / 2, size, size);
+        // Sum this point's ink density from every zone, tracking a
+        // density-weighted color mix so overlapping zones blend hue
+        // instead of just stacking opacity.
+        let density = 0;
+        let r = 0, g = 0, b = 0;
+        for (const z of live) {
+          const dx = x - z.cx;
+          const dy = y - z.cy;
+          const distSq = dx * dx + dy * dy;
+          const influence = z.strength * Math.exp(-distSq / (2 * z.radius * z.radius));
+          density += influence;
+          r += z.color[0] * influence;
+          g += z.color[1] * influence;
+          b += z.color[2] * influence;
+        }
+        if (density <= 0.004) continue;
+
+        const d = Math.min(density, 1);
+        r = Math.round(r / density);
+        g = Math.round(g / density);
+        b = Math.round(b / density);
+
+        // A slow, continuous per-dot breathing grain (not random flicker)
+        // so the texture feels like living ink on paper, not static.
+        const grain = 0.92 + 0.08 * Math.sin(time * 0.6 + (col * 12.9898 + row * 78.233) % 6.283);
+
+        // A second, slower and independently-phased scale wave layered on
+        // top of the grain, purely for dot size. Both factors are capped at
+        // 1, so the combined ceiling never exceeds today's max dot size —
+        // it just adds a richer, less uniform breathing motion below that.
+        const sizeScale = 0.88 + 0.12 * Math.sin(time * 0.23 + (col * 5.37 + row * 9.11) % 6.283);
+
+        const alpha = d * 0.58 * textFade * grain;
+        // Dot area grows roughly with density, the way halftone ink
+        // coverage does, rather than radius scaling linearly with tone.
+        const radius = (minDotRadius + (maxDotRadius - minDotRadius) * Math.sqrt(d)) * grain * sizeScale;
+
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.fill();
       }
     }
   }
 
-  function handlePointerMove(event) {
-    const rect = hero.getBoundingClientRect();
-    pointer.x = event.clientX - rect.left;
-    pointer.y = event.clientY - rect.top;
-    pointer.active = true;
-    if (!rafId) rafId = requestAnimationFrame(tick);
-  }
-
-  function handlePointerLeave() {
-    pointer.active = false;
-    if (!rafId) rafId = requestAnimationFrame(tick);
-  }
-
-  function tick() {
-    draw();
-    rafId = null;
+  function tick(now) {
+    draw(now);
+    rafId = requestAnimationFrame(tick);
   }
 
   resize();
   window.addEventListener('resize', resize);
-  hero.addEventListener('mousemove', handlePointerMove);
-  hero.addEventListener('mouseleave', handlePointerLeave);
+  rafId = requestAnimationFrame(tick);
+}
+
+function expandDeepDive() {
+  const target = document.getElementById('deep-dive');
+  if (!target || target.classList.contains('is-expanded')) return;
+
+  target.classList.add('is-expanded');
+
+  const trigger = document.querySelector('.case-jump');
+  if (trigger) {
+    trigger.setAttribute('aria-expanded', 'true');
+    trigger.hidden = true;
+  }
+
+  const note = document.querySelector('.case-jump-note');
+  if (note) note.hidden = true;
+
+  const backToTop = document.querySelector('.back-to-top');
+  if (backToTop) backToTop.hidden = false;
+}
+
+function initCaseJumpNav() {
+  const nav = document.querySelector('.case-jumpnav');
+  if (!nav) return;
+
+  const links = [...nav.querySelectorAll('a')];
+  const sections = links
+    .map((link) => document.getElementById(link.getAttribute('href').slice(1)))
+    .filter(Boolean);
+  if (!sections.length) return;
+
+  const deepDive = document.getElementById('deep-dive');
+
+  const setActive = (id) => {
+    links.forEach((link) => {
+      link.classList.toggle('is-active', link.getAttribute('href') === `#${id}`);
+    });
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const visible = entries.filter((entry) => entry.isIntersecting);
+      if (!visible.length) return;
+      visible.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+      setActive(visible[0].target.id);
+    },
+    { rootMargin: '-20% 0px -60% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] }
+  );
+
+  sections.forEach((section) => observer.observe(section));
+
+  // Sections inside the collapsed deep-dive need it expanded before a jump-nav
+  // link can actually scroll to them.
+  if (deepDive) {
+    links.forEach((link) => {
+      const section = document.getElementById(link.getAttribute('href').slice(1));
+      if (!section || !deepDive.contains(section)) return;
+      link.addEventListener('click', (event) => {
+        if (deepDive.classList.contains('is-expanded')) return;
+        event.preventDefault();
+        expandDeepDive();
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  }
 }
 
 function initCaseStudyExpand() {
@@ -210,93 +419,26 @@ function initCaseStudyExpand() {
 
   trigger.addEventListener('click', (event) => {
     event.preventDefault();
-
-    target.classList.add('is-expanded');
-    trigger.setAttribute('aria-expanded', 'true');
-    trigger.hidden = true;
-
-    const note = document.querySelector('.case-jump-note');
-    if (note) note.hidden = true;
-
-    const backToTop = document.querySelector('.back-to-top');
-    if (backToTop) backToTop.hidden = false;
-
+    expandDeepDive();
     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 }
 
-function initCatWidget() {
-  const widget = document.querySelector('.cat-widget');
-  const catWrapper = widget ? widget.querySelector('.cat_wrapper') : null;
-  if (!widget || !catWrapper) return;
+function setNativeVideoPlaybackRate(container, rate) {
+  const videos = container.querySelectorAll('video');
+  videos.forEach((video) => {
+    video.playbackRate = rate;
+    video.addEventListener('loadedmetadata', () => { video.playbackRate = rate; });
+    video.addEventListener('play', () => { video.playbackRate = rate; });
+  });
+}
 
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReducedMotion) return;
-
-  const cat = widget.querySelector('.cat');
-  const head = widget.querySelector('.cat_head');
-  const legs = widget.querySelectorAll('.leg');
-  const pos = { x: null, y: null };
-
-  const walk = () => {
-    cat.classList.remove('first_pose');
-    legs.forEach((leg) => leg.classList.add('walk'));
-  };
-
-  const handleMouseMotion = (event) => {
-    const rect = widget.getBoundingClientRect();
-    pos.x = event.clientX - rect.left;
-    pos.y = event.clientY - rect.top;
-    walk();
-  };
-
-  const turnRight = () => {
-    cat.style.left = `${pos.x - 90}px`;
-    cat.classList.remove('face_left');
-    cat.classList.add('face_right');
-  };
-
-  const turnLeft = () => {
-    cat.style.left = `${pos.x + 10}px`;
-    cat.classList.remove('face_right');
-    cat.classList.add('face_left');
-  };
-
-  const decideTurnDirection = () => {
-    const catX = cat.getBoundingClientRect().x - widget.getBoundingClientRect().x;
-    catX < pos.x ? turnRight() : turnLeft();
-  };
-
-  const headMotion = () => {
-    pos.y > widget.clientHeight - 40 ? (head.style.top = '-15px') : (head.style.top = '-30px');
-  };
-
-  const decideStop = () => {
-    if (
-      (cat.classList.contains('face_right') && pos.x - 90 === cat.offsetLeft) ||
-      (cat.classList.contains('face_left') && pos.x + 10 === cat.offsetLeft)
-    ) {
-      legs.forEach((leg) => leg.classList.remove('walk'));
-    }
-  };
-
-  const intervalId = setInterval(() => {
-    if (pos.x === null || pos.y === null) return;
-    decideTurnDirection();
-    headMotion();
-    decideStop();
-  }, 100);
-
-  const leaveInterval = () => {
-    pos.x = null;
-    pos.y = null;
-    legs.forEach((leg) => leg.classList.remove('walk'));
-    cat.classList.add('first_pose');
-  };
-
-  widget.addEventListener('mousemove', handleMouseMotion);
-  widget.addEventListener('mouseleave', leaveInterval);
-  window.addEventListener('beforeunload', () => clearInterval(intervalId));
+function setVimeoPlaybackRate(container, videoId, rate) {
+  if (typeof Vimeo === 'undefined') return;
+  const iframe = container.querySelector(`iframe[src*="${videoId}"]`);
+  if (!iframe) return;
+  const player = new Vimeo.Player(iframe);
+  player.ready().then(() => player.setPlaybackRate(rate)).catch(() => {});
 }
 
 function initArchiveModal() {
@@ -311,6 +453,7 @@ function initArchiveModal() {
   const bodyEl = document.getElementById('archive-modal-body');
   const tagsEl = document.getElementById('archive-modal-tags');
   const noteEl = modal.querySelector('.archive-modal__note');
+  const expandBtn = modal.querySelector('.archive-modal__expand');
   let lastFocused = null;
 
   function openModal(card) {
@@ -334,15 +477,31 @@ function initArchiveModal() {
     if (fullTemplate) {
       bodyEl.innerHTML = fullTemplate.innerHTML;
       if (noteEl) noteEl.hidden = true;
+      setVimeoPlaybackRate(bodyEl, '598947983', 1.25);
+      setNativeVideoPlaybackRate(bodyEl, 1.25);
     } else {
       bodyEl.textContent = body ? body.textContent : '';
       if (noteEl) noteEl.hidden = false;
+    }
+
+    modal.classList.remove('is-fullscreen');
+    if (expandBtn) {
+      expandBtn.setAttribute('aria-pressed', 'false');
+      expandBtn.setAttribute('aria-label', 'Expand to full screen');
     }
 
     lastFocused = document.activeElement;
     modal.hidden = false;
     document.body.style.overflow = 'hidden';
     modal.querySelector('.archive-modal__close').focus();
+  }
+
+  if (expandBtn) {
+    expandBtn.addEventListener('click', () => {
+      const expanded = modal.classList.toggle('is-fullscreen');
+      expandBtn.setAttribute('aria-pressed', String(expanded));
+      expandBtn.setAttribute('aria-label', expanded ? 'Exit full screen' : 'Expand to full screen');
+    });
   }
 
   bodyEl.addEventListener('click', (event) => {
@@ -374,18 +533,424 @@ function initArchiveModal() {
   });
 
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && !modal.hidden) closeModal();
+    if (event.key !== 'Escape' || modal.hidden) return;
+    const lightbox = document.querySelector('.lightbox');
+    if (lightbox && !lightbox.hidden) return;
+    closeModal();
   });
 
   dialog.addEventListener('click', (event) => event.stopPropagation());
 }
 
+function initLightbox() {
+  const lightbox = document.createElement('div');
+  lightbox.className = 'lightbox';
+  lightbox.hidden = true;
+  lightbox.innerHTML = `
+    <div class="lightbox__overlay" data-lightbox-close></div>
+    <button class="lightbox__close" type="button" data-lightbox-close aria-label="Close">&times;</button>
+    <div class="lightbox__image-wrap">
+      <img class="lightbox__image" src="" alt="" />
+    </div>
+    <p class="lightbox__caption"></p>
+  `;
+  document.body.appendChild(lightbox);
+
+  const imageEl = lightbox.querySelector('.lightbox__image');
+  const captionEl = lightbox.querySelector('.lightbox__caption');
+  const archiveModal = document.getElementById('archive-modal');
+  let lastFocused = null;
+
+  function getCaptionFor(img) {
+    const next = img.nextElementSibling;
+    if (next && next.classList.contains('case-figcaption-standalone')) return next.textContent;
+    const figure = img.closest('.case-figure');
+    const figcaption = figure ? figure.querySelector('figcaption') : null;
+    return figcaption ? figcaption.textContent : '';
+  }
+
+  function openLightbox(img) {
+    imageEl.src = img.currentSrc || img.src;
+    imageEl.alt = img.alt;
+    const captionText = getCaptionFor(img);
+    captionEl.textContent = captionText;
+    captionEl.hidden = !captionText;
+
+    lastFocused = document.activeElement;
+    lightbox.hidden = false;
+    document.body.style.overflow = 'hidden';
+    lightbox.querySelector('.lightbox__close').focus();
+  }
+
+  function closeLightbox() {
+    lightbox.hidden = true;
+    if (!archiveModal || archiveModal.hidden) {
+      document.body.style.overflow = '';
+    }
+    imageEl.src = '';
+    if (lastFocused) lastFocused.focus();
+  }
+
+  document.addEventListener('click', (event) => {
+    const img = event.target.closest('img.case-image-full, .case-figure img, .case-gallery img');
+    if (!img) return;
+    openLightbox(img);
+  }, true);
+
+  lightbox.querySelectorAll('[data-lightbox-close]').forEach((el) => {
+    el.addEventListener('click', closeLightbox);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !lightbox.hidden) closeLightbox();
+  });
+}
+
+function initAutoplayVideos() {
+  const videos = document.querySelectorAll('video[autoplay]');
+  if (!videos.length) return;
+
+  const tryPlay = (video) => {
+    video.muted = true;
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {});
+    }
+  };
+
+  videos.forEach((video) => {
+    tryPlay(video);
+    video.addEventListener('loadeddata', () => tryPlay(video));
+    video.addEventListener('canplay', () => tryPlay(video));
+  });
+
+  const retryAll = () => videos.forEach(tryPlay);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) retryAll();
+  });
+  window.addEventListener('pageshow', retryAll);
+  ['touchstart', 'click'].forEach((evt) => {
+    window.addEventListener(evt, retryAll, { once: true, passive: true });
+  });
+}
+
+function initFaqBot() {
+  const widget = document.createElement('div');
+  widget.className = 'faq-bot';
+  widget.innerHTML = `
+    <div class="faq-bot__panel" id="faq-bot-panel" hidden>
+      <div class="faq-bot__header">
+        <p class="faq-bot__title">Ask about Theresa</p>
+        <button type="button" class="faq-bot__close" aria-label="Close chat">&times;</button>
+      </div>
+      <div class="faq-bot__messages" id="faq-bot-messages" role="log" aria-live="polite"></div>
+      <form class="faq-bot__form" id="faq-bot-form">
+        <button type="button" class="faq-bot__mic" id="faq-bot-mic" aria-label="Speak your question" hidden>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3z" fill="currentColor" />
+            <path d="M19 11a1 1 0 0 0-2 0 5 5 0 0 1-10 0 1 1 0 0 0-2 0 7 7 0 0 0 6 6.92V20H9a1 1 0 0 0 0 2h6a1 1 0 0 0 0-2h-2v-2.08A7 7 0 0 0 19 11z" fill="currentColor" />
+          </svg>
+        </button>
+        <input type="text" class="faq-bot__input" id="faq-bot-input" placeholder="Ask a question…" autocomplete="off" maxlength="500" />
+        <button type="submit" class="faq-bot__send" aria-label="Send">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M4 12h16M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </form>
+    </div>
+    <button type="button" class="faq-bot__toggle" id="faq-bot-toggle" aria-expanded="false" aria-controls="faq-bot-panel" aria-label="Chat with Bean about Theresa's work">
+      <img class="faq-bot__toggle-icon" src="Assets/bean-icon.gif" alt="" width="46" height="46" />
+    </button>
+  `;
+  document.body.appendChild(widget);
+
+  const toggle = widget.querySelector('#faq-bot-toggle');
+  const panel = widget.querySelector('#faq-bot-panel');
+  const closeBtn = widget.querySelector('.faq-bot__close');
+  const messagesEl = widget.querySelector('#faq-bot-messages');
+  const form = widget.querySelector('#faq-bot-form');
+  const input = widget.querySelector('#faq-bot-input');
+  const micBtn = widget.querySelector('#faq-bot-mic');
+
+  const history = [];
+  let greeted = false;
+  let pending = false;
+
+  // Voice input via the browser's built-in speech recognition, where supported.
+  const SpeechRecognitionCtor = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (SpeechRecognitionCtor) {
+    const recognition = new SpeechRecognitionCtor();
+    recognition.lang = 'en-US';
+    recognition.interimResults = true;
+    recognition.maxAlternatives = 1;
+    let listening = false;
+
+    micBtn.hidden = false;
+
+    recognition.addEventListener('start', () => {
+      listening = true;
+      micBtn.classList.add('is-listening');
+      micBtn.setAttribute('aria-label', 'Stop listening');
+    });
+
+    recognition.addEventListener('end', () => {
+      listening = false;
+      micBtn.classList.remove('is-listening');
+      micBtn.setAttribute('aria-label', 'Speak your question');
+    });
+
+    recognition.addEventListener('error', () => {
+      listening = false;
+      micBtn.classList.remove('is-listening');
+    });
+
+    recognition.addEventListener('result', (event) => {
+      let transcript = '';
+      for (let i = 0; i < event.results.length; i++) {
+        transcript += event.results[i][0].transcript;
+      }
+      input.value = transcript;
+    });
+
+    micBtn.addEventListener('click', () => {
+      if (listening) {
+        recognition.stop();
+        return;
+      }
+      input.value = '';
+      input.focus();
+      try {
+        recognition.start();
+      } catch (err) {
+        // Recognition already running or mic permission denied; ignore.
+      }
+    });
+  }
+
+  // Renders markdown-style [label](url) links in bot replies as real,
+  // clickable <a> tags. Everything else is HTML-escaped first, and only
+  // URLs matching a known-safe pattern (this site's own pages/anchors,
+  // its resume PDF, its own mailto, or its LinkedIn/illustration links)
+  // are turned into links; anything else falls back to plain text.
+  function escapeHtml(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function isSafeReplyUrl(url) {
+    return (
+      /^\/[\w#/.-]*$/.test(url) ||
+      url === 'mailto:theresapdesign@gmail.com' ||
+      /^https:\/\/(www\.)?linkedin\.com\//.test(url) ||
+      /^https:\/\/(www\.)?behance\.net\//.test(url) ||
+      /^https:\/\/theresapettingilldraws\.com\//.test(url)
+    );
+  }
+
+  function renderReplyHtml(text) {
+    return escapeHtml(text).replace(/\[([^[\]]+)\]\(([^()\s]+)\)/g, (match, label, url) => {
+      if (!isSafeReplyUrl(url)) return label;
+      const attrs = url.startsWith('mailto:') ? '' : ' target="_blank" rel="noopener"';
+      return `<a href="${url}"${attrs}>${label}</a>`;
+    });
+  }
+
+  function addMessage(role, text) {
+    const el = document.createElement('div');
+    el.className = `faq-bot__message faq-bot__message--${role}`;
+    if (role === 'bot' || role === 'error') {
+      el.innerHTML = renderReplyHtml(text);
+    } else {
+      el.textContent = text;
+    }
+    messagesEl.appendChild(el);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+    return el;
+  }
+
+  const SUGGESTED_QUESTIONS = [
+    'What kind of work is she looking for?',
+    'Tell me about her background',
+    'How does she use AI in her work?',
+  ];
+
+  function removeSuggestions() {
+    const el = widget.querySelector('.faq-bot__suggestions');
+    if (el) el.remove();
+  }
+
+  function addSuggestions() {
+    const wrap = document.createElement('div');
+    wrap.className = 'faq-bot__suggestions';
+    SUGGESTED_QUESTIONS.forEach((question) => {
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'faq-bot__suggestion';
+      chip.textContent = question;
+      chip.addEventListener('click', () => {
+        removeSuggestions();
+        sendMessage(question);
+      });
+      wrap.appendChild(chip);
+    });
+    messagesEl.appendChild(wrap);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function openPanel() {
+    panel.hidden = false;
+    toggle.setAttribute('aria-expanded', 'true');
+    if (!greeted) {
+      addMessage('bot', "Hi! I'm Bean, Theresa's ever faithful companion. Ask me anything about her, work related that is!");
+      addSuggestions();
+      greeted = true;
+    }
+    input.focus();
+  }
+
+  function closePanel() {
+    panel.hidden = true;
+    toggle.setAttribute('aria-expanded', 'false');
+  }
+
+  toggle.addEventListener('click', () => {
+    if (panel.hidden) openPanel();
+    else closePanel();
+  });
+
+  closeBtn.addEventListener('click', closePanel);
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !panel.hidden) closePanel();
+  });
+
+  async function sendMessage(message) {
+    if (!message || pending) return;
+
+    addMessage('user', message);
+    pending = true;
+    input.disabled = true;
+    const pendingEl = addMessage('pending', 'Thinking…');
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 22000);
+
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message, history }),
+        signal: controller.signal,
+      });
+      const data = await response.json().catch(() => ({}));
+
+      pendingEl.remove();
+
+      if (!response.ok || !data.reply) {
+        addMessage('error', data.error || "Sorry, something went wrong. Try emailing theresapdesign@gmail.com instead.");
+      } else {
+        addMessage('bot', data.reply);
+        history.push({ role: 'user', text: message });
+        history.push({ role: 'assistant', text: data.reply });
+      }
+    } catch (err) {
+      pendingEl.remove();
+      if (err && err.name === 'AbortError') {
+        addMessage('error', "This is taking longer than expected. Please try again, or email theresapdesign@gmail.com.");
+      } else {
+        addMessage('error', "Sorry, something went wrong. Try emailing theresapdesign@gmail.com instead.");
+      }
+    } finally {
+      clearTimeout(timeoutId);
+      pending = false;
+      input.disabled = false;
+      input.focus();
+    }
+  }
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const message = input.value.trim();
+    if (!message || pending) return;
+    input.value = '';
+    removeSuggestions();
+    sendMessage(message);
+  });
+}
+
+function initCapabilitiesAccordion() {
+  const items = [...document.querySelectorAll('.capability-item')];
+  if (!items.length) return;
+
+  function setOpen(item, isOpen) {
+    const trigger = item.querySelector('.capability-item__trigger');
+    const panel = item.querySelector('.capability-item__panel');
+    item.classList.toggle('is-open', isOpen);
+    panel.classList.toggle('is-open', isOpen);
+    trigger.setAttribute('aria-expanded', String(isOpen));
+  }
+
+  items.forEach((item) => {
+    const trigger = item.querySelector('.capability-item__trigger');
+    trigger.addEventListener('click', () => {
+      const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+      if (isOpen) {
+        setOpen(item, false);
+        return;
+      }
+      items.forEach((other) => {
+        if (other !== item) setOpen(other, false);
+      });
+      setOpen(item, true);
+    });
+  });
+}
+
+function initExperienceAccordion() {
+  const items = [...document.querySelectorAll('.experience-item')];
+  if (!items.length) return;
+
+  function setOpen(item, isOpen) {
+    const trigger = item.querySelector('.experience-item__trigger');
+    const panel = item.querySelector('.experience-item__panel');
+    item.classList.toggle('is-open', isOpen);
+    panel.classList.toggle('is-open', isOpen);
+    trigger.setAttribute('aria-expanded', String(isOpen));
+  }
+
+  items.forEach((item) => {
+    const trigger = item.querySelector('.experience-item__trigger');
+    trigger.addEventListener('click', () => {
+      const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+      if (isOpen) {
+        setOpen(item, false);
+        return;
+      }
+      items.forEach((other) => {
+        if (other !== item) setOpen(other, false);
+      });
+      setOpen(item, true);
+    });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  initTestimonialCarousel();
+  setNativeVideoPlaybackRate(document, 1.25);
+  initTestimonialCycler();
   initScrollReveal();
   initStatCounters();
   initHeroCanvas();
+  // initFaqBot(); // disabled for now, re-enable to bring the chat widget back
   initCaseStudyExpand();
-  initCatWidget();
+  initCaseJumpNav();
   initArchiveModal();
+  initLightbox();
+  initAutoplayVideos();
+  // initCapabilitiesAccordion(); // section held back from production for now, re-enable when it goes live
+  initExperienceAccordion();
 });

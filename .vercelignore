@@ -1,0 +1,7 @@
+# Local-only reference files — never ship with a deploy.
+case-study-trust-draft.html
+case-study-trust-draft.css
+case-study-trust-draft-v2.html
+case-study-trust-draft-v2.css
+case-study-brand-draft.html
+case-study-brand-draft.css

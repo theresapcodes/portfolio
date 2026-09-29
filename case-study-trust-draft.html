@@ -1,0 +1,791 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>[DRAFT] Rebuilding Trust in a Staffing Marketplace — Theresa Pettingill</title>
+  <meta name="description" content="Draft rewrite for reference only — not part of the live site. Not linked from navigation or included in the sitemap." />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/svg+xml" href="Assets/Logo.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=Inter:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="case-study-trust-draft.css" />
+  <style>
+    .draft-banner {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #27202f;
+      color: #fff;
+      text-align: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="draft-banner">Draft reference only &middot; not linked from the live site &middot; not indexed</div>
+
+  <header class="site-header">
+    <div class="site-header__brand">
+      <a class="logo-lockup" href="/" aria-label="Home">
+        <img class="logo-mark" src="Assets/Logo.svg" alt="" width="44" height="44" />
+      </a>
+    </div>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="/#featured-work">Work</a>
+      <a href="/#about">About</a>
+      <a href="/experience.html">Resume</a>
+      <a class="site-nav__email" href="mailto:theresapdesign@gmail.com" aria-label="Email">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.8" />
+          <path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ============ JUMP NAV ============ -->
+    <nav class="case-jumpnav" aria-label="Case study sections">
+      <a href="#overview">Overview</a>
+      <a href="#setting-the-bar">Setting the Bar</a>
+      <a href="#visual-trust-signals">Visual Trust Signals</a>
+      <a href="#smarter-fulfillment">Smart Fulfillment</a>
+      <a href="#reflection">Reflection</a>
+    </nav>
+
+    <!-- ============ CASE HERO ============ -->
+    <section class="case-hero" id="top">
+      <p class="eyebrow case-hero__eyebrow">Gigpro &rarr; Qwick</p>
+      <h1 class="h1">Rebuilding trust in a staffing marketplace</h1>
+      <p class="case-hero__summary">Gigpro&rsquo;s open marketplace helped hospitality businesses fill shifts quickly, but gave them too little confidence in who they were hiring. I led a multi-year product-design effort that turned worker qualifications, performance, availability, and prior relationships into clear selection signals, and ultimately a more reliable matching and fulfillment model.</p>
+      <div class="case-hero__image" data-reveal>
+        <video src="Assets/match_biz_new.mp4" autoplay muted loop playsinline webkit-playsinline="true" preload="auto" aria-label="Business-side shift view showing 8 of 10 confirmed Pros for an Event Server shift, each with rating, gigs completed, and confirmation status"></video>
+      </div>
+    </section>
+
+    <!-- ============ META BAR ============ -->
+    <section class="case-meta section-container">
+      <div class="case-meta__col">
+        <p class="case-meta__compact">Lead Product Designer &middot; 2022&ndash;2026</p>
+        <div class="case-meta__role-timeline">
+          <p class="eyebrow case-meta__label">Role</p>
+          <p class="case-meta__value">Lead Product Designer</p>
+        </div>
+        <p class="eyebrow case-meta__label">My contribution</p>
+        <p class="case-meta__value">Product strategy, research synthesis, end-to-end UX and UI design, interaction design, prototyping, and cross-functional collaboration across worker onboarding, profiles, business selection, trust signals, recommendations, and fulfillment.</p>
+        <p class="case-meta__note">[Customize this statement to precisely reflect my responsibilities and collaboration model.]</p>
+        <div class="case-meta__role-timeline">
+          <p class="eyebrow case-meta__label">Timeline</p>
+          <p class="case-meta__value">2022&ndash;2026</p>
+        </div>
+        <p class="eyebrow case-meta__label">Team / collaboration</p>
+        <p class="case-meta__note">[Add product, engineering, research, operations, Pro Success, data, or leadership collaborators here.]</p>
+      </div>
+      <div class="case-meta__col">
+        <p class="eyebrow case-meta__label">Scope</p>
+        <div class="tag-row case-meta__pills">
+          <span class="pill">Worker onboarding and eligibility</span>
+          <span class="pill">Pro profiles and profile data</span>
+          <span class="pill">Skill and industry certifications</span>
+          <span class="pill">Performance signals and Pro Ranks</span>
+          <span class="pill">Business relationship management</span>
+          <span class="pill">Direct Offers</span>
+          <span class="pill">Recommended Pros</span>
+          <span class="pill">Automatch and Match</span>
+        </div>
+        <p class="eyebrow case-meta__label" style="margin-top: 24px;">Challenge</p>
+        <ul class="case-meta__list case-meta__list--full">
+          <li>No-shows, late cancellations, and inconsistent Pro quality were eroding trust in the marketplace.</li>
+          <li>Businesses had limited context to assess a Pro&rsquo;s fit and no easy way to rehire people they already trusted.</li>
+          <li>The platform lacked the qualification, performance, and relationship signals needed to support confident selection and smarter fulfillment.</li>
+        </ul>
+        <ul class="case-meta__list case-meta__list--compact">
+          <li>No-shows, late cancellations, inconsistent Pro quality</li>
+          <li>Limited fit context, no easy way to rehire trusted Pros</li>
+          <li>Lacked qualification, performance, and relationship signals</li>
+        </ul>
+      </div>
+      <div class="case-meta__col">
+        <p class="eyebrow case-meta__label">The Outcome</p>
+        <div class="case-meta__stat">
+          <p class="case-meta__stat-num">79%</p>
+          <p class="case-meta__stat-caption">Reduction in no-shows following qualification, onboarding, and verification improvements.</p>
+        </div>
+        <div class="case-meta__stat">
+          <p class="case-meta__stat-num">28%</p>
+          <p class="case-meta__stat-caption">Reduction in late cancellations following qualification, onboarding, and verification improvements.</p>
+        </div>
+        <div class="case-meta__stat">
+          <p class="case-meta__stat-num">13%</p>
+          <p class="case-meta__stat-caption">Of paid gigs filled through <strong>Direct Offers</strong> within two months of launch.</p>
+        </div>
+        <div class="case-measurement-note">
+          <p class="case-measurement-note__label">Measurement context</p>
+          <p>Metrics reflect internal marketplace reporting across [insert applicable market, user cohort, and measurement period]. Results followed a combination of qualification standards, structured onboarding, profile signals, and selection tools; they should be understood as marketplace-level outcomes rather than the effect of a single screen or feature.</p>
+          <p>[Replace bracketed text with approved measurement methodology or confidentiality language.]</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-container"><hr class="case-divider" /></div>
+
+    <!-- ============ OVERVIEW ============ -->
+    <section class="case-section section-container" id="overview">
+      <h2 class="h2">Overview</h2>
+      <p>Gigpro, now Qwick, helps hospitality businesses fill on-demand shifts with flexible workers. The open marketplace made it fast to access available talent, but gave businesses limited confidence in a Pro&rsquo;s qualifications, professionalism, and reliability before hiring.</p>
+
+      <h3 class="h3 case-section__subhead eyebrow">Open Marketplace Model</h3>
+      <div class="case-flow-diagram" data-reveal>
+        <div class="case-flow-step case-flow-step--start">Business posts a gig</div>
+        <span class="case-flow-arrow" aria-hidden="true">&rarr;</span>
+        <div class="case-flow-step">Pros apply</div>
+        <span class="case-flow-arrow" aria-hidden="true">&rarr;</span>
+        <div class="case-flow-step">Business manually reviews applicants</div>
+        <span class="case-flow-arrow" aria-hidden="true">&rarr;</span>
+        <div class="case-flow-step">Business sends offers</div>
+        <span class="case-flow-arrow" aria-hidden="true">&rarr;</span>
+        <div class="case-flow-step case-flow-step--end">First Pro(s) to confirm secure the gig</div>
+      </div>
+
+      <div class="case-callout-grid">
+        <div class="case-callout-card">
+          <p class="case-callout-card__title">Sparse profiles</p>
+          <p>Businesses could not consistently assess a Pro&rsquo;s experience, professionalism, certifications, or readiness.</p>
+        </div>
+        <div class="case-callout-card">
+          <p class="case-callout-card__title">Low-context manual review</p>
+          <p>Operators had to infer fit and reliability from incomplete, inconsistent information.</p>
+        </div>
+        <div class="case-callout-card">
+          <p class="case-callout-card__title">Speed could outweigh fit</p>
+          <p>The first qualified-enough Pro to confirm could secure a gig, even when another candidate may have been a stronger fit.</p>
+        </div>
+      </div>
+
+      <p class="case-flow-insight"><em>The original model optimized for speed, not certainty.</em></p>
+      <p class="case-design-principle"><strong>Design principle:</strong> Preserve marketplace speed while giving businesses enough evidence to make confident, reliable hiring decisions.</p>
+
+      <p class="case-research-label"><strong>Churn survey: [insert sample size] former business accounts.</strong> [Clarify whether respondents selected one primary reason or could select multiple reasons.]</p>
+      <p>Feedback from churned businesses revealed a consistent trust gap. Of survey respondents, 45.5% said insufficient training or professionalism was their primary reason for leaving, alongside concerns about unpredictable quality, reliability, and the ability to screen Pros.</p>
+
+      <div class="case-table-wrap">
+        <table class="case-table">
+          <thead>
+            <tr><th>Reason cited for leaving</th><th>Count</th><th>Percentage</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Insufficient training or professionalism</td><td>10</td><td>45.5%</td></tr>
+            <tr><td>Unpredictable quality</td><td>5</td><td>22.7%</td></tr>
+            <tr><td>Walkouts or last-minute cancellations</td><td>4</td><td>18.2%</td></tr>
+            <tr><td>Low confidence that a Pro would show up</td><td>2</td><td>9.1%</td></tr>
+            <tr><td>Limited ability to screen or train Pros</td><td>1</td><td>4.5%</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="case-insight" style="margin-top: 16px;">
+        <p class="eyebrow case-insight__eyebrow">Core Product Insight</p>
+        <p class="case-insight__heading">The problem was not applicant volume. It was confidence.</p>
+        <p class="case-insight__body">Businesses lacked the signals needed to assess whether a Pro was qualified, professional, and reliable before extending an offer. Qualified Pros also had limited ways to demonstrate the skills and experience that made them a strong fit. This created a trust gap: businesses could not confidently choose the right Pro, and strong candidates could not reliably stand out.</p>
+      </div>
+    </section>
+
+    <!-- ============ STRATEGY DIAGRAM ============ -->
+    <section class="case-section case-strategy section-container" id="strategy">
+      <p class="eyebrow case-insight__eyebrow">Product Strategy</p>
+      <h2 class="h2">From open marketplace to trusted fulfillment</h2>
+      <p style="max-width: 680px;">The marketplace did not have an applicant-volume problem. It had a confidence problem: businesses lacked consistent evidence of who was qualified, reliable, and right for a specific shift. The strategy was to turn worker information into trustworthy signals, then use those signals to improve selection and fulfillment.</p>
+
+      <div class="case-strategy-diagram" data-reveal>
+        <div class="case-strategy-step">
+          <span class="case-strategy-step__marker" aria-hidden="true">1</span>
+          <p class="case-strategy-step__label">Capture</p>
+          <p class="case-strategy-step__title">Structured worker data</p>
+          <p>Availability, preferences, experience, skills, readiness.</p>
+        </div>
+        <span class="case-strategy-arrow" aria-hidden="true">&rarr;</span>
+        <div class="case-strategy-step">
+          <span class="case-strategy-step__marker" aria-hidden="true">2</span>
+          <p class="case-strategy-step__label">Verify</p>
+          <p class="case-strategy-step__title">Proof of qualifications</p>
+          <p>Assessments, certifications, eligibility requirements.</p>
+        </div>
+        <span class="case-strategy-arrow" aria-hidden="true">&rarr;</span>
+        <div class="case-strategy-step">
+          <span class="case-strategy-step__marker" aria-hidden="true">3</span>
+          <p class="case-strategy-step__label">Display</p>
+          <p class="case-strategy-step__title">Clear, comparable trust signals</p>
+          <p>Profiles, badges, performance history, Pro Ranks.</p>
+        </div>
+        <span class="case-strategy-arrow" aria-hidden="true">&rarr;</span>
+        <div class="case-strategy-step">
+          <span class="case-strategy-step__marker" aria-hidden="true">4</span>
+          <p class="case-strategy-step__label">Apply</p>
+          <p class="case-strategy-step__title">Better hiring and fulfillment decisions</p>
+          <p>Trusted networks, Direct Offers, recommendations, Automatch, Match.</p>
+        </div>
+      </div>
+
+      <p class="case-strategy-note">Each stage depended on the one before it: the platform could not responsibly recommend or match workers until it had stronger, structured evidence of qualifications, performance, availability, and relationship history.</p>
+    </section>
+
+    <!-- ============ TRUST-SIGNAL ROADMAP ============ -->
+    <section class="case-section section-container" id="trust-signal-system">
+      <h2 class="h2">Building a trust-signal system</h2>
+      <p style="max-width: 680px;">We evolved the marketplace in stages: first establishing a clearer qualification baseline, then making proof of performance visible, then enabling businesses to reuse trusted relationships, and finally applying those signals to more scalable fulfillment.</p>
+
+      <div class="case-stage-roadmap">
+        <div class="case-stage-card">
+          <p class="case-stage-card__num">Stage 1</p>
+          <p class="case-stage-card__title">Establish a qualification baseline</p>
+          <div class="case-stage-card__grid">
+            <div class="case-stage-card__field">
+              <p class="case-stage-card__field-label">Problem</p>
+              <p>Anyone could apply with too little consistent information for businesses to evaluate them.</p>
+            </div>
+            <div class="case-stage-card__field">
+              <p class="case-stage-card__field-label">Intervention</p>
+              <p>Redesigned Pro onboarding, Pro Profiles, and business-facing selection surfaces around availability, work preferences, role experience, skills, certifications, and readiness.</p>
+            </div>
+            <div class="case-stage-card__field">
+              <p class="case-stage-card__field-label">Signal created</p>
+              <p>Structured, comparable profile and eligibility data.</p>
+            </div>
+            <div class="case-stage-card__field">
+              <p class="case-stage-card__field-label">Enabled</p>
+              <p>Businesses could evaluate basic fit with more confidence.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="case-stage-card">
+          <p class="case-stage-card__num">Stage 2</p>
+          <p class="case-stage-card__title">Make performance visible</p>
+          <div class="case-stage-card__grid">
+            <div class="case-stage-card__field">
+              <p class="case-stage-card__field-label">Problem</p>
+              <p>A completed profile did not show whether a Pro had consistently delivered strong work.</p>
+            </div>
+            <div class="case-stage-card__field">
+              <p class="case-stage-card__field-label">Intervention</p>
+              <p>Designed Pro Ranks and Skill Certifications to make earned achievements and role-specific qualifications visible.</p>
+            </div>
+            <div class="case-stage-card__field">
+              <p class="case-stage-card__field-label">Signal created</p>
+              <p>Evidence of capability, reliability, and relevant experience.</p>
+            </div>
+            <div class="case-stage-card__field">
+              <p class="case-stage-card__field-label">Enabled</p>
+              <p>Businesses could identify stronger candidates without manually interpreting every profile.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="case-stage-card">
+          <p class="case-stage-card__num">Stage 3</p>
+          <p class="case-stage-card__title">Reuse trusted relationships</p>
+          <div class="case-stage-card__grid">
+            <div class="case-stage-card__field">
+              <p class="case-stage-card__field-label">Problem</p>
+              <p>Businesses had no efficient way to find and rehire Pros they already trusted.</p>
+            </div>
+            <div class="case-stage-card__field">
+              <p class="case-stage-card__field-label">Intervention</p>
+              <p>Designed Connect and Direct Offers so businesses could save, organize, filter, and invite preferred Pros or groups.</p>
+            </div>
+            <div class="case-stage-card__field">
+              <p class="case-stage-card__field-label">Signal created</p>
+              <p>Relationship history and explicit business preference.</p>
+            </div>
+            <div class="case-stage-card__field">
+              <p class="case-stage-card__field-label">Enabled</p>
+              <p>Faster, more confident repeat hiring.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="case-stage-card">
+          <p class="case-stage-card__num">Stage 4</p>
+          <p class="case-stage-card__title">Apply signals at scale</p>
+          <div class="case-stage-card__grid">
+            <div class="case-stage-card__field">
+              <p class="case-stage-card__field-label">Problem</p>
+              <p>Manual applicant review did not scale as marketplace activity increased.</p>
+            </div>
+            <div class="case-stage-card__field">
+              <p class="case-stage-card__field-label">Intervention</p>
+              <p>Designed Recommended Pros, Automatch, and the path toward Match.</p>
+            </div>
+            <div class="case-stage-card__field">
+              <p class="case-stage-card__field-label">Signal created</p>
+              <p>Combined fit, qualification, availability, performance, and relationship signals.</p>
+            </div>
+            <div class="case-stage-card__field">
+              <p class="case-stage-card__field-label">Enabled</p>
+              <p>Decision support and platform-led fulfillment with business oversight.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="case-strategy-note">The product strategy moved from making signals visible to using those signals responsibly in selection and fulfillment.</p>
+    </section>
+
+    <!-- ============ DEEP DIVE ============ -->
+    <div id="deep-dive">
+
+      <section class="case-section section-container" id="setting-the-bar">
+        <div class="case-section__head">
+          <h2 class="h2">Setting the Bar</h2>
+          <p class="case-section__years">2022&ndash;23</p>
+        </div>
+        <p>The work began by defining a clearer baseline for who could represent the business. At Gigpro, workers were called &ldquo;Pros,&rdquo; but that positioning didn't reflect the range of experience on the platform.</p>
+
+        <p class="case-quote-label">Anonymized business account feedback</p>
+        <blockquote class="case-pullquote">&ldquo;This last pro showed up 20 minutes late, didn't even introduce themselves upon walking in, and then just disappeared in the middle of service before their scheduled shift was over.&rdquo;</blockquote>
+
+        <p>After hearing recurring concerns from accounts about their experiences with Pros, I audited both the Pro onboarding flow and the connected business selection experience. The core question became: what does it mean to be a &ldquo;Pro,&rdquo; and how should the product uphold that standard?</p>
+        <p>The audit revealed a weak qualification baseline. Nearly anyone could join and apply for shifts, including Pros with little or no relevant hospitality experience. The only required profile fields were a short bio and photo, with little guidance on what a strong profile looked like. As a result, profiles were often incomplete, unclear, or unprofessional.</p>
+
+        <div class="case-before-after" data-reveal>
+          <div class="case-before-after__col">
+            <p class="case-before-after__heading">Before: an inconsistent qualification baseline</p>
+            <img src="Assets/pro_card_before.jpg" alt="View of the Pro Profile Card (Before). Seasoned hospitality professionals sat side by side with those who had little to no background in hospitality." loading="lazy" />
+            <ul class="case-before-after__list">
+              <li>Unstructured bios and uneven work history</li>
+              <li>No clear evidence of role-relevant skills</li>
+              <li>No verified credentials or consistent readiness signals</li>
+              <li>No visible performance or reliability context</li>
+            </ul>
+          </div>
+          <span class="case-before-after__arrow" aria-hidden="true">&rarr;</span>
+          <div class="case-before-after__col">
+            <p class="case-before-after__heading">After: a comparable, decision-ready Pro profile</p>
+            <img src="Assets/pro_profile_business_view_square.jpg" alt="Business-facing Pro profile showing gig history, years of experience, and skills organized by position" loading="lazy" />
+            <ul class="case-before-after__list">
+              <li>Structured role experience and work preferences</li>
+              <li>Availability and eligibility information</li>
+              <li>Certifications and skill signals</li>
+              <li>Reviews, ratings, work history, and performance indicators</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="h3 case-section__subhead">Raising the bar for eligibility</h3>
+        <p>I introduced intentional but focused onboarding requirements so workers could demonstrate the information businesses needed before applying for shifts.</p>
+
+        <div class="case-storyboard" data-reveal-group>
+          <div class="case-storyboard__step" data-reveal>
+            <div class="case-storyboard__frame">Set availability</div>
+            <p class="case-storyboard__num">01</p>
+            <p class="case-storyboard__title">Set availability and work preferences.</p>
+            <p class="case-storyboard__why">Confirms current shift fit.</p>
+          </div>
+          <div class="case-storyboard__step" data-reveal>
+            <div class="case-storyboard__frame">Add experience</div>
+            <p class="case-storyboard__num">02</p>
+            <p class="case-storyboard__title">Add relevant role experience.</p>
+            <p class="case-storyboard__why">Provides evidence of role relevance.</p>
+          </div>
+          <div class="case-storyboard__step" data-reveal>
+            <div class="case-storyboard__frame">Capture skills</div>
+            <p class="case-storyboard__num">03</p>
+            <p class="case-storyboard__title">Capture skills and certifications.</p>
+            <p class="case-storyboard__why">Establishes qualification or compliance.</p>
+          </div>
+          <div class="case-storyboard__step" data-reveal>
+            <div class="case-storyboard__frame">Complete orientation</div>
+            <p class="case-storyboard__num">04</p>
+            <p class="case-storyboard__title">Complete orientation or readiness requirements.</p>
+            <p class="case-storyboard__why">Confirms baseline participation requirements.</p>
+          </div>
+          <div class="case-storyboard__step" data-reveal>
+            <div class="case-storyboard__frame">Unlock eligibility</div>
+            <p class="case-storyboard__num">05</p>
+            <p class="case-storyboard__title">Unlock eligibility to apply for relevant shifts.</p>
+            <p class="case-storyboard__why">Helps match roles and schedules.</p>
+          </div>
+        </div>
+
+        <p class="case-video-label">Watch the onboarding prototype</p>
+        <video class="case-image-full" src="Assets/complete_your_profile_square.mp4" poster="Assets/complete_your_profile_square.jpg" muted loop playsinline controls aria-label="Gigpro onboarding flow prompting a new Pro to set their hours preference and complete their profile" data-reveal></video>
+        <p class="case-figcaption-standalone"><strong>Pro Onboarding</strong> and Completed Profile in Pro Mobile App (Above)</p>
+        <p style="margin-top: 24px;">These steps filtered out candidates unwilling to complete the preliminary requirements while collecting structured information from qualified Pros to create more complete, professional profiles for businesses to evaluate.</p>
+        <video class="case-image-full" src="Assets/pro_profile_business_view_square.mp4" poster="Assets/pro_profile_business_view_square.jpg" muted loop playsinline controls aria-label="Business-facing Pro profile showing gig history, years of experience, and skills organized by position" data-reveal></video>
+        <p class="case-figcaption-standalone">Structured onboarding inputs carried into the business-facing Pro selection card and <strong>Pro Profile</strong>, giving businesses richer, more consistent information to compare applicants, identify relevant experience, and select Pros with greater confidence.</p>
+
+        <h3 class="h3 case-section__subhead">From profile data to hiring confidence</h3>
+        <div class="case-table-wrap">
+          <table class="case-table case-table--responsive">
+            <thead>
+              <tr><th>Pro provides</th><th>Business sees</th><th>Decision supported</th></tr>
+            </thead>
+            <tbody>
+              <tr><td data-label="Pro provides">Availability and work preferences</td><td data-label="Business sees">Eligible and available status</td><td data-label="Decision supported">Can this person work this shift?</td></tr>
+              <tr><td data-label="Pro provides">Role experience</td><td data-label="Business sees">Position history and relevant experience</td><td data-label="Decision supported">Are they a plausible fit?</td></tr>
+              <tr><td data-label="Pro provides">Skills and certifications</td><td data-label="Business sees">Verified badges and requirement eligibility</td><td data-label="Decision supported">Are they qualified?</td></tr>
+              <tr><td data-label="Pro provides">Reviews, ratings, and shift history</td><td data-label="Business sees">Performance and reliability indicators</td><td data-label="Decision supported">Can I trust them to show up and perform?</td></tr>
+              <tr><td data-label="Pro provides">Prior work relationships</td><td data-label="Business sees">Saved Pro, group, or relationship history</td><td data-label="Decision supported">Have we worked well together before?</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="case-section section-container" id="visual-trust-signals">
+        <div class="case-section__head">
+          <h2 class="h2">Conveying Visual Trust Signals</h2>
+          <p class="case-section__years">2023&ndash;2024</p>
+        </div>
+
+        <p>Once the platform established a clearer qualification baseline, the next challenge was making those signals understandable at the moment of selection. Each signal answered a different hiring question.</p>
+
+        <div class="case-table-wrap">
+          <table class="case-table case-table--responsive">
+            <thead>
+              <tr><th>Signal</th><th>Evidence type</th><th>Question it answered</th><th>Where it appeared</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Signal">Skill certifications</td>
+                <td data-label="Evidence type">Role-specific capability</td>
+                <td data-label="Question it answered">Can this Pro perform this skill?</td>
+                <td data-label="Where it appeared">Profiles and applicant cards</td>
+              </tr>
+              <tr>
+                <td data-label="Signal">Industry certifications</td>
+                <td data-label="Evidence type">Credential or compliance</td>
+                <td data-label="Question it answered">Does this Pro meet a role or site requirement?</td>
+                <td data-label="Where it appeared">Gig eligibility and profiles</td>
+              </tr>
+              <tr>
+                <td data-label="Signal">Pro Ranks</td>
+                <td data-label="Evidence type">Sustained marketplace performance</td>
+                <td data-label="Question it answered">Has this Pro performed reliably over time?</td>
+                <td data-label="Where it appeared">Applicant cards and profiles</td>
+              </tr>
+              <tr>
+                <td data-label="Signal">Relationship history</td>
+                <td data-label="Evidence type">Prior successful work with a business</td>
+                <td data-label="Question it answered">Has this business worked with this Pro before?</td>
+                <td data-label="Where it appeared">Connect, Direct Offers, and matching workflows</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="case-meta__note">[Confirm exact placement.] [Confirm whether credentials affected eligibility.] [Confirm whether relationship history appeared in matching.]</p>
+
+        <h3 class="h3 case-section__subhead">Skill certifications</h3>
+        <p>To give businesses stronger evidence of a Pro's capabilities before extending an offer, I designed the in-app experience for earning and displaying skill certifications, in partnership with the Pro Success team, who conducted the evaluations.</p>
+
+        <div class="case-strategy-diagram" data-reveal style="margin: 4px 0 16px;">
+          <div class="case-strategy-step">
+            <p class="case-strategy-step__label">Earn</p>
+            <p>Pro completes an assessment or evaluation.</p>
+            <p class="case-meta__note" style="margin-top: 0;">[Confirm the actual earning and review process.]</p>
+          </div>
+          <span class="case-strategy-arrow" aria-hidden="true">&rarr;</span>
+          <div class="case-strategy-step">
+            <p class="case-strategy-step__label">Display</p>
+            <p>Certification appears on a profile and applicant card.</p>
+          </div>
+          <span class="case-strategy-arrow" aria-hidden="true">&rarr;</span>
+          <div class="case-strategy-step">
+            <p class="case-strategy-step__label">Use</p>
+            <p>Businesses recognize qualifications when reviewing candidates or defining shift requirements.</p>
+            <p class="case-meta__note" style="margin-top: 0;">[Confirm exact business behavior.]</p>
+          </div>
+        </div>
+        <p>Certifications were designed as evidence of specific capabilities, not as decorative badges. They helped businesses recognize role-relevant qualifications before extending an offer.</p>
+
+        <p>New Pros could be assessed during onboarding and earn multiple certifications based on their experience and aptitude. Existing Pros could also request an evaluation from Pro Success to earn certified badges.</p>
+        <img class="case-image-full" src="Assets/Skill Certificates.jpg" alt="Applicant list with filters and an expanded Pro profile showing skill certificates, industry certifications, and reviews" loading="lazy" data-reveal />
+        <p class="case-figcaption-standalone">Badges appeared prominently on applicant cards and individual Pro profiles, helping businesses quickly identify qualified candidates and hire with greater confidence.</p>
+
+        <h3 class="h3 case-section__subhead">Pro ranks</h3>
+        <p><em>Certifications answered, &ldquo;Can this Pro perform a specific skill?&rdquo; Pro Ranks answered, &ldquo;Has this Pro consistently delivered high-quality work on the platform?&rdquo;</em></p>
+        <p>Alongside certifications, I designed the in-app experience for <strong>Pro Ranks</strong>, a recognition system that incentivized consistent, high-quality performance. Pros earned Bronze, Silver, and Gold status through shift volume, ratings, and a clean record, giving top performers a visible way to stand out in the applicant pool. Pro Ranks created a visible, earned recognition system that reinforced the behaviors the marketplace needed to reward.</p>
+        <img class="case-image-full" src="Assets/Pro Ranks.jpg" alt="Bronze, Silver, and Gold Pro Rank tiers, each showing the percentile threshold, an example profile card, and the requirements to reach that tier" loading="lazy" data-reveal />
+        <p class="case-figcaption-standalone">Bronze, Silver, and Gold tiers were earned through shift volume, rating thresholds, and a clean record, giving high performers a visible way to stand out in the applicant pool.</p>
+        <p class="case-meta__note">Ranks summarized longitudinal performance using defined milestones such as completed shifts, rating thresholds, and a clean record. [Confirm eligibility criteria and time-window rules.]</p>
+
+        <h3 class="h3 case-section__subhead">Industry certifications</h3>
+        <p>Industry certifications enabled businesses to require industry certifications at the business, market, or gig level. This gave business operators greater control over who was eligible to apply.</p>
+
+        <div class="case-flow-diagram" data-reveal>
+          <div class="case-flow-step case-flow-step--start">Business adds a credential requirement</div>
+          <span class="case-flow-arrow" aria-hidden="true">&rarr;</span>
+          <div class="case-flow-step">Pro sees the requirement before applying</div>
+          <span class="case-flow-arrow" aria-hidden="true">&rarr;</span>
+          <div class="case-flow-step">Pro uploads or verifies documentation</div>
+          <span class="case-flow-arrow" aria-hidden="true">&rarr;</span>
+          <div class="case-flow-step case-flow-step--end">Eligible Pros can proceed</div>
+        </div>
+        <p class="case-meta__note">[Confirm whether documentation was manually reviewed, automatically verified, or both.]</p>
+        <p style="margin-top: 8px;">Pros could upload industry certifications which were then reviewed by admins; if they didn't have required certifications, they could access state-specific food and alcohol certification through the app.</p>
+        <img class="case-image-full" src="Assets/Industry Certifications.jpg" alt="Gig detail screen listing required certifications for a Line Cook shift, next to a certifications upload screen for Food Handler Card and Alcohol Certification" loading="lazy" data-reveal />
+        <p class="case-figcaption-standalone">Posted Gig detail with required industry certifications on the Pro app.</p>
+      </section>
+
+      <section class="case-section section-container" id="smarter-fulfillment">
+        <div class="case-section__head">
+          <h2 class="h2">Building towards Smart Fulfillment</h2>
+          <p class="case-section__years">2024&ndash;26</p>
+        </div>
+
+        <p>Strengthening onboarding, profile data, and earned trust signals gave Gigpro and businesses a more complete view of each Pro, while establishing a clearer platform standard.</p>
+        <p>Structured data connected signals across experience, skills, availability, and performance, helping businesses make more confident hiring decisions. It also created the foundation for more intentional fulfillment models, beginning with a simple but important need: helping businesses reconnect with Pros they already knew and trusted.</p>
+
+        <h3 class="h3 case-section__subhead">Supporting business-led fulfillment</h3>
+        <p><strong>Connect</strong> was a lightweight workspace that let businesses save, organize, and filter Pros they had worked with, turning successful past shifts into a reusable talent network.</p>
+        <p class="case-meta__note">[Revise this definition if &ldquo;Connect&rdquo; had different or more limited behavior.]</p>
+
+        <div class="case-flow-diagram" data-reveal>
+          <div class="case-flow-step case-flow-step--start">Business and Pro complete a successful shift</div>
+          <span class="case-flow-arrow" aria-hidden="true">&rarr;</span>
+          <div class="case-flow-step">Business saves the Pro or adds them to a group</div>
+          <span class="case-flow-arrow" aria-hidden="true">&rarr;</span>
+          <div class="case-flow-step">Business filters a trusted network by role, availability, or performance</div>
+          <span class="case-flow-arrow" aria-hidden="true">&rarr;</span>
+          <div class="case-flow-step case-flow-step--end">Business sends future work directly to that network</div>
+        </div>
+
+        <p>The first step was enabling businesses to act on relationships and preferences they had already built. At the time, the app offered no way to support that. After a shift ended, businesses could not contact a Pro again. Chats between Pros and managers were limited to the shift window to protect both parties, so when posting a new gig, businesses had to just hope a Pro they had proven success with would apply and confirm before anyone else.</p>
+        <p>Connect gave businesses a dedicated space to find, save, and organize Pros they had worked with. Businesses could browse Pros in the market by position and then refine results with available filters.</p>
+        <img class="case-image-full" src="Assets/Connect.jpg" alt="Connect screens showing a list of trusted Pros with completion rates and certifications, an auto-generated Groups tab, and filters for relationship, favorites, and rating" loading="lazy" data-reveal />
+        <p class="case-figcaption-standalone">Connect view on Business mobile web</p>
+
+        <div class="case-table-wrap">
+          <table class="case-table case-table--responsive">
+            <thead>
+              <tr><th>Open marketplace</th><th>Direct Offers</th></tr>
+            </thead>
+            <tbody>
+              <tr><td data-label="Open marketplace">Broadcast to a broad applicant pool</td><td data-label="Direct Offers">Send a shift to a selected preferred network</td></tr>
+              <tr><td data-label="Open marketplace">Businesses review an uneven applicant pool</td><td data-label="Direct Offers">Businesses start with known or intentionally selected Pros</td></tr>
+              <tr><td data-label="Open marketplace">Applicants apply and wait for review</td><td data-label="Direct Offers">Invited Pros can confirm directly</td></tr>
+              <tr><td data-label="Open marketplace">Better for discovery</td><td data-label="Direct Offers">Better for repeat, reliable hiring</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="case-meta__note">[Confirm whether Direct Offers were sent to individual Pros, groups, or both, and what happened if offers were not accepted.]</p>
+
+        <p style="margin-top: 8px;"><strong>Direct Offers</strong> enabled businesses to post shifts to their Preferred Network rather than the default marketplace. When creating a shift, operators could choose which individual Pros or groups could access it. The first Pros to confirm were added to the roster. On the Pro side there was no need to apply and then wait for these offers, they could simply hit confirm upon receipt and have it added to their schedule.</p>
+        <video class="case-image-full" src="Assets/Post2Preferred.mp4" poster="Assets/Post2Preferred.jpg" muted loop playsinline controls aria-label="Post-a-shift form with a Select Pros modal for sending a Line Cook shift directly to trusted Pros before it opens to the general applicant pool" data-reveal></video>
+        <p class="case-figcaption-standalone">Businesses could post gigs directly to the preferred network of Pros</p>
+
+        <h3 class="h3 case-section__subhead">Introducing data-informed selections</h3>
+        <p>Recommended Pros gave businesses a ranked shortlist above the general applicant pool, ordered using observable hiring signals such as completion rate, rank, and relevant certifications. The goal was to make the recommendation understandable rather than opaque.</p>
+
+        <ul class="case-before-after__list" style="max-width: 480px; margin: 4px 0 16px;">
+          <li>Completion rate &rarr; reliability signal</li>
+          <li>Pro Rank &rarr; sustained performance signal</li>
+          <li>Relevant certification &rarr; qualification signal</li>
+          <li>Availability &rarr; current shift fit</li>
+          <li>[Prior relationship, if applicable] &rarr; repeat-work confidence</li>
+        </ul>
+        <p class="case-meta__note">[Confirm ranking logic, constraints, and whether recommendations were rules-based, algorithmic, or hybrid.]</p>
+
+        <video class="case-image-full" src="Assets/Recommended Pros.mp4" poster="Assets/Recommended Pros.jpg" muted loop playsinline controls aria-label="Business view scrolling through Recommended Pros, showing ratings, gigs completed, and completion rate for each Pro" data-reveal></video>
+        <p class="case-figcaption-standalone"><strong>Recommended Pros</strong> was designed as an &ldquo;easy button&rdquo; for selection: a shortlist above the general applicant pool that surfaced the strongest fits for each shift. Businesses could choose individual Pros to receive an offer or use Send offers to all to instantly reach every recommended Pro.</p>
+
+        <h3 class="h3 case-section__subhead">Steps towards automation</h3>
+        <p><strong>Automatch</strong> let Gigpro test a platform-led fulfillment model while preserving business oversight. Businesses could continue selecting candidates from the pool as they always had, but if they did not make enough selections or forgot to select anyone, <strong>Automatch</strong> kicked in and sent offers to matched Pros to ensure the shift was filled. Early results indicated that platform-selected Pros had higher completion rates and stronger business ratings than manually selected Pros.</p>
+
+        <div class="case-flow-diagram" data-reveal>
+          <div class="case-flow-step case-flow-step--start">Gig posted</div>
+          <span class="case-flow-arrow" aria-hidden="true">&rarr;</span>
+          <div class="case-flow-step">Qualified candidates apply or become available</div>
+          <span class="case-flow-arrow" aria-hidden="true">&rarr;</span>
+          <div class="case-flow-step">Business reviews and selects preferred Pros</div>
+          <span class="case-flow-arrow" aria-hidden="true">&rarr;</span>
+          <div class="case-flow-step">A review deadline or insufficient-selection threshold is reached</div>
+          <span class="case-flow-arrow" aria-hidden="true">&rarr;</span>
+          <div class="case-flow-step">Automatch identifies eligible, high-fit Pros</div>
+          <span class="case-flow-arrow" aria-hidden="true">&rarr;</span>
+          <div class="case-flow-step">Offers are sent according to defined business-approved rules</div>
+          <span class="case-flow-arrow" aria-hidden="true">&rarr;</span>
+          <div class="case-flow-step">Business can review, remove, or override selections</div>
+          <span class="case-flow-arrow" aria-hidden="true">&rarr;</span>
+          <div class="case-flow-step case-flow-step--end">Shift is fulfilled</div>
+        </div>
+
+        <div class="case-callout-grid">
+          <div class="case-callout-card case-callout-card--neutral">
+            <p class="case-callout-card__title">Business oversight</p>
+            <p>Businesses retained the ability to review, remove, or override selections.</p>
+          </div>
+          <div class="case-callout-card case-callout-card--neutral">
+            <p class="case-callout-card__title">Signal-driven matching</p>
+            <p>Availability, qualifications, performance, and other approved signals informed matching.</p>
+          </div>
+          <div class="case-callout-card case-callout-card--neutral">
+            <p class="case-callout-card__title">Marketplace goal</p>
+            <p>Improve fulfillment reliability without removing business agency.</p>
+          </div>
+        </div>
+        <p class="case-meta__note">[Confirm whether this interaction was rules-based or algorithmic, and mark any unconfirmed step above.]</p>
+
+        <video class="case-image-full" src="Assets/Automatch.mp4" poster="Assets/Automatch.jpg" muted loop playsinline controls aria-label="Email notification prompting a business to review and confirm automatically selected Pros for an upcoming shift" data-reveal></video>
+        <p class="case-figcaption-standalone">Supporting artifact: notification that prompted businesses to review pending offers before automated fulfillment.</p>
+
+        <h3 class="h3 case-section__subhead">Platform-led fulfillment</h3>
+        <p>The work leading up to <strong>Match</strong> set the foundation for Gigpro's evolution from an open marketplace to a more active matching and fulfillment platform. By setting clearer standards for Pros, improving onboarding, and strengthening profiles, we had a better understanding of each Pro's experience, qualifications, and readiness.</p>
+
+        <p><strong>Direct Offers</strong>, <strong>Recommended Pros</strong>, and <strong>Automatch</strong> helped us put those signals to work, first by helping businesses build trusted networks and make more informed selections, then by testing how the platform could play a larger role in fulfillment.</p>
+
+        <p>By mid 2025 and early 2026, following Gigpro's merger with Qwick, those efforts came together as <strong>Match</strong>. Businesses no longer had to spend time sorting through applicants (unless they wanted to), and Pros were no longer feeling as though they were shouting into the void.</p>
+
+        <video class="case-image-full case-image-crop" src="Assets/match_biz_new.mp4" poster="Assets/match_biz_new.jpg" muted loop playsinline controls webkit-playsinline="true" preload="auto" aria-label="Business-side shift view showing 8 of 10 confirmed Pros for an Event Server shift, each with rating, gigs completed, and confirmation status" data-reveal></video>
+        <p class="case-figcaption-standalone">Businesses could trust <strong>Match</strong> to fulfill shifts while retaining the option to review selections, remove Pros, or send direct offers.</p>
+
+        <video class="case-image-full" src="Assets/Pro_accept.mp4" poster="Assets/Pro_accept.jpg" muted loop playsinline controls aria-label="Qwick Pro-side app showing matched shifts sorted by new shifts, each with pay rate, distance, and schedule" data-reveal></video>
+        <p class="case-figcaption-standalone">Pros went from applying to confirming. With <strong>Match</strong>, qualified Pros could skip the uncertainty of applying and waiting to be selected. Instead, they could see shifts they were matched to, accept them instantly, and add them directly to their schedule.</p>
+
+        <div class="case-insight" style="margin-top: 8px;">
+          <p class="case-insight__conclusion"><strong>Match operationalized the trust signals built throughout the product.</strong> Instead of asking businesses to infer fit from sparse applications, the platform could identify eligible, available, and high-confidence Pros, while preserving the ability to review selections, remove Pros, or send direct offers when needed.</p>
+        </div>
+
+        <h3 class="h3 case-section__subhead">What changed</h3>
+        <div class="case-table-wrap">
+          <table class="case-table case-table--responsive">
+            <thead>
+              <tr><th>Earlier marketplace</th><th>Match-enabled fulfillment</th></tr>
+            </thead>
+            <tbody>
+              <tr><td data-label="Earlier marketplace">Open applications with uneven information</td><td data-label="Match-enabled fulfillment">Structured worker signals inform fulfillment</td></tr>
+              <tr><td data-label="Earlier marketplace">Businesses manually infer role fit</td><td data-label="Match-enabled fulfillment">Qualified, relevant Pros can be surfaced faster</td></tr>
+              <tr><td data-label="Earlier marketplace">First-confirmed behavior can outweigh fit</td><td data-label="Match-enabled fulfillment">Availability, qualifications, performance, and fit inform selection</td></tr>
+              <tr><td data-label="Earlier marketplace">Relationships are difficult to reuse</td><td data-label="Match-enabled fulfillment">Preferred networks and Direct Offers support repeat hiring</td></tr>
+              <tr><td data-label="Earlier marketplace">Manual review is the primary fulfillment mechanism</td><td data-label="Match-enabled fulfillment">Platform-assisted matching supports scale with business control</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============ REFLECTION ============ -->
+      <section class="case-section section-container" id="reflection">
+        <p class="eyebrow case-insight__eyebrow">Reflection</p>
+        <h2 class="h2 case-reflection__title">Trust had to be designed as a system</h2>
+        <p>The most important lesson from this work was that marketplace trust cannot be added through a single feature or badge. It has to be built into the data captured during onboarding, the standards used for eligibility, the signals shown at the moment of selection, the incentives that reward strong performance, and the fulfillment system itself.</p>
+        <p>Raising qualification standards also required a careful tradeoff: improving business confidence without creating unnecessary barriers for qualified Pros. The work focused on making requirements meaningful, transparent, and connected to better access to work.</p>
+        <p>Together, these changes created a shared language of quality for businesses, Pros, and the platform, and established the inputs needed for more reliable, scalable fulfillment.</p>
+        <p class="case-meta__note">[Include a short statement about what I would measure, test, or improve next, if appropriate.]</p>
+      </section>
+
+    </div>
+
+    <div class="back-to-top-wrap"><a class="back-to-top" href="#top"><span class="arrow">&uarr;</span> Back to top</a></div>
+
+    <div class="section-container"><hr class="case-divider" /></div>
+
+    <section class="case-other-works">
+      <p class="case-other-works__label">Other Works</p>
+      <div class="case-other-works__grid">
+        <a class="case-other-works__item" href="case-study-brand.html">
+          <div class="case-other-works__thumb">
+            <img src="Assets/Brand Announcement.gif" alt="Gigpro rebrand photography and merchandise" loading="lazy" />
+          </div>
+          <h3 class="case-other-works__title">Scaling design through growth and acquisition</h3>
+          <p class="case-other-works__meta">Built and led the design function through two rebrands, a merger, and a 27-market unification.</p>
+        </a>
+        <a class="case-other-works__item" href="case-study-artlas.html">
+          <div class="case-other-works__thumb">
+            <img src="Assets/artlas_hero.png" alt="Artlas wordmark and brand illustration" loading="lazy" />
+          </div>
+          <h3 class="case-other-works__title">Art lesson aggregator for K&ndash;8 art educators</h3>
+          <p class="case-other-works__meta">An independent experiment designed and built with AI-assisted development.</p>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <h2 class="h4 footer-headline">Let's build something great.</h2>
+    <div class="footer-grid">
+      <div class="footer-cta">
+        <p>If you're looking for a strategic product design leader to bring that next level of clarity and care to your product and organization, I'd love to connect.</p>
+        <a class="btn btn--outline" href="mailto:theresapdesign@gmail.com">Get in touch</a>
+      </div>
+      <nav class="footer-links" aria-label="Site">
+        <h6>Navigate</h6>
+        <a href="/#featured-work">Work</a>
+        <a href="/#about">About</a>
+        <a href="/experience.html">Resume</a>
+      </nav>
+      <nav class="footer-links" aria-label="Elsewhere">
+        <h6>Elsewhere</h6>
+        <a href="https://www.linkedin.com/in/theresapettingill/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://www.behance.net/theresatruong" target="_blank" rel="noopener">Behance</a>
+        <a href="https://theresapettingilldraws.com/" target="_blank" rel="noopener">Illustration Portfolio</a>
+      </nav>
+    </div>
+    <p class="footer-legal footer-copyright">All rights reserved © 2026 Theresa Pettingill LLC.</p>
+    <p class="footer-legal footer-credits">🎨 Designed in Figma &bull; 👩🏻&zwj;💻 Built with Claude Code &bull; 🚀 Deployed via Vercel</p>
+
+    <div class="cat-widget" aria-hidden="true">
+      <div class="cat-widget__ground"></div>      <div class="cat_wrapper">
+        <div class="cat first_pose">
+          <div class="cat_head">
+            <svg viewBox="0 0 76.4 61.2">
+              <polygon class="eyes" points="63.8,54.1 50.7,54.1 50.7,59.6 27.1,59.6 27.1,54.1 12.4,54.1 12.4,31.8 63.8,31.8 " />
+              <path d="M15.3,45.9h5.1V35.7h-5.1C15.3,35.7,15.3,45.9,15.3,45.9z M45.8,56.1V51H30.6v5.1H45.8z M61.1,35.7H56v10.2h5.1
+                V35.7z M10.2,61.2v-5.1H5.1V51H0V25.5h5.1V15.3h5.1V5.1h5.1V0h5.1v5.1h5.1v5.1h5.1v5.1c0,0,15.2,0,15.2,0v-5.1h5.1V5.1H56V0h5.1v5.1
+                h5.1v10.2h5.1v10.2h5.1l0,25.5h-5.1v5.1h-5.1v5.1H10.2z" />
+            </svg>
+          </div>
+          <div class="cat_reaction cat_reaction--heart" aria-hidden="true">
+            <svg class="cat_reaction__heart-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+            </svg>
+            <span class="cat_reaction__sparkle cat_reaction__sparkle--one"></span>
+            <span class="cat_reaction__sparkle cat_reaction__sparkle--two"></span>
+          </div>
+          <div class="cat_reaction cat_reaction--meow" aria-hidden="true">
+            <span class="cat_reaction__bubble">Meow!</span>
+          </div>
+          <div class="cat_reaction cat_reaction--fish" aria-hidden="true">
+            <span class="cat_reaction__bubble">🐟</span>
+          </div>
+          <div class="cat_reaction cat_reaction--yarn" aria-hidden="true">
+            <span class="cat_reaction__bubble">🧶</span>
+          </div>
+          <div class="body">
+            <svg viewBox="0 0 91.7 40.8">
+              <path class="st0" d="M91.7,40.8H0V10.2h5.1V5.1h5.1V0h66.2v5.1h10.2v5.1h5.1L91.7,40.8z" />
+            </svg>
+            <div class="tail">
+              <svg viewBox="0 0 25.5 61.1">
+                <polygon class="st0" points="10.2,56 10.2,50.9 5.1,50.9 5.1,40.7 0,40.7 0,20.4 5.1,20.4 5.1,10.2 10.2,10.2 10.2,5.1 15.3,5.1
+                  15.3,0 25.5,0 25.5,10.2 20.4,10.2 20.4,15.3 15.3,15.3 15.3,20.4 10.2,20.4 10.2,40.7 15.3,40.7 15.3,45.8 20.4,45.8 20.4,50.9
+                  25.5,50.9 25.5,61.1 15.3,61.1 15.3,56 " />
+              </svg>
+            </div>
+          </div>
+          <div class="front_legs">
+            <div class="leg one"><svg viewBox="0 0 14 30.5"><polygon points="15.3,30.5 5.1,30.5 5.1,25.4 0,25.4 0,0 15.3,0 " /></svg></div>
+            <div class="leg two"><svg viewBox="0 0 14 30.5"><polygon points="15.3,30.5 5.1,30.5 5.1,25.4 0,25.4 0,0 15.3,0 " /></svg></div>
+          </div>
+          <div class="back_legs">
+            <div class="leg three"><svg viewBox="0 0 14 30.5"><polygon points="15.3,30.5 5.1,30.5 5.1,25.4 0,25.4 0,0 15.3,0 " /></svg></div>
+            <div class="leg four"><svg viewBox="0 0 14 30.5"><polygon points="15.3,30.5 5.1,30.5 5.1,25.4 0,25.4 0,0 15.3,0 " /></svg></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

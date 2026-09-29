@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Artlas: An Art Lesson Aggregator for K&ndash;8 Educators — Theresa Pettingill</title>
+  <meta name="description" content="Case study: designing and building Artlas, a branded lesson-discovery tool that helps K-8 art teachers find and organize classroom-ready lessons, built with AI-assisted development." />
+  <link rel="canonical" href="https://theresapettingill.com/case-study-artlas.html" />
+  <link rel="icon" type="image/svg+xml" href="Assets/Logo.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="site-header__brand">
+      <a class="logo-lockup" href="/" aria-label="Home">
+        <img class="logo-mark" src="Assets/Logo.svg" alt="" width="44" height="44" />
+      </a>
+    </div>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="/#featured-work">Work</a>
+      <a href="/#about">About</a>
+      <a href="/experience.html">Resume</a>
+      <a class="site-nav__email" href="mailto:theresapdesign@gmail.com" aria-label="Email">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.8" />
+          <path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ============ CASE HERO ============ -->
+    <section class="case-hero" id="top">
+      <p class="eyebrow case-hero__eyebrow">Personal project &middot; 2026</p>
+      <h1 class="h1">Art lesson aggregator for K&ndash;8 art educators</h1>
+      <div class="case-hero__image" data-reveal>
+        <a href="https://art-resource-atlas.vercel.app" target="_blank" rel="noopener" aria-label="Open Artlas live prototype in a new tab">
+          <img src="Assets/artlas_browse_hero.png" alt="Artlas Browse page showing filterable lesson cards with thumbnail covers, grade band, duration, and prep level" loading="lazy" />
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ META BAR ============ -->
+    <section class="case-meta section-container">
+      <div class="case-meta__col">
+        <p class="case-meta__compact">Personal project &middot; 2026</p>
+        <div class="case-meta__role-timeline">
+          <p class="eyebrow case-meta__label">Role</p>
+          <p class="case-meta__value">Product concept, brand identity, UX/UI design, and AI-assisted development</p>
+        </div>
+        <p class="eyebrow case-meta__label">Type</p>
+        <p class="case-meta__value">Personal project</p>
+        <div class="case-meta__role-timeline">
+          <p class="eyebrow case-meta__label">Timeline</p>
+          <p class="case-meta__value">2026</p>
+        </div>
+      </div>
+      <div class="case-meta__col">
+        <p class="eyebrow case-meta__label">Tools</p>
+        <p class="case-meta__value">Figma, Next.js, TypeScript, Tailwind CSS, and Vercel. Built and deployed with Claude Code as the AI development partner.</p>
+      </div>
+      <div class="case-meta__col">
+        <p class="eyebrow case-meta__label">Live Prototype</p>
+        <a class="case-cta-link" href="https://art-resource-atlas.vercel.app" target="_blank" rel="noopener">View live &rarr;</a>
+      </div>
+    </section>
+
+    <div class="section-container"><hr class="case-divider" /></div>
+
+    <!-- ============ OVERVIEW ============ -->
+    <section class="case-section section-container" id="overview">
+      <h2 class="h2">Overview</h2>
+      <p>Artlas, short for Art Atlas, is a free lesson-discovery and organization tool for K&ndash;8 visual-art teachers. It helps teachers quickly find classroom-ready art resources, evaluate them against real teaching constraints, and save the best-fit lessons into personal collections they can return to later.</p>
+
+      <p class="eyebrow case-insight__eyebrow" style="margin-top: 24px;">The Opportunity</p>
+      <p>Unlike teachers in subjects with widely adopted, prepackaged curricula, K&ndash;8 visual-art teachers often build much of their own instructional program. They turn broad standards into grade-level lessons, assessments, material plans, and adaptations, often across many grades and within limited planning time.</p>
+      <p>Each lesson must be creatively meaningful and realistic to run: appropriate for the class period, available supplies, budget, prep and cleanup capacity, accessibility needs, and the practical demands of a busy art room.</p>
+      <p>Useful resources are scattered across museum sites, blogs, marketplaces, saved links, and personal documents. They are rarely organized by the details that determine whether a lesson will work, such as grade band, duration, prep level, cost, mess level, medium, or artistic process.</p>
+      <p>The problem is not a lack of ideas. It is the time required to find and evaluate lessons that fit a specific classroom. Artlas helps teachers discover classroom-ready resources and save them into a library they can return to.</p>
+
+      <p class="eyebrow case-insight__eyebrow" style="margin-top: 24px;">What I Made</p>
+      <p>Artlas lets a teacher search and filter a library of art lessons by grade, duration, prep level, cost, medium, and standards alignment, then open any lesson for a full classroom-ready breakdown: materials, step-by-step flow, accessibility notes, and assessment ideas. From there, they can save a lesson into a named collection (&ldquo;Low-prep sub plans,&rdquo; &ldquo;Spring art projects&rdquo;) or set it aside with a quick save for later, building their own working library inside the tool. It&rsquo;s a free resource library, not a paid subscription, built around that single loop: discover, evaluate, save, intentionally scoped as a fast lesson-discovery and organization tool, not a full curriculum planner or LMS.</p>
+
+      <p class="eyebrow case-insight__eyebrow" style="margin-top: 24px;">Designed and Built with AI</p>
+      <p style="max-width: 680px;">I defined the product scope, brand direction, user flow, interface, and interaction behavior, then used AI-assisted development to turn the concept into a working prototype.</p>
+
+      <a class="case-cta-link" style="margin-top: 8px;" href="https://art-resource-atlas.vercel.app" target="_blank" rel="noopener">View live &rarr;</a>
+    </section>
+
+    <div class="back-to-top-wrap"><a class="back-to-top" href="#top"><span class="arrow">&uarr;</span> Back to top</a></div>
+
+    <div class="section-container"><hr class="case-divider" /></div>
+
+    <section class="case-other-works">
+      <p class="case-other-works__label">Other Works</p>
+      <div class="case-other-works__grid">
+        <a class="case-other-works__item" href="case-study-trust.html">
+          <div class="case-other-works__thumb">
+            <img src="Assets/match_pro_hero.png" alt="Marketplace matching flow showing recommended Pros with trust signals" loading="lazy" />
+          </div>
+          <h3 class="case-other-works__title">Rebuilding trust in a staffing marketplace</h3>
+          <p class="case-other-works__meta">Leading the transformation from an open marketplace to a guided fulfillment experience.</p>
+        </a>
+        <a class="case-other-works__item" href="case-study-brand.html">
+          <div class="case-other-works__thumb">
+            <img src="Assets/Brand Announcement.gif" alt="Gigpro rebrand photography and merchandise" loading="lazy" />
+          </div>
+          <h3 class="case-other-works__title">Scaling design through growth and acquisition</h3>
+          <p class="case-other-works__meta">Built and led the design function through two rebrands, a merger, and a 27-market unification.</p>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-cta">
+        <h2 class="footer-headline">Let&rsquo;s build something great.</h2>
+        <p>If you&rsquo;re looking for a strategic product design leader to bring that next level of clarity and care to your product and organization, I&rsquo;d love to connect.</p>
+        <a class="footer-cta__email" href="mailto:theresapdesign@gmail.com"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.8" /><path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg> theresapdesign@gmail.com</a>
+      </div>
+      <nav class="footer-links" aria-label="Site">
+        <h6>Navigate</h6>
+        <a href="/#featured-work">Work</a>
+        <a href="/#about">About</a>
+        <a href="/experience.html">Resume</a>
+      </nav>
+      <nav class="footer-links" aria-label="Elsewhere">
+        <h6>Elsewhere</h6>
+        <a href="https://www.linkedin.com/in/theresapettingill/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://www.behance.net/theresatruong" target="_blank" rel="noopener">Behance</a>
+        <a href="https://theresapettingilldraws.com/" target="_blank" rel="noopener">Illustration Portfolio</a>
+      </nav>
+    </div>
+    <p class="footer-legal footer-copyright">All rights reserved © 2026 Theresa Pettingill LLC.</p>
+    <p class="footer-legal footer-credits">👩🏻&zwj;💻 Built with Claude Code &bull; 🚀 Deployed via Vercel</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
