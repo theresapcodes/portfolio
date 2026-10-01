@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design System Starter | Theresa Pettingill</title>
+  <meta name="description" content="A design system your team will actually use, in three weeks, for a fixed scope. Tokens, Figma components, documentation, and engineering handoff." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=Work+Sans:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="services.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <a class="logo-lockup" href="index.html" aria-label="Home">
+      <img class="logo-mark" src="Assets/Logo.svg" alt="" width="44" height="44" />    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="index.html#featured-work">Work</a>
+      <a href="services.html">Services</a>
+      <a href="index.html#about">About</a>
+      <a href="https://docs.google.com/document/d/1oDYoFUKpgHZdX-uFW3e5cOmPZ1pxaMabBaq6PuFHleE/edit?usp=sharing" target="_blank" rel="noopener">Resume</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="svc-hero">
+      <div class="svc-wrap">
+        <p class="eyebrow">Design System Starter</p>
+        <h1 class="h1">A design system your team will actually use.</h1>
+        <p class="lede">In three weeks, I set up the tokens, core components, and documentation your startup needs, so designers and engineers build from the same source.</p>
+        <div class="svc-btns">
+          <a class="btn btn--primary" href="mailto:theresapdesign@gmail.com?subject=Design%20System%20Starter">Book a 20-minute call</a>
+          <a class="btn btn--outline" href="design-system-sample.html">See a sample system</a>
+        </div>
+        <p class="note">Fixed scope. Fixed price. Email me and we will set up the call.</p>
+      </div>
+    </section>
+
+    <section class="svc-section">
+      <div class="svc-wrap">
+        <h2 class="h2">The problem</h2>
+        <p class="lead">Your product is starting to look like it was built by five different people.</p>
+        <p>Most early-stage teams never set out to build an inconsistent product. It happens one screen at a time. A button gets rebuilt in three places. Three shades of blue show up. Engineers ask which version is right, and nobody wants to be the one to say.</p>
+        <p>The cost arrives later, as slower releases, longer reviews, and a product that feels a little different on every page. A small, well-built system fixes that early, while it is still cheap to do.</p>
+      </div>
+    </section>
+
+    <section class="svc-section">
+      <div class="svc-wrap">
+        <h2 class="h2">What you get</h2>
+        <p>A working design system, documented and handed off, in three weeks.</p>
+        <div class="svc-grid">
+          <div class="svc-card"><h3>Design audit</h3><p>A review of your current product and brand to find what repeats, what conflicts, and what to keep.</p></div>
+          <div class="svc-card"><h3>Token structure</h3><p>Color, type, spacing, and corner radius defined once, named clearly, and set up to carry into code.</p></div>
+          <div class="svc-card"><h3>Core component library in Figma</h3><p>The 15 to 20 components most startups use every day, such as buttons, inputs, cards, modals, and navigation, with states and variants.</p></div>
+          <div class="svc-card"><h3>Documentation</h3><p>Usage guidance written for designers, engineers, and whoever joins next.</p></div>
+          <div class="svc-card"><h3>Engineering handoff</h3><p>A walkthrough with your dev team, a token file and component inventory ready to use in code, and a rules file your AI coding tools can follow so new screens stay consistent.</p></div>
+          <div class="svc-card"><h3>Two weeks of follow-up support</h3><p>Questions answered after handoff, so the system holds up once your team starts using it.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="svc-section">
+      <div class="svc-wrap">
+        <h2 class="h2">How it works</h2>
+        <p>Three weeks, one clear scope, and a midweek check-in so nothing surprises you.</p>
+        <ol class="svc-steps">
+          <li><strong>Week 1: Audit and align</strong>I review your product and brand, then meet with your design and engineering leads. We agree on what the system covers and what it leaves out.</li>
+          <li><strong>Week 2: Build</strong>Tokens come first, then components, with a review session midweek. I use AI tools to speed up first drafts and variations. I review every output by hand before it goes into the system.</li>
+          <li><strong>Week 3: Document and hand off</strong>I write the usage guidance, walk your team through it, and leave you a clear list of what to build next.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="svc-section" id="shadcn">
+      <div class="svc-wrap">
+        <h2 class="h2">Works with shadcn/ui</h2>
+        <p>Many startup teams build with shadcn/ui, and I like it. It gives your engineers well-made components they can edit, which is a strong place to start.</p>
+        <p>What it does not give you is the layer around it. Your brand decisions, a Figma library your designers can work in, and written rules for how everything fits still need someone to make them. That is the work I do, and I build it to sit on top of what your engineers already use.</p>
+        <ul class="svc-list">
+          <li><strong>Your brand, mapped in.</strong> Your colors, type, spacing, and corner radius go into shadcn's theme variables, so the components your engineers already use look like your product, not the default theme.</li>
+          <li><strong>A Figma library that matches.</strong> Your designers get components built on the same tokens, so what they design is what gets built.</li>
+          <li><strong>Rules everyone can find.</strong> Spec pages that say when to use each component, how it behaves, and what it needs to be accessible.</li>
+          <li><strong>One source of truth.</strong> A single token file that design and code both follow, so changing a brand color means changing one value.</li>
+        </ul>
+        <p style="margin-top:16px">On a different stack? The tokens and documentation carry over to other frameworks and native apps.</p>
+      </div>
+    </section>
+
+    <section class="svc-section">
+      <div class="svc-wrap">
+        <h2 class="h2">Who it's for</h2>
+        <p>This works best for startups with a live product and a small team building it.</p>
+        <div class="svc-two">
+          <div>
+            <h3>A good fit if</h3>
+            <ul class="svc-list">
+              <li>You are a seed to Series B company with a product in market.</li>
+              <li>Your team is founder-led, with no dedicated design leader.</li>
+              <li>Your product has started to feel inconsistent from screen to screen.</li>
+              <li>Engineers and designers are rebuilding the same things.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Probably not yet if</h3>
+            <ul class="svc-list">
+              <li>You are still testing ideas and have no product to systemize.</li>
+              <li>You need governance across several brands or a large organization. That is a longer engagement, and we can scope it separately.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="svc-section">
+      <div class="svc-wrap">
+        <h2 class="h2">About me</h2>
+        <p>Hi, I'm Theresa. I started in brand and visual design, then spent two decades growing into product design leadership.</p>
+        <p>Most recently I led product design at Qwick (formerly Gigpro) through a merger and a multi-market rollout, with 85+ features shipped along the way. Design systems ran through all of it. When a product looks and behaves consistently, people trust it, and a good system is how a small team gets there without slowing down.</p>
+        <p>Because I come from brand, I care how a system looks and feels as much as how it is built. I like work that is practical, calm to use, and easy for the next person to pick up.</p>
+      </div>
+    </section>
+
+    <section class="svc-section">
+      <div class="svc-wrap">
+        <span class="svc-badge">Concept · Not client work</span>
+        <h2 class="h2">See a sample system</h2>
+        <p>Here is a working example of what a starter system looks like: tokens, components, and documentation, built for a made-up brand. You can click through the naming, the structure, and the level of detail you would get.</p>
+        <p style="margin-top:20px"><a class="btn btn--primary" href="design-system-sample.html">Open the sample system</a></p>
+        <p style="margin-top:16px">I am glad to walk through my past design systems work on a call, within the limits of client confidentiality.</p>
+      </div>
+    </section>
+
+    <section class="svc-section">
+      <div class="svc-wrap">
+        <h2 class="h2">Scope</h2>
+        <p><strong>Included:</strong> everything listed under "What you get."</p>
+        <p><strong>Not included:</strong> ongoing design work, full engineering implementation, and brand identity work. If you need any of these, we can scope them as add-ons or a follow-on project.</p>
+      </div>
+    </section>
+
+    <section class="svc-section">
+      <div class="svc-wrap">
+        <h2 class="h2">FAQ</h2>
+        <dl class="svc-faq">
+          <dt>Will you work with our engineers?</dt>
+          <dd>Yes. I meet with your engineering lead in week 1 and run a handoff session in week 3. You also get a token file set up to use in code.</dd>
+          <dt>Why not just use shadcn/ui?</dt>
+          <dd>You can, and if your team already uses it, I build on top of it. It is a strong set of components for React and Tailwind. What it leaves open is what makes a product feel like yours: your brand decisions in one place, and a Figma library plus written rules that keep designers and engineers working from the same page. Without those, teams end up with the default look and a little more drift with each release. The Design System Starter is that missing layer.</dd>
+          <dt>Do you use AI?</dt>
+          <dd>Yes, for first drafts, variations, and documentation. I review everything and make the design decisions myself.</dd>
+          <dt>What do you need from us?</dt>
+          <dd>One point person and access to your product and design files.</dd>
+          <dt>What if we need more after three weeks?</dt>
+          <dd>We can scope a follow-on, such as engineering support, more components, or ongoing design help.</dd>
+          <dt>Can I see past client work?</dt>
+          <dd>The sample system shows how I work. I can also talk through my past design systems work on a call, within the limits of client confidentiality.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section class="svc-cta">
+      <div class="svc-wrap">
+        <h2 class="h2">Ready to make your product feel consistent?</h2>
+        <p>Book a 20-minute call. I will tell you whether the Design System Starter fits, and if it does not, I will point you toward what will.</p>
+        <a class="btn btn--outline" href="mailto:theresapdesign@gmail.com?subject=Design%20System%20Starter">Book a 20-minute call</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <h2 class="h4 footer-headline">Let's build something great.</h2>
+    <div class="footer-grid">
+      <div class="footer-cta">
+        <p>If you're looking for a strategic product design leader to bring that next level of clarity and care to your product and organization, I'd love to connect.</p>
+        <a class="btn btn--outline" href="mailto:theresapdesign@gmail.com">Get in touch</a>
+      </div>
+      <nav class="footer-links" aria-label="Site">
+        <h6>Navigate</h6>
+        <a href="index.html#featured-work">Work</a>
+        <a href="services.html">Services</a>
+        <a href="index.html#about">About</a>
+      </nav>
+      <nav class="footer-links" aria-label="Elsewhere">
+        <h6>Elsewhere</h6>
+        <a href="https://www.linkedin.com/in/theresapettingill/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://theresapettingilldraws.com/" target="_blank" rel="noopener">Illustration Portfolio</a>
+      </nav>
+    </div>
+    <p class="footer-legal footer-copyright">All rights reserved © 2026 Theresa Pettingill LLC.</p>
+    <p class="footer-legal footer-credits">🎨 Designed in Figma &bull; 👩🏻&zwj;💻 Built with Claude Code &bull; 🚀 Deployed via Vercel</p>
+  </footer>
+</body>
+</html>

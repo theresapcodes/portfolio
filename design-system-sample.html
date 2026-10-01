@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sample Design System | Theresa Pettingill</title>
+  <meta name="description" content="A concept design system for a made-up brand: tokens, components, usage guidance, and engineering handoff, with light and dark themes." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="sample.css" />
+</head>
+<body style="margin:0">
+<div class="ds" id="ds" data-theme="light">
+
+  <div class="ds-bar">
+    <a href="design-system-starter.html" style="font-weight:600;color:var(--color-text-primary)">← Design System Starter</a>
+    <nav aria-label="Sample sections">
+      <a href="#tokens">Tokens</a><a href="#type">Type</a><a href="#spacing">Spacing</a><a href="#components">Components</a><a href="#docs">Usage docs</a><a href="#handoff">Handoff</a>
+    </nav>
+    <button class="themebtn" id="themebtn" type="button" aria-pressed="false">Dark mode</button>
+  </div>
+
+  <header class="ds-hero"><div class="ds-wrap">
+    <span class="tag">Concept · Not client work</span>
+    <h1>Fieldnote design system</h1>
+    <p>A sample of what the Design System Starter produces, built for a made-up brand. Every color, size, and radius on this page comes from a token. Switch to dark mode to see the same tokens remap.</p>
+  </div></header>
+
+  <section class="ds-sec" id="tokens"><div class="ds-wrap">
+    <h2>Color tokens</h2>
+    <p class="sub">Two layers. Primitive tokens hold raw values and mean nothing on their own. Semantic tokens say what a color is for, and components use only those. To rebrand, change the primitives.</p>
+    <p class="ds-label">color.primitive.brand</p><div class="sw-scale" style="grid-template-columns:repeat(10,1fr)"><div class="sw" style="background:var(--p-brand-50);color:#0F172A">50</div><div class="sw" style="background:var(--p-brand-100);color:#0F172A">100</div><div class="sw" style="background:var(--p-brand-200);color:#0F172A">200</div><div class="sw" style="background:var(--p-brand-300);color:#0F172A">300</div><div class="sw" style="background:var(--p-brand-400);color:#0F172A">400</div><div class="sw" style="background:var(--p-brand-500);color:#fff">500</div><div class="sw" style="background:var(--p-brand-600);color:#fff">600</div><div class="sw" style="background:var(--p-brand-700);color:#fff">700</div><div class="sw" style="background:var(--p-brand-800);color:#fff">800</div><div class="sw" style="background:var(--p-brand-900);color:#fff">900</div></div><div style="height:16px"></div><p class="ds-label">color.primitive.neutral</p><div class="sw-scale" style="grid-template-columns:repeat(11,1fr)"><div class="sw" style="background:var(--p-n-0);color:#0F172A">0</div><div class="sw" style="background:var(--p-n-50);color:#0F172A">50</div><div class="sw" style="background:var(--p-n-100);color:#0F172A">100</div><div class="sw" style="background:var(--p-n-200);color:#0F172A">200</div><div class="sw" style="background:var(--p-n-300);color:#0F172A">300</div><div class="sw" style="background:var(--p-n-400);color:#0F172A">400</div><div class="sw" style="background:var(--p-n-500);color:#fff">500</div><div class="sw" style="background:var(--p-n-600);color:#fff">600</div><div class="sw" style="background:var(--p-n-700);color:#fff">700</div><div class="sw" style="background:var(--p-n-800);color:#fff">800</div><div class="sw" style="background:var(--p-n-900);color:#fff">900</div></div>
+    <h3>Semantic tokens (these change in dark mode)</h3>
+    <div class="ds-grid ds-g3"><div class="sem"><i style="background:var(--color-bg-page)"></i><div><b>color.bg.page</b><span>Page background</span></div></div><div class="sem"><i style="background:var(--color-bg-subtle)"></i><div><b>color.bg.subtle</b><span>Quiet panels, hover fills</span></div></div><div class="sem"><i style="background:var(--color-bg-surface)"></i><div><b>color.bg.surface</b><span>Cards and overlays</span></div></div><div class="sem"><i style="background:var(--color-text-primary)"></i><div><b>color.text.primary</b><span>Body and headings</span></div></div><div class="sem"><i style="background:var(--color-text-secondary)"></i><div><b>color.text.secondary</b><span>Supporting text</span></div></div><div class="sem"><i style="background:var(--color-text-muted)"></i><div><b>color.text.muted</b><span>Hints and captions</span></div></div><div class="sem"><i style="background:var(--color-border-default)"></i><div><b>color.border.default</b><span>Dividers, card edges</span></div></div><div class="sem"><i style="background:var(--color-border-strong)"></i><div><b>color.border.strong</b><span>Input borders</span></div></div><div class="sem"><i style="background:var(--color-border-focus)"></i><div><b>color.border.focus</b><span>Focus ring</span></div></div><div class="sem"><i style="background:var(--color-border-danger)"></i><div><b>color.border.danger</b><span>Error borders</span></div></div><div class="sem"><i style="background:var(--color-action-primary-bg)"></i><div><b>color.action.primary.bg</b><span>Primary buttons</span></div></div><div class="sem"><i style="background:var(--color-action-primary-hover)"></i><div><b>color.action.primary.hover</b><span>Primary hover</span></div></div></div>
+  </div></section>
+
+  <section class="ds-sec" id="type"><div class="ds-wrap">
+    <h2>Typography</h2>
+    <p class="sub">Thirteen text styles in the full system. Font family and size come from variables, so changing one value restyles every component.</p>
+    <div class="ty"><div><b class="mono">heading/h1</b><br><small>40 / 48 · 700</small></div><div style="font-size:40px;line-height:48px;font-weight:700">Ship with a single source of truth</div></div><div class="ty"><div><b class="mono">heading/h2</b><br><small>32 / 40 · 700</small></div><div style="font-size:32px;line-height:40px;font-weight:700">Ship with a single source of truth</div></div><div class="ty"><div><b class="mono">heading/h3</b><br><small>24 / 32 · 600</small></div><div style="font-size:24px;line-height:32px;font-weight:600">Ship with a single source of truth</div></div><div class="ty"><div><b class="mono">heading/h4</b><br><small>20 / 28 · 600</small></div><div style="font-size:20px;line-height:28px;font-weight:600">Ship with a single source of truth</div></div><div class="ty"><div><b class="mono">body/lg</b><br><small>18 / 28 · 400</small></div><div style="font-size:18px;line-height:28px">Components only use semantic tokens, so a rebrand changes values, not screens.</div></div><div class="ty"><div><b class="mono">body/md</b><br><small>16 / 24 · 400</small></div><div style="font-size:16px;line-height:24px">Components only use semantic tokens, so a rebrand changes values, not screens.</div></div><div class="ty"><div><b class="mono">body/sm</b><br><small>14 / 20 · 400</small></div><div style="font-size:14px;line-height:20px">Components only use semantic tokens, so a rebrand changes values, not screens.</div></div><div class="ty"><div><b class="mono">label/md</b><br><small>14 / 20 · 500</small></div><div style="font-size:14px;line-height:20px;font-weight:500">Email address</div></div><div class="ty"><div><b class="mono">caption</b><br><small>12 / 16 · 400</small></div><div style="font-size:12px;line-height:16px">Helper text and captions</div></div><div class="ty"><div><b class="mono">code/md</b><br><small>13 / 20 · mono</small></div><div style="font-family:var(--font-mono);font-size:13px;line-height:20px">--color-action-primary-bg</div></div>
+  </div></section>
+
+  <section class="ds-sec" id="spacing"><div class="ds-wrap">
+    <h2>Spacing, radius, and shadow</h2>
+    <p class="sub">A short scale. If a value is not on it, it does not go in the product.</p>
+    <div class="ds-grid ds-g2">
+      <div class="ds-card"><p class="ds-label">Spacing</p><div class="sp"><span style="width:70px">space.1</span><i style="width:4px"></i>4px</div><div class="sp"><span style="width:70px">space.2</span><i style="width:8px"></i>8px</div><div class="sp"><span style="width:70px">space.3</span><i style="width:12px"></i>12px</div><div class="sp"><span style="width:70px">space.4</span><i style="width:16px"></i>16px</div><div class="sp"><span style="width:70px">space.6</span><i style="width:24px"></i>24px</div><div class="sp"><span style="width:70px">space.8</span><i style="width:32px"></i>32px</div><div class="sp"><span style="width:70px">space.12</span><i style="width:48px"></i>48px</div></div>
+      <div class="ds-card"><p class="ds-label">Radius</p><div class="ds-row"><div><div class="rad" style="border-radius:var(--radius-sm)">sm</div></div><div><div class="rad" style="border-radius:var(--radius-md)">md</div></div><div><div class="rad" style="border-radius:var(--radius-lg)">lg</div></div><div><div class="rad" style="border-radius:var(--radius-full)">full</div></div></div>
+        <p class="ds-label" style="margin-top:20px">Shadow</p><div class="ds-row" style="padding:8px"><div class="shd" style="box-shadow:var(--shadow-sm)">shadow.sm</div><div class="shd" style="box-shadow:var(--shadow-md)">shadow.md</div><div class="shd" style="box-shadow:var(--shadow-lg)">shadow.lg</div></div></div>
+    </div>
+  </div></section>
+
+  <section class="ds-sec" id="components"><div class="ds-wrap">
+    <h2>Components</h2>
+    <p class="sub">A selection from the full library of about 40. Each has the states and variants engineers need, and the same names in Figma and code.</p>
+
+    <h3>Button</h3>
+    <div class="ds-card">
+      <p class="ds-label">Variants</p>
+      <div class="ds-row"><button class="btn-ds primary">Primary</button><button class="btn-ds secondary">Secondary</button><button class="btn-ds ghost">Ghost</button><button class="btn-ds danger">Delete</button></div>
+      <p class="ds-label" style="margin-top:20px">Sizes</p>
+      <div class="ds-row"><button class="btn-ds primary sm">Small</button><button class="btn-ds primary">Medium</button><button class="btn-ds primary lg">Large</button></div>
+      <p class="ds-label" style="margin-top:20px">States</p>
+      <div class="ds-row"><button class="btn-ds primary">Default</button><button class="btn-ds primary is-hover">Hover</button><button class="btn-ds primary focus-demo">Focus</button><button class="btn-ds primary" disabled>Disabled</button></div>
+    </div>
+
+    <h3>Form controls</h3>
+    <div class="ds-card">
+      <div class="ds-row" style="align-items:flex-start">
+        <div class="field"><label for="e1">Email address</label><input class="inp" id="e1" type="email" placeholder="you@company.com"><span class="help">We will only use this for receipts.</span></div>
+        <div class="field"><label for="e2">Workspace URL</label><input class="inp error" id="e2" value="field note" aria-invalid="true" aria-describedby="e2err"><span class="err" id="e2err">Use lowercase letters and hyphens only.</span></div>
+        <div class="field"><label for="e3">Plan</label><select class="inp" id="e3"><option>Team</option><option>Business</option></select></div>
+        <div class="field"><label for="e4">Disabled</label><input class="inp" id="e4" value="Locked" disabled></div>
+      </div>
+      <div class="ds-row" style="margin-top:20px;gap:24px">
+        <label class="chk"><input type="checkbox" checked> Checkbox</label>
+        <label class="chk"><input type="radio" name="r" checked> Radio</label>
+        <label class="chk"><input type="radio" name="r"> Radio</label>
+        <label class="chk"><button type="button" role="switch" aria-checked="true" class="sw-switch" id="sw1" aria-label="Email notifications"></button> Switch</label>
+      </div>
+    </div>
+
+    <h3>Feedback</h3>
+    <div class="ds-grid ds-g2">
+      <div class="ds-card" style="display:grid;gap:12px">
+        <div class="alert info" role="status"><div><b>Heads up</b>Your trial ends in 3 days.</div></div>
+        <div class="alert success" role="status"><div><b>Saved</b>Your changes are live.</div></div>
+        <div class="alert warning" role="status"><div><b>Almost full</b>You have used 90% of your seats.</div></div>
+        <div class="alert danger" role="alert"><div><b>Payment failed</b>Update your card to keep your plan.</div></div>
+      </div>
+      <div class="ds-card" style="display:grid;gap:16px;align-content:start">
+        <div class="ds-row"><span class="badge neutral">Draft</span><span class="badge brand">New</span><span class="badge success">Active</span><span class="badge warning">Pending</span><span class="badge danger">Overdue</span></div>
+        <div class="toast" role="status"><span>Invite sent to maya@acme.co</span><button class="btn-ds ghost sm" style="color:inherit">Undo</button></div>
+        <div class="ds-row"><span class="tip"><button class="btn-ds secondary sm" aria-describedby="t1">Hover or focus me</button><span role="tooltip" id="t1">Copies the link</span></span></div>
+        <div><p class="ds-label">Progress</p><div class="prog" role="progressbar" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100" aria-label="Upload progress"><i style="width:64%"></i></div></div>
+        <div class="ds-row"><div class="spin" role="status" aria-label="Loading"></div><div style="flex:1;display:grid;gap:8px"><div class="skel" style="width:70%"></div><div class="skel" style="width:45%"></div></div></div>
+      </div>
+    </div>
+
+    <h3>Navigation</h3>
+    <div class="ds-card">
+      <div class="tabs" role="tablist" aria-label="Project views">
+        <button role="tab" aria-selected="true" aria-controls="p1" id="tb1">Overview</button>
+        <button role="tab" aria-selected="false" aria-controls="p2" id="tb2" tabindex="-1">Activity</button>
+        <button role="tab" aria-selected="false" aria-controls="p3" id="tb3" tabindex="-1">Settings</button>
+      </div>
+      <div class="tabpanel" role="tabpanel" id="p1" aria-labelledby="tb1">Overview: a summary of the project and its latest changes.</div>
+      <div class="tabpanel" role="tabpanel" id="p2" aria-labelledby="tb2" hidden>Activity: who did what, newest first.</div>
+      <div class="tabpanel" role="tabpanel" id="p3" aria-labelledby="tb3" hidden>Settings: name, members, and billing.</div>
+      <div class="ds-row" style="justify-content:space-between;margin-top:8px">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="#components">Projects</a><span aria-hidden="true">/</span><a href="#components">Fieldnote</a><span aria-hidden="true">/</span><span aria-current="page">Settings</span></nav>
+        <div class="pager" aria-label="Pagination"><button aria-label="Previous page">‹</button><button aria-current="page">1</button><button>2</button><button>3</button><button aria-label="Next page">›</button></div>
+      </div>
+    </div>
+
+    <h3>Data display</h3>
+    <div class="ds-grid ds-g2">
+      <div class="ds-card"><p class="ds-label">Stat card</p><div class="stat">12,480</div><p style="margin:4px 0 0;color:var(--color-text-secondary);font-size:14px">Active members</p><p class="trend up" style="margin:8px 0 0">▲ 8.2% vs last month</p></div>
+      <div class="ds-card"><p class="ds-label">Card with avatar</p><div class="ds-row"><span class="avatar lg">MR</span><div><b>Maya Reyes</b><div style="font-size:14px;color:var(--color-text-secondary)">Product lead</div></div></div><p style="margin:12px 0 0;font-size:14px;color:var(--color-text-secondary)">Cards group related content on a surface with a border and a small shadow.</p></div>
+    </div>
+    <div class="ds-card scroll" style="margin-top:16px;padding:8px 12px"><table class="tbl"><thead><tr><th>Name</th><th>Role</th><th>Status</th><th>Last active</th></tr></thead><tbody>
+      <tr><td>Maya Reyes</td><td>Admin</td><td><span class="badge success">Active</span></td><td>Today</td></tr>
+      <tr><td>Jon Park</td><td>Editor</td><td><span class="badge warning">Pending</span></td><td>2 days ago</td></tr>
+      <tr><td>Ana Silva</td><td>Viewer</td><td><span class="badge neutral">Invited</span></td><td>Never</td></tr></tbody></table></div>
+
+    <h3>Overlay and empty state</h3>
+    <div class="ds-grid ds-g2">
+      <div class="modal-demo"><div class="modal" role="dialog" aria-label="Delete project example"><h4>Delete this project?</h4><p>This removes all files and cannot be undone.</p><div class="actions"><button class="btn-ds secondary">Cancel</button><button class="btn-ds danger">Delete</button></div></div></div>
+      <div class="ds-card empty"><div class="ico" aria-hidden="true">+</div><b>No projects yet</b><p style="margin:6px 0 16px;color:var(--color-text-secondary);font-size:14px">Create a project to start collecting notes.</p><button class="btn-ds primary">New project</button></div>
+    </div>
+  </div></section>
+
+  <section class="ds-sec" id="docs"><div class="ds-wrap">
+    <h2>What a usage page looks like</h2>
+    <p class="sub">Every component gets one page in the same order, so designers and engineers know where to look. This is the Button page.</p>
+    <div class="ds-card doc"><dl style="margin:0">
+      <dt>Purpose</dt><dd>Starts an action. Use a link for navigation, a button for actions that change something.</dd>
+      <dt>Variants</dt><dd><ul><li><b>Primary:</b> the one main action on a screen. Use once per view.</li><li><b>Secondary:</b> supporting actions next to a primary.</li><li><b>Ghost:</b> low-emphasis actions in toolbars and tables.</li><li><b>Danger:</b> destructive actions, always behind a confirmation.</li></ul></dd>
+      <dt>States</dt><dd>Default, hover, focus, active, disabled. Loading replaces the label with a spinner and keeps the width.</dd>
+      <dt>Accessibility</dt><dd><ul><li>Minimum target size of 40 by 40 pixels at the medium size.</li><li>Visible focus ring using <code>--color-border-focus</code>.</li><li>Label text must describe the action. Icon-only buttons need an <code>aria-label</code>.</li><li>Text contrast of at least 4.5:1 in light and dark themes.</li></ul></dd>
+      <dt>Code</dt><dd><pre>&lt;Button variant="primary" size="md"&gt;Save changes&lt;/Button&gt;</pre></dd>
+    </dl></div>
+  </div></section>
+
+  <section class="ds-sec" id="handoff"><div class="ds-wrap">
+    <h2>What engineering receives</h2>
+    <p class="sub">A folder of files that live in your repo: tokens, a component inventory, usage pages, and a rules file for AI coding tools. The JSON tokens are the source of truth.</p>
+    <div class="ds-grid ds-g2">
+      <div><p class="ds-label">tokens/tokens.json</p><pre>{
+  "color": {
+    "semantic": {
+      "action": {
+        "primary": {
+          "bg": { "$value": "{color.primitive.brand.600}" },
+          "text": { "$value": "#FFFFFF" }
+        }
+      }
+    }
+  }
+}</pre></div>
+      <div><p class="ds-label">tokens/tokens.css</p><pre>:root {
+  --color-action-primary-bg: #4F46E5;
+  --color-action-primary-text: #FFFFFF;
+  --radius-md: 8px;
+  --space-4: 16px;
+}
+[data-theme="dark"] {
+  --color-action-primary-bg: #6366F1;
+}</pre></div>
+      <div><p class="ds-label">shadcn/ui theme mapping</p><pre>:root {
+  --primary: var(--color-action-primary-bg);
+  --primary-foreground: var(--color-action-primary-text);
+  --border: var(--color-border-default);
+  --ring: var(--color-border-focus);
+  --radius: var(--radius-md);
+}</pre></div>
+      <div><p class="ds-label">AGENTS.md (excerpt)</p><pre>1. Never hardcode a color, size,
+   radius, or shadow. Use a token.
+2. Use semantic tokens only.
+3. Use an existing component from
+   components.json before building
+   a new one.
+4. Every interactive element needs
+   all its states.</pre></div>
+    </div>
+  </div></section>
+
+  <footer class="ds-foot"><div class="ds-wrap">
+    <p>Sample system for a made-up brand. Not client work. Designed and built by Theresa Pettingill. <a href="design-system-starter.html">Back to the Design System Starter</a></p>
+  </div></footer>
+</div>
+
+<script>
+(function () {
+  var ds = document.getElementById('ds'), btn = document.getElementById('themebtn');
+  var saved = null; try { saved = sessionStorage.getItem('ds-theme'); } catch (e) {}
+  function set(t) {
+    ds.setAttribute('data-theme', t); document.body.style.background = t === 'dark' ? '#0F172A' : '#fff';
+    btn.setAttribute('aria-pressed', t === 'dark'); btn.textContent = t === 'dark' ? 'Light mode' : 'Dark mode';
+    try { sessionStorage.setItem('ds-theme', t); } catch (e) {}
+  }
+  set(saved || (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+  btn.addEventListener('click', function () { set(ds.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); });
+
+  var sw = document.getElementById('sw1');
+  sw.addEventListener('click', function () { sw.setAttribute('aria-checked', sw.getAttribute('aria-checked') !== 'true'); });
+
+  var tabs = [].slice.call(document.querySelectorAll('[role=tab]'));
+  function pick(t) {
+    tabs.forEach(function (x) {
+      var on = x === t; x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1;
+      document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
+    });
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { pick(t); });
+    t.addEventListener('keydown', function (e) {
+      var n = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : null;
+      if (n === null) return; n = (n + tabs.length) % tabs.length; tabs[n].focus(); pick(tabs[n]);
+    });
+  });
+})();
+</script>
+</body>
+</html>

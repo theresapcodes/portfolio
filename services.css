@@ -1,0 +1,56 @@
+/* Services pages. Built on the tokens in styles.css. */
+.svc-wrap { max-width: 1008px; margin: 0 auto; padding: 0 var(--container-padding); }
+.svc-hero { background: color-mix(in srgb, var(--color-primary) 8%, white); padding: clamp(48px, 8vw, 96px) 0; }
+.svc-hero .eyebrow { color: var(--color-primary); margin-bottom: 16px; }
+.svc-hero h1 { max-width: 20ch; margin-bottom: 20px; }
+.svc-hero p.lede { font-size: 18px; max-width: 60ch; color: var(--color-text-secondary); margin-bottom: 28px; }
+.svc-hero .note { margin-top: 16px; font-size: 14px; color: var(--color-text-muted); }
+.svc-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.svc-section { padding: clamp(40px, 6vw, 72px) 0; }
+.svc-section + .svc-section { border-top: 1px solid var(--color-gray-200); }
+.svc-section h2 { color: var(--color-primary); margin-bottom: 16px; }
+.svc-section p { max-width: 68ch; color: var(--color-text-secondary); }
+.svc-section p + p { margin-top: 14px; }
+.svc-section .lead { font-family: var(--font-heading); font-weight: 600; font-size: 22px; color: var(--color-text); max-width: 32ch; margin-bottom: 12px; }
+
+.svc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 24px; }
+.svc-card { border: 1px solid var(--color-gray-200); border-radius: var(--radius-md); padding: 24px; background: var(--color-surface); }
+.svc-card h3 { font-size: 18px; margin-bottom: 8px; }
+.svc-card p { font-size: 15px; }
+.svc-card--link { display: block; transition: transform var(--duration-hover) var(--ease-standard), box-shadow var(--duration-hover) var(--ease-standard); }
+.svc-card--link:hover, .svc-card--link:focus-visible { transform: translateY(-3px); box-shadow: 0 16px 32px -16px rgba(39,32,47,.35); }
+.svc-card .cta { display: inline-block; margin-top: 14px; font-family: var(--font-heading); font-weight: 600; color: var(--color-primary); }
+
+.svc-steps { counter-reset: s; list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 16px; }
+.svc-steps li { counter-increment: s; border-left: 3px solid var(--color-secondary); padding: 4px 0 4px 20px; color: var(--color-text-secondary); max-width: 68ch; }
+.svc-steps li strong { display: block; font-family: var(--font-heading); color: var(--color-text); }
+
+.svc-list { padding-left: 20px; margin: 16px 0 0; max-width: 68ch; color: var(--color-text-secondary); }
+.svc-list li { margin-bottom: 10px; }
+.svc-list strong { color: var(--color-text); }
+
+.svc-two { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 20px; }
+.svc-two h3 { font-size: 18px; margin-bottom: 8px; }
+
+.svc-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 15px; }
+.svc-table th, .svc-table td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--color-gray-200); vertical-align: top; }
+.svc-table th { font-family: var(--font-eyebrow); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--color-text-muted); }
+.svc-scroll { overflow-x: auto; }
+
+.svc-faq dt { font-family: var(--font-heading); font-weight: 600; margin-top: 22px; }
+.svc-faq dd { margin: 6px 0 0; color: var(--color-text-secondary); max-width: 68ch; }
+
+.svc-cta { background: var(--color-dark-bg); color: var(--color-gray-100); padding: clamp(40px, 6vw, 72px) 0; }
+.svc-cta h2 { color: var(--color-primary); margin-bottom: 12px; }
+.svc-cta p { max-width: 56ch; margin-bottom: 20px; }
+
+.svc-badge { display: inline-block; font-family: var(--font-eyebrow); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; padding: 4px 10px; border-radius: var(--radius-pill); background: var(--color-secondary-bg); border: 1px solid var(--color-secondary-border); color: var(--color-text); margin-bottom: 14px; }
+
+/* Home page call-out */
+.svc-callout { padding: clamp(40px, 6vw, 72px) var(--content-padding); background: var(--color-gray-100); }
+.svc-callout__inner { max-width: 1008px; margin: 0 auto; display: flex; gap: 32px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+.svc-callout h2 { color: var(--color-primary); margin-bottom: 8px; }
+.svc-callout p { max-width: 54ch; color: var(--color-text-secondary); }
+
+@media (max-width: 640px) { .svc-hero h1 { max-width: none; } }
