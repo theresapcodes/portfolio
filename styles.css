@@ -2525,16 +2525,22 @@ img.case-image-full,
   margin-top: 12px;
 }
 
-#archive-modal-body h2.h2 {
-  font-size: 20px;
-}
-
 #archive-modal-body h3 {
   margin-top: 24px;
 }
 
 #archive-modal-body h3 + * {
   margin-top: 16px;
+}
+
+#archive-modal-body h3 + ul,
+#archive-modal-body h3 + p:has(> strong:first-child) {
+  margin-top: 16px;
+}
+
+#archive-modal-body :has(+ h3),
+#archive-modal-body .case-pullquote:has(+ h3) {
+  margin-bottom: 0;
 }
 
 #archive-modal-body ul {
