@@ -634,6 +634,86 @@ function initAutoplayVideos() {
   });
 }
 
+function initScrollPlayVideos() {
+  if (!document.querySelector('.case-hero')) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!('IntersectionObserver' in window)) return;
+
+  // The hero video keeps its own always-on autoplay; everything below it plays on scroll.
+  const videos = [...document.querySelectorAll('main video')].filter((video) => !video.closest('.case-hero'));
+  if (!videos.length) return;
+
+  // Pauses we trigger ourselves, or that the browser triggers while the tab is
+  // hidden, must not count as the visitor pausing a video.
+  const pausedByScroll = new WeakSet();
+  const pausedByUser = new WeakSet();
+  const inView = new Set();
+
+  videos.forEach((video) => {
+    video.removeAttribute('autoplay');
+    video.muted = true;
+    video.addEventListener('pause', () => {
+      if (pausedByScroll.has(video)) {
+        pausedByScroll.delete(video);
+      } else if (!video.ended && !document.hidden) {
+        pausedByUser.add(video);
+      }
+    });
+    video.addEventListener('play', () => pausedByUser.delete(video));
+  });
+
+  const playObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target;
+        const mostlyVisible =
+          entry.isIntersecting &&
+          (entry.intersectionRatio >= 0.5 || entry.intersectionRect.height >= window.innerHeight * 0.5);
+
+        if (mostlyVisible) {
+          inView.add(video);
+          if (pausedByUser.has(video)) return;
+          const playPromise = video.play();
+          if (playPromise !== undefined) playPromise.catch(() => {});
+        } else {
+          inView.delete(video);
+          if (!video.paused) {
+            pausedByScroll.add(video);
+            video.pause();
+          }
+        }
+      });
+    },
+    { threshold: [0, 0.25, 0.5, 0.75, 1] }
+  );
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) return;
+    inView.forEach((video) => {
+      if (!video.paused || pausedByUser.has(video)) return;
+      const playPromise = video.play();
+      if (playPromise !== undefined) playPromise.catch(() => {});
+    });
+  });
+
+  // Start loading a little before a video scrolls into view so it can begin right away.
+  const preloadObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.preload = 'auto';
+        preloadObserver.unobserve(entry.target);
+      });
+    },
+    { rootMargin: '400px 0px' }
+  );
+
+  videos.forEach((video) => {
+    playObserver.observe(video);
+    preloadObserver.observe(video);
+  });
+}
+
 function initCapabilitiesAccordion() {
   const items = [...document.querySelectorAll('.capability-item')];
   if (!items.length) return;
@@ -700,6 +780,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCaseJumpNav();
   initArchiveModal();
   initLightbox();
+  initScrollPlayVideos();
   initAutoplayVideos();
   // initCapabilitiesAccordion(); // section held back from production for now, re-enable when it goes live
   initExperienceAccordion();
