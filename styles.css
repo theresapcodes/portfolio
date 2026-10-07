@@ -1439,6 +1439,21 @@ p { margin: 0; }
   display: block;
 }
 
+.case-hero__image iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.case-hero__lead {
+  max-width: 760px;
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+
 .case-hero__caption {
   max-width: 880px;
   margin-top: -8px;
@@ -2246,11 +2261,11 @@ img.case-image-full,
 
 .case-other-works__grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 28px;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 900px) {
   .case-other-works__grid { grid-template-columns: 1fr; }
 }
 
