@@ -636,12 +636,17 @@ function initAutoplayVideos() {
 
 function initScrollPlayVideos() {
   if (!document.querySelector('.case-hero')) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  if (!('IntersectionObserver' in window)) return;
 
   // The hero video keeps its own always-on autoplay; everything below it plays on scroll.
   const videos = [...document.querySelectorAll('main video')].filter((video) => !video.closest('.case-hero'));
   if (!videos.length) return;
+
+  // Without scroll-play (reduced motion, or no IntersectionObserver) the videos would never start,
+  // so give those visitors the native controls back.
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+    videos.forEach((video) => { video.controls = true; });
+    return;
+  }
 
   // Pauses we trigger ourselves, or that the browser triggers while the tab is
   // hidden, must not count as the visitor pausing a video.
