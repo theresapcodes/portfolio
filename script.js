@@ -654,9 +654,26 @@ function initScrollPlayVideos() {
   const pausedByUser = new WeakSet();
   const inView = new Set();
 
+  // Start a video. If the browser refuses to autoplay (Low Power Mode, data saver, strict settings),
+  // bring the native controls back so the visitor can start it with a tap; hide them again once it plays.
+  const startVideo = (video) => {
+    const playPromise = video.play();
+    if (playPromise === undefined) return;
+    playPromise.catch((err) => {
+      if (err && err.name === 'NotAllowedError') video.controls = true;
+    });
+  };
+
   videos.forEach((video) => {
     video.removeAttribute('autoplay');
     video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+    video.setAttribute('webkit-playsinline', '');
+    video.addEventListener('playing', () => { video.controls = false; });
+    video.addEventListener('canplay', () => {
+      if (inView.has(video) && video.paused && !pausedByUser.has(video)) startVideo(video);
+    });
     video.addEventListener('pause', () => {
       if (pausedByScroll.has(video)) {
         pausedByScroll.delete(video);
@@ -678,8 +695,7 @@ function initScrollPlayVideos() {
         if (mostlyVisible) {
           inView.add(video);
           if (pausedByUser.has(video)) return;
-          const playPromise = video.play();
-          if (playPromise !== undefined) playPromise.catch(() => {});
+          startVideo(video);
         } else {
           inView.delete(video);
           if (!video.paused) {
@@ -696,9 +712,17 @@ function initScrollPlayVideos() {
     if (document.hidden) return;
     inView.forEach((video) => {
       if (!video.paused || pausedByUser.has(video)) return;
-      const playPromise = video.play();
-      if (playPromise !== undefined) playPromise.catch(() => {});
+      startVideo(video);
     });
+  });
+
+  // A first touch counts as a user gesture on phones, so retry any video that was refused before it.
+  ['touchend', 'click'].forEach((evt) => {
+    window.addEventListener(evt, () => {
+      inView.forEach((video) => {
+        if (video.paused && !pausedByUser.has(video)) startVideo(video);
+      });
+    }, { passive: true });
   });
 
   // Start loading a little before a video scrolls into view so it can begin right away.
