@@ -193,6 +193,8 @@ strong { font-weight: 700; }
 .switcher--below { align-items: stretch; gap: 21px; }
 .switcher--below .switcher__toggle { align-self: center; }
 .switcher--below .media[hidden] { display: none; }
+/* the newer Automatch recording is taller than the other two, so show it uncropped */
+#ph-panel-auto { aspect-ratio: 1920 / 1348; }
 /* very light stroke drawn over the edge of the Match video container */
 .switcher--below .media { position: relative; }
 .switcher--below .media::after {
