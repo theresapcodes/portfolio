@@ -401,7 +401,12 @@ body { overflow-x: clip; }
   :root { --gap-block: 64px; }
   .h1 { font-size: 36px; line-height: 44px; }
   .cs-hero__grid, .pair { grid-template-columns: minmax(0, 1fr); }
-  .results__grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  /* phones: compact rows (number left, label right) instead of three tall stacked blocks */
+  .results { gap: 12px; }
+  .results__grid { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .result { flex-direction: row; align-items: center; gap: 16px; padding: 12px 0; }
+  .result__figure { flex: 0 0 4.2ch; font-size: 32px; line-height: 40px; padding-top: 0; }
+  .result .body-m { flex: 1 1 0; min-width: 0; }
   .problem { flex-direction: column; align-items: flex-start; }
   .problem__lead { flex-basis: auto; }
   .table thead { display: none; }
