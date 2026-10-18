@@ -198,6 +198,58 @@
     request();
   }
 
+  // ---- carousel: swipe or tap between videos --------------------------------------------
+  Array.prototype.forEach.call(document.querySelectorAll('[data-carousel]'), function (root) {
+    var track = root.querySelector('.carousel__track');
+    var slides = Array.prototype.slice.call(root.querySelectorAll('.carousel__slide'));
+    var prev = root.querySelector('.carousel__btn--prev');
+    var next = root.querySelector('.carousel__btn--next');
+    var dots = Array.prototype.slice.call(root.querySelectorAll('.carousel__dot'));
+    var current = 0;
+
+    function goTo(i) {
+      i = Math.max(0, Math.min(slides.length - 1, i));
+      track.scrollTo({ left: i * track.clientWidth, behavior: reduceMotion ? 'auto' : 'smooth' });
+    }
+    function setCurrent(i) {
+      if (i === current) return;
+      current = i;
+      render();
+      // start the slide you just landed on from the top
+      var v = slides[i].querySelector('video');
+      if (v) { try { v.currentTime = 0; } catch (e) { /* not seekable yet */ } }
+    }
+    function render() {
+      prev.hidden = current === 0;
+      next.hidden = current === slides.length - 1;
+      dots.forEach(function (d, k) {
+        d.classList.toggle('is-active', k === current);
+        if (k === current) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current');
+      });
+    }
+
+    var raf = null;
+    track.addEventListener('scroll', function () {
+      if (raf) return;
+      raf = requestAnimationFrame(function () {
+        raf = null;
+        setCurrent(Math.round(track.scrollLeft / Math.max(1, track.clientWidth)));
+      });
+    }, { passive: true });
+    window.addEventListener('resize', function () {
+      track.scrollTo({ left: current * track.clientWidth, behavior: 'auto' });
+    });
+
+    prev.addEventListener('click', function () { goTo(current - 1); });
+    next.addEventListener('click', function () { goTo(current + 1); });
+    dots.forEach(function (d, k) { d.addEventListener('click', function () { goTo(k); }); });
+    track.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') { e.preventDefault(); goTo(current + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(current - 1); }
+    });
+    render();
+  });
+
   // ---- segmented control + panels ---------------------------------------------------
   Array.prototype.forEach.call(document.querySelectorAll('[data-switcher]'), function (root) {
     var tabs = Array.prototype.slice.call(root.querySelectorAll('[role="tab"]'));
