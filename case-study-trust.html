@@ -12,6 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:ital,wght@0,300..700;1,300..700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 
+  <script>document.documentElement.classList.add('js');</script>
   <link rel="stylesheet" href="case-trust.css" />
 </head>
 <body>
@@ -27,7 +28,7 @@
 
     <!-- ============ HERO ============ -->
     <section class="cs-hero" aria-labelledby="cs-title">
-      <div class="cs-hero__grid">
+      <div class="cs-hero__grid" data-reveal>
         <div class="cs-hero__intro">
           <div class="cs-hero__titles">
             <p class="eyebrow eyebrow--accent">Gigpro/Qwick</p>
@@ -57,19 +58,19 @@
         </div>
       </div>
 
-      <div class="results">
+      <div class="results" data-reveal>
         <h2 class="eyebrow results__label">Results</h2>
-        <ul class="results__grid">
-          <li class="result">
-            <p class="result__figure">79%</p>
+        <ul class="results__grid" data-reveal-group>
+          <li class="result" data-reveal>
+            <p class="result__figure" data-count>79%</p>
             <p class="body-m">Fewer no-shows</p>
           </li>
-          <li class="result">
-            <p class="result__figure">28%</p>
+          <li class="result" data-reveal>
+            <p class="result__figure" data-count>28%</p>
             <p class="body-m">Fewer late cancellations</p>
           </li>
-          <li class="result">
-            <p class="result__figure">13%</p>
+          <li class="result" data-reveal>
+            <p class="result__figure" data-count>13%</p>
             <p class="body-m">of paid gigs from Direct Offers within 2 months</p>
           </li>
         </ul>
@@ -78,7 +79,7 @@
 
     <!-- ============ BEFORE / AFTER ============ -->
     <section class="cs-block" aria-label="Before and after Match">
-      <div class="switcher" data-switcher>
+      <div class="switcher" data-switcher data-reveal>
         <div class="seg seg--neutral" role="tablist" aria-label="Compare the hiring experience before and after Match">
           <button class="seg__tab" type="button" role="tab" id="ba-tab-before" aria-controls="ba-panel-before" aria-selected="false" tabindex="-1" data-view="before">Before</button>
           <button class="seg__tab is-active" type="button" role="tab" id="ba-tab-after" aria-controls="ba-panel-after" aria-selected="true" data-view="after">After</button>
@@ -103,21 +104,21 @@
 
     <!-- ============ THE PROBLEM ============ -->
     <section class="cs-block problem" aria-labelledby="problem-title">
-      <div class="problem__lead">
+      <div class="problem__lead" data-reveal>
         <p class="eyebrow eyebrow--accent">The problem</p>
         <h2 class="h4" id="problem-title">Nearly half of churned businesses cited concerns about Pro quality.</h2>
         <blockquote class="quote">“The last pro showed up 20 minutes late and then just disappeared in the middle of service.”</blockquote>
       </div>
-      <p class="body-l problem__body">In research with churned businesses, 10 of 22 respondents cited insufficient training or professionalism as a reason they stopped using the platform. As the marketplace grew, no-shows, late cancellations, and poor experiences with Pros made businesses less confident in the Pros they were choosing.</p>
+      <p class="body-l problem__body" data-reveal>In research with churned businesses, 10 of 22 respondents cited insufficient training or professionalism as a reason they stopped using the platform. As the marketplace grew, no-shows, late cancellations, and poor experiences with Pros made businesses less confident in the Pros they were choosing.</p>
     </section>
 
     <!-- ============ MY APPROACH ============ -->
     <section class="cs-block approach" aria-labelledby="approach-title">
-      <div class="approach__lead">
+      <div class="approach__lead" data-reveal>
         <p class="eyebrow eyebrow--accent">My approach</p>
         <h2 class="h4" id="approach-title">I focused the work around being able to answer the questions that businesses were asking themselves.</h2>
       </div>
-      <table class="table">
+      <table class="table" data-reveal>
         <thead>
           <tr><th scope="col" class="eyebrow">Question</th><th scope="col" class="eyebrow">Response</th></tr>
         </thead>
@@ -133,7 +134,7 @@
 
     <!-- ============ 01 QUALIFICATION ============ -->
     <section class="cs-block chapter" aria-labelledby="qualification-title">
-      <div class="chapter__head">
+      <div class="chapter__head" data-reveal>
         <p class="eyebrow eyebrow--accent">qualification • 2022–24</p>
         <h2 class="h4" id="qualification-title">Building a trusted path into the marketplace.</h2>
         <p class="body-l chapter__lede">Before Gigpro could help businesses make better hiring decisions, it needed to set a standard for being a Pro on the platform.</p>
@@ -141,14 +142,14 @@
           <p class="body-l"><strong>The call: Raise the bar for eligibility</strong><br>I made completing onboarding a requirement to apply. New steps captured richer profile data, and orientation and screening educated Pros and helped to set expectations. Until Pros finished them, they could browse gigs but not apply.</p>
         </div>
       </div>
-      <div class="pair">
-        <figure class="tile">
+      <div class="pair" data-reveal-group>
+        <figure class="tile" data-reveal>
           <div class="media media--square">
             <video src="Assets/pro-onboarding-1x1.mp4" poster="Assets/pro-onboarding-1x1.jpg" muted loop playsinline webkit-playsinline="true" preload="none" aria-label="Pro onboarding flow on a phone stepping through days, hours, work type, shifts, gigs, experience, certifications, skills, and an about summary, ending on the Edit profile screen"></video>
           </div>
           <figcaption class="caption caption--m"><strong>Profile setup</strong><br>Before: Pros needed only a photo and a bio to create a Pro profile.<br>After: onboarding collected structured inputs that became dedicated, scannable sections which made profiles richer and easier to assess.</figcaption>
         </figure>
-        <figure class="tile">
+        <figure class="tile" data-reveal>
           <div class="media media--square">
             <video src="Assets/pro-skill-toggles-1x1.mp4" poster="Assets/pro-skill-toggles-1x1.jpg" muted loop playsinline webkit-playsinline="true" preload="none" aria-label="W2 Pro profile in the Admin dashboard, zooming into Skill Certificates where toggles are switched on one by one, then rating the candidate five stars as Absolute Rockstar"></video>
           </div>
@@ -159,7 +160,7 @@
 
     <!-- ============ 02 VISIBILITY ============ -->
     <section class="cs-block chapter" aria-labelledby="visibility-title">
-      <div class="chapter__head">
+      <div class="chapter__head" data-reveal>
         <p class="eyebrow eyebrow--accent">02.visibility • 2023–24</p>
         <h2 class="h4" id="visibility-title">Making performance visible.</h2>
         <p class="body-l chapter__lede">Qualification efforts helped to create the signals. This work put it in front of businesses at the point of selection.</p>
@@ -167,14 +168,14 @@
           <p class="body-l"><strong>The call: Surface meaningful data and organize ratings by role</strong><br>Updates to business facing Pro profile included not only gig history, work experience, and credentials, but also the ability to filter reviews by role worked.</p>
         </div>
       </div>
-      <div class="pair">
-        <figure class="tile">
+      <div class="pair" data-reveal-group>
+        <figure class="tile" data-reveal>
           <div class="media media--square">
             <video src="Assets/pro-profile-scroll.mp4" poster="Assets/pro-profile-scroll.jpg" muted loop playsinline webkit-playsinline="true" preload="none" aria-label="Business-facing Pro profile scrolling through certifications, reviews with star ratings and percentage bars, gig history, experience, and skills organized by position"></video>
           </div>
           <figcaption class="caption caption--m"><strong>Credentials at a glance for businesses</strong><br>Skill certificates, industry certifications, and badges helped to visually communicate qualifications at a glance, alongside richer profile data.</figcaption>
         </figure>
-        <figure class="tile">
+        <figure class="tile" data-reveal>
           <div class="media media--square">
             <video src="Assets/pro-reviews-filter-1x1.mp4" poster="Assets/pro-reviews-filter-1x1.jpg" muted loop playsinline webkit-playsinline="true" preload="none" aria-label="Reviews section where a position dropdown is opened and Bartender, Server, then All positions are chosen, with ratings, stars and percentage bars updating for each"></video>
           </div>
@@ -185,7 +186,7 @@
 
     <!-- ============ 03 READINESS ============ -->
     <section class="cs-block chapter" aria-labelledby="readiness-title">
-      <div class="chapter__head">
+      <div class="chapter__head" data-reveal>
         <p class="eyebrow eyebrow--accent">03.readiness • 2024–25</p>
         <h2 class="h4" id="readiness-title">Getting Pros ready to work.</h2>
         <p class="body-l chapter__lede">Before important shift details lived in a freeform notes field. Pros arrived late because they didn’t know where to park, or were sent home because they weren’t in the proper uniform.</p>
@@ -193,14 +194,14 @@
           <p class="body-l"><strong>The call: Make arrival details explicit</strong><br>Field enhancements to the posting flow made shift expectations clearer and helped Pros arrive in the right location in uniform ready to work.</p>
         </div>
       </div>
-      <div class="pair">
-        <figure class="tile">
+      <div class="pair" data-reveal-group>
+        <figure class="tile" data-reveal>
           <div class="media media--square">
             <video src="Assets/pro-uniform-1x1.mp4" poster="Assets/pro-uniform-1x1.jpg" muted loop playsinline webkit-playsinline="true" preload="none" aria-label="Uniform requirements in the shift posting flow: choosing White on Black, opening Custom Uniform, selecting clothing options, and selecting accessories"></video>
           </div>
           <figcaption class="caption caption--l"><strong>Structured shift requirements</strong><br>On the business side, I expanded the range of uniform choices and added additional fields for parking and location information.</figcaption>
         </figure>
-        <figure class="tile">
+        <figure class="tile" data-reveal>
           <div class="media media--square">
             <video src="Assets/pro-shift-reminder-1x1.mp4" poster="Assets/pro-shift-reminder-1x1.jpg" muted loop playsinline webkit-playsinline="true" preload="none" aria-label="A push notification reminder opens the Pro shift detail, where a reminder sheet about uniform and arrival is dismissed before scrolling the full shift details"></video>
           </div>
@@ -211,7 +212,7 @@
 
     <!-- ============ 04 HIRING ============ -->
     <section class="cs-block chapter" aria-labelledby="hiring-title">
-      <div class="chapter__head">
+      <div class="chapter__head" data-reveal>
         <p class="eyebrow eyebrow--accent">04.hiring • 2024–25</p>
         <h2 class="h4" id="hiring-title">Helping businesses rehire proven Pros.</h2>
         <p class="body-l chapter__lede">Once a shift ended, businesses had no way to reach Pros they had worked with and wanted to book again.</p>
@@ -219,14 +220,14 @@
           <p class="body-l"><strong>The call: Enable businesses to build their own networks</strong><br>Businesses wanted to book Pros that they had success with before. Connect, was a dedicated space for them to see all the past pros they worked with. Here they could create groups and build their talent pipeline.</p>
         </div>
       </div>
-      <div class="pair">
-        <figure class="tile">
+      <div class="pair" data-reveal-group>
+        <figure class="tile" data-reveal>
           <div class="media media--square">
             <img src="Assets/pro-save-group-1x1.jpg" alt="Create new group sheet on the Connect screen, saving Derek P. to a new group called Event Bartenders" loading="lazy" />
           </div>
           <figcaption class="caption caption--l"><strong>Connect</strong><br>Allowed businesses to save and create groups from Pros they’ve worked with to build their trusted network of Pro talent.</figcaption>
         </figure>
-        <figure class="tile">
+        <figure class="tile" data-reveal>
           <div class="media media--square">
             <video src="Assets/pro-roster-1x1.mp4" poster="Assets/pro-roster-1x1.jpg" muted loop playsinline webkit-playsinline="true" preload="none" aria-label="Posting a shift to Preferred Pros, then selecting all Line Cooks in a Select Pros modal and adding them to the roster"></video>
           </div>
@@ -237,7 +238,7 @@
 
     <!-- ============ 05 MATCH ============ -->
     <section class="cs-block chapter chapter--match" aria-labelledby="match-title">
-      <div class="chapter__head">
+      <div class="chapter__head" data-reveal>
         <p class="eyebrow eyebrow--accent">05.match • 2025–26</p>
         <h2 class="h4" id="match-title">Earning the right to match.</h2>
         <p class="body-l chapter__lede">By 2025, stronger qualification, performance, and hiring signals made platform-led fulfillment possible. By 2026, Match became the default for new businesses, filling shifts with the best-fit available Pros that businesses could review and remove at any time.</p>
@@ -246,7 +247,7 @@
         </div>
       </div>
 
-      <div class="switcher" data-switcher>
+      <div class="switcher" data-switcher data-reveal>
         <div class="seg seg--brand" role="tablist" aria-label="Phases of platform-led matching">
           <button class="seg__tab is-active" type="button" role="tab" id="ph-tab-rec" aria-controls="ph-panel-rec" aria-selected="true" data-view="rec">01.Recommendations</button>
           <button class="seg__tab" type="button" role="tab" id="ph-tab-auto" aria-controls="ph-panel-auto" aria-selected="false" tabindex="-1" data-view="auto">02.Automatch</button>
@@ -280,7 +281,7 @@
     <section class="cs-block reflection" aria-labelledby="reflection-title">
       <p class="eyebrow eyebrow--accent">Reflection</p>
       <h2 class="h4" id="reflection-title">Trust is a long game.</h2>
-      <div class="reflection__body body-l">
+      <div class="reflection__body body-l" data-reveal>
         <p>Businesses wanted Pros they could trust to show up and do the job. At the time, our competitors were doing more to qualify the people on their platforms. We had taken a lighter touch, connecting Pros with businesses and leaving the rest to them. Closing that gap meant looking inward. Who are we as a business, and what do we stand for? What is our standard, and how do we hold ourselves to it? Those are brand questions as much as product ones, and the product had to keep the promise the brand made. I led an audit of the experience from both sides to find our answers, and it set everything else in motion.</p>
         <p>No single feature was going to rebuild that trust, so we took it in stages. Qualification set the standard, and visibility helped businesses see it and act on it. Readiness and rehiring tools made the relationship dependable. Plenty of it asked more of people. Pros had to finish onboarding before they could apply, and businesses shared more about each shift and took one more step in every review. That went against the instinct to make everything effortless, and I understood the pushback. I kept making the call anyway, because an experience people can’t trust costs more than a few extra steps.</p>
         <p>As businesses grew more confident, the business model began to change, from a marketplace where Pros applied and businesses chose to a platform that filled shifts on their behalf. We introduced it in phases, from Recommendations to Automatch and toward Match, and watched how each performed and was received before the next step. Businesses could always remove a Pro we picked or offer the shift to their own network. That is how automation earned its place.</p>
