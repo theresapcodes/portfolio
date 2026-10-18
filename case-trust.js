@@ -124,7 +124,7 @@
     counters.forEach(function (el) { counterObserver.observe(el); });
   }
 
-  // ---- pull quote cycler: a new quote every 2.5 seconds ------------------------------
+  // ---- pull quote cycler: a new quote every 3.5 seconds ------------------------------
   Array.prototype.forEach.call(document.querySelectorAll('[data-quote-cycle]'), function (root) {
     var quotes = Array.prototype.slice.call(root.querySelectorAll('.quote'));
     if (quotes.length < 2 || reduceMotion) return;   // reduced motion keeps the first quote still
@@ -143,7 +143,7 @@
     function tick() { show((index + 1) % quotes.length); }
     function sync() {
       var shouldRun = visible && !paused && !document.hidden;
-      if (shouldRun && !timer) timer = setInterval(tick, 2500);
+      if (shouldRun && !timer) timer = setInterval(tick, 3500);
       if (!shouldRun && timer) { clearInterval(timer); timer = null; }
     }
 
