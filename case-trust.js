@@ -124,6 +124,44 @@
     counters.forEach(function (el) { counterObserver.observe(el); });
   }
 
+  // ---- pull quote cycler: a new quote every 2.5 seconds ------------------------------
+  Array.prototype.forEach.call(document.querySelectorAll('[data-quote-cycle]'), function (root) {
+    var quotes = Array.prototype.slice.call(root.querySelectorAll('.quote'));
+    if (quotes.length < 2 || reduceMotion) return;   // reduced motion keeps the first quote still
+    var index = 0;
+    var timer = null;
+    var paused = false;
+    var visible = false;
+
+    function show(next) {
+      quotes[index].classList.remove('is-active');
+      quotes[index].setAttribute('aria-hidden', 'true');
+      index = next;
+      quotes[index].classList.add('is-active');
+      quotes[index].removeAttribute('aria-hidden');
+    }
+    function tick() { show((index + 1) % quotes.length); }
+    function sync() {
+      var shouldRun = visible && !paused && !document.hidden;
+      if (shouldRun && !timer) timer = setInterval(tick, 2500);
+      if (!shouldRun && timer) { clearInterval(timer); timer = null; }
+    }
+
+    root.addEventListener('mouseenter', function () { paused = true; sync(); });
+    root.addEventListener('mouseleave', function () { paused = false; sync(); });
+    document.addEventListener('visibilitychange', sync);
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        visible = entries[0].isIntersecting;
+        sync();
+      }, { threshold: 0.3 }).observe(root);
+    } else {
+      visible = true;
+      sync();
+    }
+  });
+
   // ---- segmented control + panels ---------------------------------------------------
   Array.prototype.forEach.call(document.querySelectorAll('[data-switcher]'), function (root) {
     var tabs = Array.prototype.slice.call(root.querySelectorAll('[role="tab"]'));

@@ -204,6 +204,17 @@ strong { font-weight: 700; }
 .problem__body { flex: 1 1 0; min-width: 0; }
 .quote { align-self: stretch; }
 
+/* Quote cycler: every quote sits in one grid cell so the box is as tall as the longest,
+   and nothing around it shifts when the quote changes. */
+.quote-cycle { display: grid; align-self: stretch; }
+.quote-cycle > .quote { grid-area: 1 / 1; }
+.js .quote-cycle > .quote {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 600ms var(--ease), transform 600ms var(--ease);
+}
+.js .quote-cycle > .quote.is-active { opacity: 1; transform: translateY(0); }
+
 /* ---------- Approach table ---------- */
 .approach { display: flex; flex-direction: column; gap: 20px; }
 .approach__lead { display: flex; flex-direction: column; gap: 8px; max-width: 669px; }
@@ -282,4 +293,5 @@ strong { font-weight: 700; }
 @media (prefers-reduced-motion: reduce) {
   .seg__tab { transition: none; }
   .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+  .js .quote-cycle > .quote { transition: none; transform: none; }
 }
