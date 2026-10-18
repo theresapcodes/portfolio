@@ -86,8 +86,8 @@ strong { font-weight: 700; }
 }
 .eyebrow--accent { color: var(--brand-secondary); }
 
-.h1 { font-weight: 700; font-size: 48px; line-height: 56px; }
-.h4 { font-weight: 700; font-size: 24px; line-height: 32px; }
+.h1 { font-weight: 700; font-size: 48px; line-height: 56px; color: var(--brand-primary); }
+.h4 { font-weight: 700; font-size: 24px; line-height: 32px; color: var(--brand-primary); }
 .body-l { font-size: 16px; line-height: 24px; }
 .body-m { font-size: 14px; line-height: 20px; }
 
