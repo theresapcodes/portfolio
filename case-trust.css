@@ -181,19 +181,21 @@ body { overflow-x: clip; }
   /* full bleed: break out of the 1024 column to the full viewport width */
   width: 100vw;
   margin-inline: calc(50% - 50vw);
-  padding: 96px 24px 88px;
+  padding: 72px 24px 92px;
   display: flex;
   justify-content: center;
   isolation: isolate;
   background:
+    linear-gradient(to top, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 32%),
     linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.18)),
     url('Assets/trust-stage-bg.jpg') center / cover no-repeat,
     #1a1210;
 }
 .stage__toggle {
   position: absolute;
-  top: 28px;
-  left: max(24px, calc((100% - var(--content-width)) / 2));
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 2;
 }
 
@@ -363,8 +365,8 @@ body { overflow-x: clip; }
   .table tbody th, .table tbody td { border: 0; padding: 0; }
   .table tbody th { margin-bottom: 4px; font-weight: 700; }
   .seg--glass:not(.stage__toggle) { display: flex; overflow-x: auto; }
-  .stage { padding: 64px 16px 32px; }
-  .stage__toggle { top: 20px; left: 16px; }
+  .stage { padding: 40px 16px 72px; }
+  .stage__toggle { bottom: 20px; }
   .device { padding: 6px; }
 }
 
