@@ -220,7 +220,7 @@ body { overflow-x: clip; }
   background:
     linear-gradient(to top, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 32%),
     linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.18)),
-    url('Assets/trust-stage-bg-duotone.jpg') center / cover no-repeat,
+    url('Assets/trust-stage-bg.jpg') center / cover no-repeat,
     #1a1210;
 }
 .stage__toggle {
