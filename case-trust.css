@@ -177,34 +177,39 @@ strong { font-weight: 700; }
 .switcher__panel[hidden] { display: none; }
 
 /* ---------- Device stage (Before / After) ---------- */
+body { overflow-x: clip; }
+
 .stage-switcher { gap: 21px; align-items: stretch; }
 .stage {
   position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: var(--radius);
-  overflow: hidden;
-  display: grid;
-  place-items: center;
-  /* Drop the exported photo in as Assets/trust-stage-bg.jpg; the warm gradient is the fallback. */
+  /* full bleed: break out of the 1024 column to the full viewport width */
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+  padding: 96px 24px 88px;
+  display: flex;
+  justify-content: center;
+  isolation: isolate;
   background:
+    linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.18)),
     url('Assets/trust-stage-bg.jpg') center / cover no-repeat,
-    radial-gradient(120% 90% at 85% 20%, #7a3a24 0%, rgba(122, 58, 36, 0) 55%),
-    radial-gradient(90% 90% at 10% 90%, #2b1a12 0%, rgba(43, 26, 18, 0) 60%),
     #1a1210;
 }
-.stage__toggle { position: absolute; top: 20px; left: 20px; z-index: 2; }
+.stage__toggle {
+  position: absolute;
+  top: 28px;
+  left: max(24px, calc((100% - var(--content-width)) / 2));
+  z-index: 2;
+}
 
 .device {
-  width: 70%;
+  width: min(960px, 100%);
   padding: 9px;
   background: #0d0d0f;
   border-radius: 10px;
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.14),
-    0 30px 60px -12px rgba(0, 0, 0, 0.55),
-    0 12px 24px -8px rgba(0, 0, 0, 0.4);
-  margin-top: 28px;
+    0 40px 80px -16px rgba(0, 0, 0, 0.6),
+    0 14px 28px -8px rgba(0, 0, 0, 0.45);
 }
 .device__screen {
   aspect-ratio: 1972 / 1206;
@@ -216,6 +221,31 @@ strong { font-weight: 700; }
 .device__panel[hidden] { display: none; }
 .device__panel video { width: 100%; height: 100%; object-fit: cover; }
 [data-caption][hidden] { display: none; }
+
+/* Minimal glass toggle that sits on the photo */
+.seg--glass {
+  padding: 2px;
+  gap: 2px;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+.seg--glass .seg__tab {
+  height: 22px;
+  padding: 0 10px;
+  border-radius: 5px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.72);
+}
+.seg--glass .seg__tab:hover { color: #fff; }
+.seg--glass .seg__tab.is-active,
+.seg--glass .seg__tab.is-active:hover {
+  background: #fff;
+  border-color: #fff;
+  color: var(--gray-900);
+}
 
 /* ---------- Media ---------- */
 .media {
@@ -321,10 +351,10 @@ strong { font-weight: 700; }
   .table tbody tr { padding: 16px 0; border-bottom: 1px solid var(--border); }
   .table tbody th, .table tbody td { border: 0; padding: 0; }
   .table tbody th { margin-bottom: 4px; font-weight: 700; }
-  .seg--brand { display: flex; overflow-x: auto; }
-  .stage { aspect-ratio: auto; display: block; padding: 68px 16px 24px; }
-  .stage__toggle { top: 16px; left: 16px; right: 16px; width: auto; }
-  .device { width: 100%; margin-top: 0; padding: 6px; }
+  .seg--brand:not(.stage__toggle) { display: flex; overflow-x: auto; }
+  .stage { padding: 64px 16px 32px; }
+  .stage__toggle { top: 20px; left: 16px; }
+  .device { padding: 6px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
