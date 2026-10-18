@@ -176,6 +176,9 @@
         tab.tabIndex = active ? 0 : -1;
         if (active && focus) tab.focus();
       });
+      Array.prototype.forEach.call(root.querySelectorAll('[data-caption]'), function (cap) {
+        cap.hidden = cap.dataset.caption !== view;
+      });
       panels.forEach(function (panel) {
         var active = panel.dataset.view === view;
         var video = panel.querySelector('video');
