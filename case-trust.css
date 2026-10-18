@@ -190,6 +190,9 @@ strong { font-weight: 700; }
 .switcher__panels { width: 100%; }
 .switcher__panel { display: flex; flex-direction: column; gap: 21px; }
 .switcher__panel[hidden] { display: none; }
+.switcher--below { align-items: stretch; gap: 21px; }
+.switcher--below .switcher__toggle { align-self: center; }
+.switcher--below .media[hidden] { display: none; }
 
 /* ---------- Device stage (Before / After) ---------- */
 body { overflow-x: clip; }
