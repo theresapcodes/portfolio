@@ -304,7 +304,6 @@ body { overflow-x: clip; }
 .media--wide { aspect-ratio: 1972 / 1206; }
 
 .caption { color: var(--text-default); }
-.caption--l { font-size: 16px; line-height: 24px; }
 .caption--m { font-size: 14px; line-height: 20px; }
 
 /* ---------- The problem ---------- */
