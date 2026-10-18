@@ -190,14 +190,9 @@ strong { font-weight: 700; }
 .switcher__panels { width: 100%; }
 .switcher__panel { display: flex; flex-direction: column; gap: 21px; }
 .switcher__panel[hidden] { display: none; }
-.switcher--below { align-items: stretch; gap: 21px; }
-.switcher--below .switcher__toggle { align-self: center; }
-.switcher--below .media[hidden] { display: none; }
-/* the Automatch recording is slightly taller than the other two, so show it uncropped */
-#ph-panel-auto { aspect-ratio: 1920 / 1198; }
-/* very light stroke drawn over the edge of the Match video container */
-.switcher--below .media { position: relative; }
-.switcher--below .media::after {
+/* Match phases: carousel with a very light stroke and dynamic captions */
+.match-phases { display: flex; flex-direction: column; gap: 21px; }
+.match-carousel::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -205,6 +200,9 @@ strong { font-weight: 700; }
   border-radius: inherit;
   pointer-events: none;
 }
+.match-carousel video.is-contain { object-fit: contain; background: var(--surface); }
+.match-phases__captions > .caption[hidden] { display: none; }
+
 
 /* ---------- Device stage (Before / After) ---------- */
 body { overflow-x: clip; }
@@ -279,20 +277,6 @@ body { overflow-x: clip; }
   color: var(--gray-900);
 }
 
-/* same glass control on the white page: a faint dark tint instead of a light one */
-.seg--glass.seg--on-light {
-  background: rgba(0, 0, 0, 0.05);
-  border-color: rgba(0, 0, 0, 0.1);
-}
-.seg--glass.seg--on-light .seg__tab { color: var(--text-helper); }
-.seg--glass.seg--on-light .seg__tab:hover { color: var(--gray-900); }
-.seg--glass.seg--on-light .seg__tab.is-active,
-.seg--glass.seg--on-light .seg__tab.is-active:hover {
-  background: #fff;
-  border-color: rgba(0, 0, 0, 0.08);
-  color: var(--gray-900);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
 
 /* ---------- Media ---------- */
 .media {

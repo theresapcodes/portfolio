@@ -266,28 +266,33 @@
         </div>
       </div>
 
-      <div class="switcher switcher--below" data-switcher data-reveal>
-        <div class="switcher__panels">
-          <div class="media media--wide" id="ph-panel-rec" role="tabpanel" aria-labelledby="ph-tab-rec" data-view="rec">
-            <video src="Assets/Recommended Pros.mp4" poster="Assets/Recommended Pros.jpg" muted loop playsinline webkit-playsinline="true" preload="metadata" aria-label="Business view scrolling through Recommended Pros, showing ratings, gigs completed, and completion rate for each Pro"></video>
+      <div class="match-phases" data-caption-scope data-reveal>
+        <div class="media media--wide carousel match-carousel" data-carousel>
+          <div class="carousel__track" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Phases of platform-led matching, 3 slides">
+            <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="1 of 3: Recommendations">
+              <video src="Assets/Recommended Pros.mp4" poster="Assets/Recommended Pros.jpg" muted loop playsinline webkit-playsinline="true" preload="metadata" aria-label="Business view scrolling through Recommended Pros, showing ratings, gigs completed, and completion rate for each Pro"></video>
+            </div>
+            <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="2 of 3: Automatch">
+              <video class="is-contain" src="Assets/Automatch.mp4" poster="Assets/Automatch.jpg" muted loop playsinline webkit-playsinline="true" preload="none" aria-label="Email notification prompting a business to review and confirm automatically selected Pros for an upcoming shift, then the Applicants view with the Pros being sent offers"></video>
+            </div>
+            <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="3 of 3: Match">
+              <video src="Assets/Match.mp4" poster="Assets/Match.jpg" muted loop playsinline webkit-playsinline="true" preload="none" aria-label="Match searching for Pros and filling the open slots on an Event Server shift, each confirmed Pro showing rating, gigs completed, and confirmation status"></video>
+            </div>
           </div>
-          <div class="media media--wide" id="ph-panel-auto" role="tabpanel" aria-labelledby="ph-tab-auto" data-view="auto" hidden>
-            <video src="Assets/Automatch.mp4" poster="Assets/Automatch.jpg" muted loop playsinline webkit-playsinline="true" preload="none" aria-label="Email notification prompting a business to review and confirm automatically selected Pros for an upcoming shift"></video>
-          </div>
-          <div class="media media--wide" id="ph-panel-match" role="tabpanel" aria-labelledby="ph-tab-match" data-view="match" hidden>
-            <video src="Assets/Match.mp4" poster="Assets/Match.jpg" muted loop playsinline webkit-playsinline="true" preload="none" aria-label="Match searching for Pros and filling the open slots on an Event Server shift, each confirmed Pro showing rating, gigs completed, and confirmation status"></video>
+          <button class="carousel__btn carousel__btn--prev" type="button" aria-label="Previous slide" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+          <button class="carousel__btn carousel__btn--next" type="button" aria-label="Next slide"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+          <div class="carousel__dots">
+            <button class="carousel__dot is-active" type="button" aria-label="Phases of platform-led matching: 01 Recommendations" aria-current="true"></button>
+            <button class="carousel__dot" type="button" aria-label="Phases of platform-led matching: 02 Automatch"></button>
+            <button class="carousel__dot" type="button" aria-label="Phases of platform-led matching: 03 Match"></button>
           </div>
         </div>
 
-        <div class="seg seg--glass seg--on-light switcher__toggle" role="tablist" aria-label="Phases of platform-led matching">
-          <button class="seg__tab is-active" type="button" role="tab" id="ph-tab-rec" aria-controls="ph-panel-rec" aria-selected="true" data-view="rec">01.Recommendations</button>
-          <button class="seg__tab" type="button" role="tab" id="ph-tab-auto" aria-controls="ph-panel-auto" aria-selected="false" tabindex="-1" data-view="auto">02.Automatch</button>
-          <button class="seg__tab" type="button" role="tab" id="ph-tab-match" aria-controls="ph-panel-match" aria-selected="false" tabindex="-1" data-view="match">03.Match</button>
+        <div class="match-phases__captions" aria-live="polite">
+          <p class="caption caption--m" data-caption-index="0"><strong>01 Recommendations</strong><br>Recommended Pros was a platform curated shortlist that appeared above the standard applicant pool. Businesses had the choice to send offers to individual pros, send to all, or select from the standard applicant pool. At this phase there was no automatic fulfillment happening.</p>
+          <p class="caption caption--m" data-caption-index="1" hidden><strong>02 Automatch</strong><br>Automatch was the first step toward automating shift fulfillment. Businesses received a reminder to review selections and could remove any Pro they didn’t want. If they took no action, offers went out to the best available Pros on their behalf as a means to fill the shift.</p>
+          <p class="caption caption--m" data-caption-index="2" hidden><strong>03 Match</strong><br>Match became the default for new businesses and an opt-in choice for existing customers. It sent offers and filled shifts with the best-fit available Pros, with no action needed from the business. Businesses still had access to the roster and held the right to remove Pros.</p>
         </div>
-
-        <p class="caption caption--m" data-caption="rec" aria-live="polite"><strong>Recommendations</strong><br>Recommended Pros was a platform curated shortlist that appeared above the standard applicant pool. Businesses had the choice to send offers to individual pros, send to all, or select from the standard applicant pool. At this phase there was no automatic fulfillment happening.</p>
-        <p class="caption caption--m" data-caption="auto" aria-live="polite" hidden><strong>Automatch</strong><br>Automatch was the first step toward automating shift fulfillment. Businesses received a reminder to review selections and could remove any Pro they didn’t want. If they took no action, offers went out to the best available Pros on their behalf as a means to fill the shift.</p>
-        <p class="caption caption--m" data-caption="match" aria-live="polite" hidden><strong>Match</strong><br>Match became the default for new businesses and an opt-in choice for existing customers. It sent offers and filled shifts with the best-fit available Pros, with no action needed from the business. Businesses still had access to the roster and held the right to remove Pros.</p>
       </div>
     </section>
 

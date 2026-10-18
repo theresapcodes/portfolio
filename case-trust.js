@@ -219,7 +219,10 @@
       var v = slides[i].querySelector('video');
       if (v) { try { v.currentTime = 0; } catch (e) { /* not seekable yet */ } }
     }
+    var scope = root.closest('[data-caption-scope]');
+    var captions = scope ? Array.prototype.slice.call(scope.querySelectorAll('[data-caption-index]')) : [];
     function render() {
+      captions.forEach(function (cap) { cap.hidden = Number(cap.dataset.captionIndex) !== current; });
       prev.hidden = current === 0;
       next.hidden = current === slides.length - 1;
       dots.forEach(function (d, k) {
