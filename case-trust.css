@@ -541,7 +541,7 @@ body { overflow-x: clip; }
   overflow: hidden;
   border: 2px solid var(--control-border);
   border-radius: 50%;
-  background: var(--surface-gray);
+  background: #209f5b;   /* Qwick green, fills the icon's rounded corners */
   cursor: pointer;
   transition: border-color 150ms, transform 150ms var(--ease);
 }
