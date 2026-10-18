@@ -321,8 +321,21 @@ body { overflow-x: clip; }
 .chapter--match { gap: 20px; }
 
 .call {
-  border-left: 4px solid var(--brand-primary);
-  padding-left: 20px;
+  position: relative;
+  padding-left: 24px;   /* 4px stroke + 20px gap */
+  --p: 1;               /* stroke progress, driven by scroll (1 = fully drawn) */
+}
+.call::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--brand-primary);
+  transform: scaleY(var(--p));
+  transform-origin: top;
+  will-change: transform;
 }
 
 .pair {

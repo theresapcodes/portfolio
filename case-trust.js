@@ -162,6 +162,42 @@
     }
   });
 
+  // ---- "The call" stroke draws down as you scroll ------------------------------------
+  var calls = Array.prototype.slice.call(document.querySelectorAll('.call'));
+  if (calls.length && !reduceMotion && 'IntersectionObserver' in window) {
+    var active = new Set();
+    var ticking = false;
+
+    function update() {
+      ticking = false;
+      var vh = window.innerHeight;
+      active.forEach(function (el) {
+        var top = el.getBoundingClientRect().top;
+        // starts drawing as the block enters the lower part of the screen, finished by mid-screen
+        var p = (vh * 0.88 - top) / (vh * 0.38);
+        el.style.setProperty('--p', Math.max(0, Math.min(1, p)).toFixed(3));
+      });
+    }
+    function request() {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }
+
+    var callObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) active.add(entry.target); else active.delete(entry.target);
+      });
+      request();
+    }, { rootMargin: '0px 0px 0px 0px', threshold: [0, 1] });
+
+    calls.forEach(function (el) {
+      el.style.setProperty('--p', '0');
+      callObserver.observe(el);
+    });
+    window.addEventListener('scroll', request, { passive: true });
+    window.addEventListener('resize', request);
+    request();
+  }
+
   // ---- segmented control + panels ---------------------------------------------------
   Array.prototype.forEach.call(document.querySelectorAll('[data-switcher]'), function (root) {
     var tabs = Array.prototype.slice.call(root.querySelectorAll('[role="tab"]'));
