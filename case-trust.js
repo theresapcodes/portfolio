@@ -89,6 +89,24 @@
     });
   }
 
+  // ---- approach table: questions reveal one at a time as you scroll ------------------
+  var rows = Array.prototype.slice.call(document.querySelectorAll('[data-row]'));
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    rows.forEach(function (row) { row.classList.add('is-visible'); });
+  } else if (rows.length) {
+    var rowObserver = new IntersectionObserver(function (entries) {
+      // rows that arrive together (tall screens) still play in order, one after another
+      var batch = entries.filter(function (e) { return e.isIntersecting; })
+        .sort(function (a, b) { return rows.indexOf(a.target) - rows.indexOf(b.target); });
+      batch.forEach(function (entry, k) {
+        entry.target.style.setProperty('--d', (k * 700) + 'ms');
+        entry.target.classList.add('is-visible');
+        rowObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.9, rootMargin: '0px 0px -12% 0px' });
+    rows.forEach(function (row) { rowObserver.observe(row); });
+  }
+
   // ---- count-up for the results percentages ------------------------------------------
   var counters = Array.prototype.slice.call(document.querySelectorAll('[data-count]'));
   function parseStat(text) {

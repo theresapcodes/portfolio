@@ -396,6 +396,15 @@ body { overflow-x: clip; }
   line-height: 24px;
 }
 .table th, .table td { width: 50%; }
+/* each question appears as you scroll to it, then its response answers a beat later */
+.js .table tbody th, .js .table tbody td {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 800ms var(--ease), transform 800ms var(--ease);
+  transition-delay: var(--d, 0ms);
+}
+.js .table tbody td { transition-delay: calc(var(--d, 0ms) + 450ms); }
+.js .table tbody tr.is-visible th, .js .table tbody tr.is-visible td { opacity: 1; transform: none; }
 
 /* ---------- Chapters ---------- */
 .chapter { display: flex; flex-direction: column; gap: 40px; }
@@ -476,6 +485,7 @@ body { overflow-x: clip; }
   .seg__tab { transition: none; }
   .carousel__dot, .carousel__btn { transition: none; }
   .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+  .js .table tbody th, .js .table tbody td { opacity: 1; transform: none; transition: none; }
   .js .quote-cycle > .quote { transition: none; transform: none; }
   .js .result::before { transform: none; transition: none; }
 }
