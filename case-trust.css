@@ -166,10 +166,6 @@ strong { font-weight: 700; }
 .seg__tab:hover { color: var(--gray-900); }
 .seg__tab.is-active { font-weight: 500; cursor: default; }
 
-.seg--brand { background: var(--surface-gray); border-color: var(--border); }
-.seg--brand .seg__tab.is-active,
-.seg--brand .seg__tab.is-active:hover { background: var(--brand-primary); border-color: var(--brand-primary); color: var(--surface); }
-
 /* ---------- Switcher (tabs + panels) ---------- */
 .switcher { display: flex; flex-direction: column; gap: 24px; align-items: flex-start; }
 .switcher__panels { width: 100%; }
@@ -245,6 +241,21 @@ body { overflow-x: clip; }
   background: #fff;
   border-color: #fff;
   color: var(--gray-900);
+}
+
+/* same glass control on the white page: a faint dark tint instead of a light one */
+.seg--glass.seg--on-light {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+.seg--glass.seg--on-light .seg__tab { color: var(--text-helper); }
+.seg--glass.seg--on-light .seg__tab:hover { color: var(--gray-900); }
+.seg--glass.seg--on-light .seg__tab.is-active,
+.seg--glass.seg--on-light .seg__tab.is-active:hover {
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.08);
+  color: var(--gray-900);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 /* ---------- Media ---------- */
@@ -351,7 +362,7 @@ body { overflow-x: clip; }
   .table tbody tr { padding: 16px 0; border-bottom: 1px solid var(--border); }
   .table tbody th, .table tbody td { border: 0; padding: 0; }
   .table tbody th { margin-bottom: 4px; font-weight: 700; }
-  .seg--brand:not(.stage__toggle) { display: flex; overflow-x: auto; }
+  .seg--glass:not(.stage__toggle) { display: flex; overflow-x: auto; }
   .stage { padding: 64px 16px 32px; }
   .stage__toggle { top: 20px; left: 16px; }
   .device { padding: 6px; }
