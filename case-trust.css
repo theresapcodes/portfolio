@@ -193,6 +193,16 @@ strong { font-weight: 700; }
 .switcher--below { align-items: stretch; gap: 21px; }
 .switcher--below .switcher__toggle { align-self: center; }
 .switcher--below .media[hidden] { display: none; }
+/* very light stroke drawn over the edge of the Match video container */
+.switcher--below .media { position: relative; }
+.switcher--below .media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--control-border);
+  border-radius: inherit;
+  pointer-events: none;
+}
 
 /* ---------- Device stage (Before / After) ---------- */
 body { overflow-x: clip; }
