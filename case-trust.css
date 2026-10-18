@@ -190,16 +190,8 @@ strong { font-weight: 700; }
 .switcher__panels { width: 100%; }
 .switcher__panel { display: flex; flex-direction: column; gap: 21px; }
 .switcher__panel[hidden] { display: none; }
-/* Match phases: carousel with a very light stroke and dynamic captions */
+/* Match phases: carousel with dynamic captions */
 .match-phases { display: flex; flex-direction: column; gap: 21px; }
-.match-carousel::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border: 1px solid var(--control-border);
-  border-radius: inherit;
-  pointer-events: none;
-}
 .match-carousel video.is-contain { object-fit: contain; background: var(--surface); }
 .match-phases__captions > .caption[hidden] { display: none; }
 
@@ -284,7 +276,16 @@ body { overflow-x: clip; }
   border-radius: var(--radius);
   overflow: hidden;
   background: var(--surface-gray);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 8px 24px -8px rgba(0, 0, 0, 0.14);
+}
+/* very light stroke around every visual, drawn above the media */
+.media { position: relative; }
+.media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--control-border);
+  border-radius: inherit;
+  pointer-events: none;
 }
 .media video, .media img { width: 100%; height: 100%; object-fit: cover; }
 .media--square { aspect-ratio: 1 / 1; }
