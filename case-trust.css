@@ -135,7 +135,26 @@ strong { font-weight: 700; }
 
 .results { display: flex; flex-direction: column; gap: 16px; }
 .results__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
-.result { display: flex; flex-direction: column; gap: 8px; border-top: 1px solid var(--text-default); }
+.result { position: relative; display: flex; flex-direction: column; gap: 8px; }
+/* the rule above each percentage: drawn left to right when the result reveals */
+.result::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--text-default);
+  transform-origin: left;
+}
+.js .result::before {
+  transform: scaleX(0);
+  transition: transform 1200ms var(--ease);
+  transition-delay: 150ms;
+}
+.js .result.is-visible::before { transform: scaleX(1); }
+.js .result:nth-child(2)::before { transition-delay: 270ms; }
+.js .result:nth-child(3)::before { transition-delay: 390ms; }
 .result__figure { font-weight: 700; font-size: 48px; line-height: 56px; padding-top: 8px; }
 
 /* ---------- Segmented controls ---------- */
@@ -387,4 +406,5 @@ body { overflow-x: clip; }
   .seg__tab { transition: none; }
   .js [data-reveal] { opacity: 1; transform: none; transition: none; }
   .js .quote-cycle > .quote { transition: none; transform: none; }
+  .js .result::before { transform: none; transition: none; }
 }
