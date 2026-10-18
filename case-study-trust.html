@@ -215,8 +215,21 @@
       </div>
       <div class="pair" data-reveal-group>
         <figure class="tile" data-reveal>
-          <div class="media media--square">
-            <video src="Assets/pro-uniform-1x1.mp4" poster="Assets/pro-uniform-1x1.jpg" muted loop playsinline webkit-playsinline="true" preload="none" aria-label="Uniform requirements in the shift posting flow: choosing White on Black, opening Custom Uniform, selecting clothing options, and selecting accessories"></video>
+          <div class="media media--square carousel" data-carousel>
+            <div class="carousel__track" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Structured shift requirements, 2 slides">
+              <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="1 of 2: Uniform requirements">
+                <video src="Assets/pro-uniform-1x1.mp4" poster="Assets/pro-uniform-1x1.jpg" muted loop playsinline webkit-playsinline="true" preload="none" aria-label="Uniform requirements in the shift posting flow: choosing White on Black, opening Custom Uniform, selecting clothing options, and selecting accessories"></video>
+              </div>
+              <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="2 of 2: Location and arrival details">
+                <img src="Assets/pro-location-1x1.jpg" alt="Manage location form for Tiki Taco with address fields and an Arrival and parking instructions section: parking type options, arrival instructions, and an upload for a map or instructions" loading="lazy" />
+              </div>
+            </div>
+            <button class="carousel__btn carousel__btn--prev" type="button" aria-label="Previous slide" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+            <button class="carousel__btn carousel__btn--next" type="button" aria-label="Next slide"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+            <div class="carousel__dots">
+              <button class="carousel__dot is-active" type="button" aria-label="Structured shift requirements: Uniform requirements" aria-current="true"></button>
+              <button class="carousel__dot" type="button" aria-label="Structured shift requirements: Location and arrival details"></button>
+            </div>
           </div>
           <figcaption class="caption caption--m"><strong>Structured shift requirements</strong><br>On the business side, I expanded the range of uniform choices and added additional fields for parking and location information.</figcaption>
         </figure>
