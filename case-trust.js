@@ -271,6 +271,59 @@
     render();
   });
 
+  // ---- floating dock: headshot opens an "On this page" menu with scroll-spy ------------
+  (function () {
+    var btn = document.querySelector('.cs-dock__avatar');
+    var toc = document.getElementById('cs-toc');
+    if (!btn || !toc) return;
+    var open = false;
+
+    function setOpen(next, returnFocus) {
+      open = next;
+      btn.setAttribute('aria-expanded', String(open));
+      if (open) {
+        toc.hidden = false;
+        requestAnimationFrame(function () { toc.classList.add('is-open'); });
+      } else {
+        toc.classList.remove('is-open');
+        setTimeout(function () { if (!open) toc.hidden = true; }, reduceMotion ? 0 : 200);
+        if (returnFocus) btn.focus();
+      }
+    }
+    btn.addEventListener('click', function () { setOpen(!open); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && open) setOpen(false, true); });
+    document.addEventListener('click', function (e) {
+      if (open && !toc.contains(e.target) && !btn.contains(e.target)) setOpen(false);
+    });
+    toc.addEventListener('click', function (e) {
+      if (e.target.closest('a[href^="#"]')) setOpen(false);
+    });
+
+    // highlight the section you are reading
+    var links = {};
+    Array.prototype.forEach.call(toc.querySelectorAll('[data-spy]'), function (a) { links[a.dataset.spy] = a; });
+    var current = null;
+    function mark(id) {
+      if (id === current) return;
+      current = id;
+      Object.keys(links).forEach(function (k) {
+        var on = k === id;
+        links[k].classList.toggle('is-current', on);
+        if (on) links[k].setAttribute('aria-current', 'location'); else links[k].removeAttribute('aria-current');
+      });
+    }
+    if ('IntersectionObserver' in window) {
+      var spy = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) { if (entry.isIntersecting) mark(entry.target.id); });
+      }, { rootMargin: '-35% 0px -60% 0px' });
+      Object.keys(links).forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) spy.observe(el);
+      });
+    }
+    mark('overview');
+  })();
+
   // ---- segmented control + panels ---------------------------------------------------
   Array.prototype.forEach.call(document.querySelectorAll('[data-switcher]'), function (root) {
     var tabs = Array.prototype.slice.call(root.querySelectorAll('[role="tab"]'));

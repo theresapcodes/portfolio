@@ -17,17 +17,15 @@
 </head>
 <body>
 
-  <header class="cs-header">
-    <a class="cs-brand" href="/" aria-label="Theresa Pettingill, home">
-      <span class="cs-brand__dot" aria-hidden="true"></span>
-      <span class="cs-brand__name">Theresa Pettingill</span>
-    </a>
-  </header>
+  <a class="cs-back" href="/#featured-work">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+    Back
+  </a>
 
   <main class="cs-page">
 
     <!-- ============ HERO ============ -->
-    <section class="cs-hero" aria-labelledby="cs-title">
+    <section class="cs-hero" id="overview" aria-labelledby="cs-title">
       <div class="cs-hero__grid" data-reveal>
         <div class="cs-hero__intro">
           <div class="cs-hero__titles">
@@ -104,7 +102,7 @@
     </section>
 
     <!-- ============ THE PROBLEM ============ -->
-    <section class="cs-block problem" aria-labelledby="problem-title">
+    <section class="cs-block problem" id="problem" aria-labelledby="problem-title">
       <div class="problem__lead" data-reveal>
         <p class="eyebrow eyebrow--accent">The problem</p>
         <h2 class="h4" id="problem-title">Nearly half of churned businesses cited concerns about Pro quality.</h2>
@@ -119,7 +117,7 @@
     </section>
 
     <!-- ============ MY APPROACH ============ -->
-    <section class="cs-block approach" aria-labelledby="approach-title">
+    <section class="cs-block approach" id="approach" aria-labelledby="approach-title">
       <div class="approach__lead" data-reveal>
         <p class="eyebrow eyebrow--accent">My approach</p>
         <h2 class="h4" id="approach-title">I focused the work around being able to answer the questions that businesses were asking themselves.</h2>
@@ -139,7 +137,7 @@
     </section>
 
     <!-- ============ 01 QUALIFICATION ============ -->
-    <section class="cs-block chapter" aria-labelledby="qualification-title">
+    <section class="cs-block chapter" id="qualification" aria-labelledby="qualification-title">
       <div class="chapter__head" data-reveal>
         <p class="eyebrow eyebrow--accent">qualification • 2022,2025</p>
         <h2 class="h4" id="qualification-title">Building a trusted path into the marketplace.</h2>
@@ -165,7 +163,7 @@
     </section>
 
     <!-- ============ 02 VISIBILITY ============ -->
-    <section class="cs-block chapter" aria-labelledby="visibility-title">
+    <section class="cs-block chapter" id="visibility" aria-labelledby="visibility-title">
       <div class="chapter__head" data-reveal>
         <p class="eyebrow eyebrow--accent">02.visibility • 2023</p>
         <h2 class="h4" id="visibility-title">Making performance visible.</h2>
@@ -204,7 +202,7 @@
     </section>
 
     <!-- ============ 03 READINESS ============ -->
-    <section class="cs-block chapter" aria-labelledby="readiness-title">
+    <section class="cs-block chapter" id="readiness" aria-labelledby="readiness-title">
       <div class="chapter__head" data-reveal>
         <p class="eyebrow eyebrow--accent">03.readiness • 2025-2026</p>
         <h2 class="h4" id="readiness-title">Getting Pros ready to work.</h2>
@@ -243,7 +241,7 @@
     </section>
 
     <!-- ============ 04 HIRING ============ -->
-    <section class="cs-block chapter" aria-labelledby="hiring-title">
+    <section class="cs-block chapter" id="hiring" aria-labelledby="hiring-title">
       <div class="chapter__head" data-reveal>
         <p class="eyebrow eyebrow--accent">04.hiring • 2024–25</p>
         <h2 class="h4" id="hiring-title">Helping businesses rehire proven Pros.</h2>
@@ -269,7 +267,7 @@
     </section>
 
     <!-- ============ 05 MATCH ============ -->
-    <section class="cs-block chapter chapter--match" aria-labelledby="match-title">
+    <section class="cs-block chapter chapter--match" id="match" aria-labelledby="match-title">
       <div class="chapter__head" data-reveal>
         <p class="eyebrow eyebrow--accent">05.match • 2024–26</p>
         <h2 class="h4" id="match-title">Earning the right to match.</h2>
@@ -310,7 +308,7 @@
     </section>
 
     <!-- ============ REFLECTION ============ -->
-    <section class="cs-block reflection" aria-labelledby="reflection-title">
+    <section class="cs-block reflection" id="reflection" aria-labelledby="reflection-title">
       <p class="eyebrow eyebrow--accent">Reflection</p>
       <h2 class="h4" id="reflection-title">Trust is a long game.</h2>
       <div class="reflection__body body-l" data-reveal>
@@ -321,6 +319,35 @@
     </section>
 
   </main>
+
+  <nav class="cs-dock" aria-label="Site">
+   <div class="cs-dock__inner">
+    <div class="cs-toc" id="cs-toc" role="dialog" aria-label="On this page" hidden>
+      <p class="eyebrow">On this page</p>
+      <ol class="cs-toc__list">
+        <li><a href="#overview" data-spy="overview"><span class="cs-toc__n"></span>Overview</a></li>
+        <li><a href="#problem" data-spy="problem"><span class="cs-toc__n"></span>The problem</a></li>
+        <li><a href="#approach" data-spy="approach"><span class="cs-toc__n"></span>My approach</a></li>
+        <li><a href="#qualification" data-spy="qualification"><span class="cs-toc__n">01</span>Qualification</a></li>
+        <li><a href="#visibility" data-spy="visibility"><span class="cs-toc__n">02</span>Visibility</a></li>
+        <li><a href="#readiness" data-spy="readiness"><span class="cs-toc__n">03</span>Readiness</a></li>
+        <li><a href="#hiring" data-spy="hiring"><span class="cs-toc__n">04</span>Hiring</a></li>
+        <li><a href="#match" data-spy="match"><span class="cs-toc__n">05</span>Match</a></li>
+        <li><a href="#reflection" data-spy="reflection"><span class="cs-toc__n"></span>Reflection</a></li>
+      </ol>
+      <a class="cs-toc__mail" href="mailto:theresapdesign@gmail.com">Say hello<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+    </div>
+    <div class="cs-dock__pill">
+      <div class="cs-dock__links">
+        <a href="/#featured-work" aria-current="page">Work</a>
+        <a href="/#about">About</a>
+        <a href="/experience.html">Resume</a>
+      </div>
+      <span class="cs-dock__sep" aria-hidden="true"></span>
+      <button class="cs-dock__avatar" type="button" aria-expanded="false" aria-controls="cs-toc" aria-label="On this page: jump to a section"><img src="Assets/headshot-nav.jpg" alt="" width="80" height="80" /></button>
+    </div>
+   </div>
+  </nav>
 
   <script src="case-trust.js" defer></script>
 </body>
