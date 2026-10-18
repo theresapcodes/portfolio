@@ -159,7 +159,7 @@ strong { font-weight: 700; }
 .js .result.is-visible::before { transform: scaleX(1); }
 .js .result:nth-child(2)::before { transition-delay: 270ms; }
 .js .result:nth-child(3)::before { transition-delay: 390ms; }
-.result__figure { font-weight: 700; font-size: 48px; line-height: 56px; padding-top: 8px; }
+.result__figure { font-weight: 700; font-size: 48px; line-height: 56px; padding-top: 8px; color: var(--brand-primary); }
 
 /* ---------- Segmented controls ---------- */
 .seg {
@@ -422,6 +422,7 @@ body { overflow-x: clip; }
   padding-left: 24px;   /* 4px stroke + 20px gap */
   --p: 1;               /* stroke progress, driven by scroll (1 = fully drawn) */
 }
+.call strong { color: var(--brand-primary); }
 .call::before {
   content: '';
   position: absolute;
