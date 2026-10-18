@@ -166,16 +166,9 @@ strong { font-weight: 700; }
 .seg__tab:hover { color: var(--gray-900); }
 .seg__tab.is-active { font-weight: 500; cursor: default; }
 
-.seg--neutral { background: var(--control-bg); border-color: var(--control-border); }
-.seg--neutral .seg__tab { min-width: 84px; padding: 0 16px; }
-.seg--neutral .seg__tab.is-active {
-  background: var(--surface);
-  border-color: var(--border);
-  color: var(--gray-900);
-}
-
 .seg--brand { background: var(--surface-gray); border-color: var(--border); }
-.seg--brand .seg__tab.is-active { background: var(--brand-primary); border-color: var(--brand-primary); color: var(--surface); }
+.seg--brand .seg__tab.is-active,
+.seg--brand .seg__tab.is-active:hover { background: var(--brand-primary); border-color: var(--brand-primary); color: var(--surface); }
 
 /* ---------- Switcher (tabs + panels) ---------- */
 .switcher { display: flex; flex-direction: column; gap: 24px; align-items: flex-start; }
