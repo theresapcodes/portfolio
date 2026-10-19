@@ -121,9 +121,10 @@ strong { font-weight: 700; color: var(--brand-primary); }
 
 .chips { display: flex; flex-wrap: wrap; gap: 24px; }
 .chip {
-  border: 1px solid var(--text-default);
+  border: 1px solid var(--text-helper);
   border-radius: 4px;
   background: var(--surface);
+  color: var(--text-helper);
   padding: 4px 8px;
   font-family: var(--font-mono);
   font-size: 11px;
