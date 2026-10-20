@@ -19,7 +19,6 @@
 
   --font-sans: 'Google Sans Flex', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: 'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-  --font-script: 'Pinyon Script', 'Snell Roundhand', cursive;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -122,13 +121,13 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 /* ---------- Bottom ---------- */
 .home__bottom { margin-top: auto; display: flex; flex-direction: column; gap: 40px; }
 .signature {
-  font-family: var(--font-script);
-  /* Pinyon Script runs about 6.2em wide; this sizes it to fill the 1024px column */
-  font-size: min(161px, calc((100vw - 48px) * 0.157));
-  line-height: 1.25;
-  white-space: nowrap;
-  color: rgba(87, 113, 97, 0.5);
+  display: block;
+  width: calc(100% * 5123 / 5043);   /* the artwork has a small margin; this lines the ink up with the column */
+  max-width: none;
+  height: auto;
+  margin: -8.3% 0 0 -0.8%;           /* the flourishes rise above and drop below the line */
   user-select: none;
+  pointer-events: none;
 }
 .home__legal { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px; font-size: 12px; line-height: 16px; }
 .touch { color: rgba(87, 113, 97, 0.5); }
