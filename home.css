@@ -218,9 +218,6 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   transition: color 150ms;
 }
 .link:hover { color: var(--brand-tertiary); }
-/* a small up-and-right arrow after a link that opens another page */
-.link__arrow { display: inline-block; margin-left: 2px; vertical-align: -2px; transition: transform 200ms var(--ease); }
-.link:hover .link__arrow, .link:focus-visible .link__arrow { transform: translate(1.5px, -1.5px); }
 
 /* ---------- Bottom ---------- */
 /* the top flourish of the signature needs real air between it and the paragraph above */
