@@ -365,23 +365,3 @@
   }
   setUi();
 })();
-
-/* Heading word rotator: product, brand, strategy, one at a time (CSS does the motion, this swaps the classes) */
-(function () {
-  'use strict';
-  var words = Array.prototype.slice.call(document.querySelectorAll('.rotator__word'));
-  if (words.length < 2 || !document.documentElement.classList.contains('rotates')) return;
-  var i = 0, timer = null;
-  function next() {
-    var from = words[i];
-    i = (i + 1) % words.length;
-    from.classList.remove('is-on');
-    from.classList.add('is-leaving');
-    setTimeout(function () { from.classList.remove('is-leaving'); }, 420);
-    words[i].classList.add('is-on');
-  }
-  function start() { if (!timer) timer = setInterval(next, 2800); }
-  function stop() { clearInterval(timer); timer = null; }
-  document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); else start(); });
-  setTimeout(start, 2200);
-})();
