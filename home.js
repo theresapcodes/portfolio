@@ -237,3 +237,23 @@
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && active) hide(); });
   window.addEventListener('blur', hide);
 })();
+
+/* Light / dark toggle: the photograph is the light mode. The choice is remembered on this device. */
+(function () {
+  'use strict';
+  var btn = document.querySelector('.home-theme');
+  if (!btn) return;
+  var root = document.documentElement;
+  function sync() {
+    var light = root.dataset.bg === 'photo';
+    btn.setAttribute('aria-pressed', String(light));
+    btn.setAttribute('aria-label', light ? 'Switch to dark mode' : 'Switch to light mode');
+  }
+  btn.addEventListener('click', function () {
+    var next = root.dataset.bg === 'photo' ? '' : 'photo';
+    if (next) root.dataset.bg = next; else delete root.dataset.bg;
+    try { localStorage.setItem('home-bg', next); } catch (e) { /* storage blocked */ }
+    sync();
+  });
+  sync();
+})();

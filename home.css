@@ -324,14 +324,47 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   .peek__card, .peek.is-below .peek__card { transition: opacity 120ms linear; transform: none; }
 }
 
-/* Preview: the reference photograph itself as the page background (?bg=photo).
-   A dark wash from the left keeps the white text readable; the right stays open so the photo shows. */
+/* ---------- Light mode: the photograph as the page background ----------
+   Toggled from the upper right (or ?bg=photo). A dark wash from the left keeps the white text readable and
+   the right stays open so the photo shows. The artwork is served at 2x for high-density screens. */
 html[data-bg="photo"] .light { display: none; }
 html[data-bg="photo"] .home {
   background:
     linear-gradient(90deg, rgba(8, 14, 10, 0.86) 0%, rgba(8, 14, 10, 0.72) 42%, rgba(8, 14, 10, 0.34) 72%, rgba(8, 14, 10, 0.08) 100%),
     url(Assets/home/reference-photo.jpg) center / cover no-repeat;
+  background:
+    linear-gradient(90deg, rgba(8, 14, 10, 0.86) 0%, rgba(8, 14, 10, 0.72) 42%, rgba(8, 14, 10, 0.34) 72%, rgba(8, 14, 10, 0.08) 100%),
+    image-set(url(Assets/home/reference-photo.jpg) 1x, url(Assets/home/reference-photo@2x.jpg) 2x) center / cover no-repeat;
 }
 html[data-bg="photo"] .home::before {
   background: linear-gradient(to top, rgba(8, 14, 10, 0.88) 18%, rgba(8, 14, 10, 0) 100%);
 }
+/* the signature is solid white on the photograph */
+.signature--white { display: none; }
+html[data-bg="photo"] .signature--green { display: none; }
+html[data-bg="photo"] .signature--white { display: block; }
+
+/* ---------- Light / dark toggle (upper right) ---------- */
+.home-theme {
+  position: fixed;
+  top: 28px;
+  right: 24px;
+  z-index: 4;                      /* under the menu's dim, like the rest of the page */
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  transition: background-color 150ms, transform 150ms var(--ease);
+}
+.home-theme:hover { background: rgba(255, 255, 255, 0.2); }
+.home-theme:active { transform: scale(0.92); }
+.home-theme .icon-moon { display: none; }
+html[data-bg="photo"] .home-theme .icon-sun { display: none; }
+html[data-bg="photo"] .home-theme .icon-moon { display: block; }
+@media (max-width: 720px) { .home-theme { top: 20px; right: 16px; } }
