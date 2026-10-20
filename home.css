@@ -197,6 +197,39 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   color: var(--brand-tertiary);
 }
 .lede { font-weight: 700; font-size: 32px; line-height: 40px; color: var(--text-inverted); }
+/* the heading shows one word at a time: product, brand, strategy. Without JS or with reduced motion it reads as a plain list. */
+.rotator { display: none; }
+.rotates .lede__static { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.rotates .rotator { display: inline-grid; white-space: nowrap; }   /* all three words stack, so the width is the widest word and nothing around it jumps */
+.rotator__word {
+  grid-area: 1 / 1;
+  justify-self: start;             /* each word hugs its own width so the highlighter matches it */
+  position: relative;
+  color: var(--brand-tertiary);
+  opacity: 0;
+  filter: blur(6px);
+  transform: translateY(0.4em);
+  transition: opacity 450ms ease, filter 450ms ease, transform 650ms var(--ease);
+}
+.rotator__word.is-on { opacity: 1; filter: none; transform: none; }
+.rotator__word.is-leaving { opacity: 0; filter: blur(6px); transform: translateY(-0.4em); transition-duration: 380ms; }
+/* a soft lime highlighter stroke that sweeps in behind each word as it lands */
+.rotator__word::before {
+  content: '';
+  position: absolute;
+  left: -0.1em;
+  right: 0.12em;
+  bottom: 0.08em;
+  height: 0.36em;
+  border-radius: 2px;
+  background: rgba(204, 236, 150, 0.2);
+  transform: skewX(-8deg) scaleX(0);
+  transform-origin: left center;
+  z-index: -1;
+  transition: transform 0ms;
+}
+.rotator__word.is-on::before { transform: skewX(-8deg) scaleX(1); transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1) 220ms; }
+.lede { isolation: isolate; }
 .copy { display: flex; flex-direction: column; gap: 24px; color: var(--green-100); }
 /* quiet LinkedIn and email icons under the last sentence, in the same muted tone as the rest of the page */
 .connect { display: flex; gap: 2px; margin: -10px 0 0 -8px; }
