@@ -227,7 +227,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   width: calc(100% * 5123 / 5043);   /* the artwork has a small margin; this lines the ink up with the column */
   max-width: none;
   height: auto;
-  margin: 0 0 0 -0.8%;
+  margin: 0 0 40px -0.8%;            /* lifts the signature off the legal row so it sits higher on screen */
   user-select: none;
   pointer-events: none;
 }
@@ -336,6 +336,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   .home__top { margin-bottom: 48px; }
   .lede { font-size: 24px; line-height: 32px; }
   .home__bottom { gap: 24px; padding-top: 40px; }
+  .signature { margin-bottom: 24px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .in { animation: none; }
