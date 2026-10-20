@@ -122,7 +122,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   display: flex;
   flex-direction: column;
 }
-.home__top { margin-bottom: 28px; }
+.home__top { margin-bottom: 48px; }
 
 /* ---------- Profile button ---------- */
 .profile { position: relative; align-self: flex-start; }
@@ -314,7 +314,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
 @media (max-width: 720px) {
   .home__inner { padding: 28px 0 24px; }
-  .home__top { margin-bottom: 28px; }
+  .home__top { margin-bottom: 48px; }
   .lede { font-size: 24px; line-height: 32px; }
   .home__bottom { gap: 24px; padding-top: 40px; }
 }
