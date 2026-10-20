@@ -136,6 +136,8 @@
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var mouseOk = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   var img = card.querySelector('.peek__img');
+  var cardBox = card.querySelector('.peek__card');
+  var go = card.querySelector('.peek__go');
   var labelEl = card.querySelector('.peek__label');
   var titleEl = card.querySelector('.peek__title');
   var W = 320, GAP = 14, MARGIN = 12, EASE = reduceMotion ? 1 : 0.18;
@@ -208,6 +210,7 @@
       var src = link.getAttribute('data-peek-img');
       if (img.getAttribute('src') !== src) img.setAttribute('src', src);
       img.setAttribute('alt', link.getAttribute('data-peek-alt') || '');
+      if (go) go.setAttribute('href', link.getAttribute('href'));
       labelEl.textContent = link.getAttribute('data-peek-label') || '';
       titleEl.textContent = link.getAttribute('data-peek-title') || '';
       card.hidden = false;
@@ -279,6 +282,15 @@
     clearTimeout(holdTimer);
     nudging = false; nudgeX = null;
     card.classList.remove('is-nudge');      // normal hover timing from here on
+  }
+  // the nudged thumbnail is clickable: while the pointer is on it, hold it open; a moment after it leaves, let it go
+  if (cardBox) {
+    cardBox.addEventListener('mouseenter', function () { if (nudging) clearTimeout(holdTimer); });
+    cardBox.addEventListener('mouseleave', function () {
+      if (!nudging) return;
+      clearTimeout(holdTimer);
+      holdTimer = setTimeout(endNudge, 700);
+    });
   }
   function playNudge() {
     nudgeTimer = null;
