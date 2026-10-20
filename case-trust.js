@@ -5,6 +5,35 @@
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var videos = Array.prototype.slice.call(document.querySelectorAll('main video'));
 
+  // ---- poster frames load as you approach them, not all at page load -------------------
+  // (they were ~1.9 MB at the start, queued ahead of the page's own script; the images themselves are unchanged)
+  function setPoster(v) {
+    if (!v.getAttribute('data-poster')) return;
+    v.poster = v.getAttribute('data-poster');
+    v.removeAttribute('data-poster');
+  }
+  (function () {
+    var pending = videos.filter(function (v) { return v.getAttribute('data-poster'); });
+    if (!('IntersectionObserver' in window)) { pending.forEach(setPoster); return; }
+    var posterObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        setPoster(entry.target);
+        posterObserver.unobserve(entry.target);
+      });
+    }, { rootMargin: '1200px 0px' });
+    pending.forEach(function (v) { posterObserver.observe(v); });
+    // a video in a hidden tab (the "After" of Before/After) gets its poster once the page has settled
+    function idle() {
+      pending.forEach(function (v) {
+        var panel = v.closest('[role="tabpanel"]');
+        if (panel && panel.hidden) { setPoster(v); posterObserver.unobserve(v); }
+      });
+    }
+    function later() { if ('requestIdleCallback' in window) requestIdleCallback(idle, { timeout: 4000 }); else setTimeout(idle, 2500); }
+    if (document.readyState === 'complete') later(); else window.addEventListener('load', later);
+  })();
+
   // ---- play / pause by visibility --------------------------------------------------
   var inView = new Set();
 
