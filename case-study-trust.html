@@ -20,10 +20,35 @@
 </head>
 <body>
 
-  <a class="cs-back" href="/">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
-    Back
-  </a>
+  <div class="cs-profile" data-profile>
+    <button class="cs-profile__btn" type="button" aria-expanded="false" aria-controls="cs-profile-menu" aria-haspopup="true">
+      <span class="cs-avatar cs-avatar--sm"><img src="Assets/home/avatar.jpg" alt="" width="72" height="96" /></span>
+      <span class="cs-profile__rule" aria-hidden="true"></span>
+      <span class="cs-profile__text">
+        <span class="cs-profile__name">Theresa Pettingill</span>
+        <span class="cs-profile__title">Staff Product Designer</span>
+      </span>
+    </button>
+    <div class="cs-scrim" data-scrim hidden></div>
+    <div class="cs-menu" id="cs-profile-menu" role="dialog" aria-label="About Theresa and where to find her" hidden>
+      <div class="cs-menu__inner">
+        <span class="cs-avatar cs-avatar--lg"><img src="Assets/home/avatar.jpg" alt="Theresa Pettingill" width="72" height="96" decoding="sync" /></span>
+        <div class="cs-menu__id">
+          <p class="cs-menu__name">Theresa Pettingill</p>
+          <p class="cs-menu__role">Staff Product Designer</p>
+          <p class="cs-menu__tags">B2B+B2B2C SaaS · Marketplace · 0→1 · Design Systems · Product Strategy</p>
+          <p class="cs-menu__where"><img src="Assets/home/map-pin.svg" alt="" width="12" height="12" />Based in New York</p>
+        </div>
+        <img class="cs-menu__divider" src="Assets/home/menu-divider.svg" alt="" width="273" height="8" />
+        <ul class="cs-menu__tiles">
+          <li><a href="/"><span class="cs-tile"><img src="Assets/home/icon-home.svg" alt="" width="16" height="16" /></span><span>Home</span></a></li>
+          <li><a href="mailto:theresapdesign@gmail.com"><img class="cs-tile-full" src="Assets/home/icon-email.svg" alt="" width="40" height="40" /><span>Email</span></a></li>
+          <li><a href="https://www.linkedin.com/in/theresapettingill/" target="_blank" rel="noopener"><img class="cs-tile-full" src="Assets/home/icon-linkedin.svg" alt="" width="40" height="40" /><span>LinkedIn</span></a></li>
+          <li><a href="Assets/Theresa-Pettingill_Resume.pdf" target="_blank" rel="noopener"><span class="cs-tile"><img src="Assets/home/icon-resume.svg" alt="" width="16" height="16" /></span><span>Resume</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
   <button class="cs-theme" type="button" aria-pressed="false" aria-label="Dark mode">
     <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
     <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
