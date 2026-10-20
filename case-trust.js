@@ -271,6 +271,25 @@
     render();
   });
 
+  // ---- theme toggle (light / dark), remembered between visits ---------------------------
+  (function () {
+    var btn = document.querySelector('.cs-dock__theme');
+    if (!btn) return;
+    var root = document.documentElement;
+    function sync() {
+      var dark = root.dataset.theme === 'dark';
+      btn.setAttribute('aria-pressed', String(dark));
+      btn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+    }
+    btn.addEventListener('click', function () {
+      var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      if (next === 'dark') root.dataset.theme = 'dark'; else delete root.dataset.theme;
+      try { localStorage.setItem('cs-theme', next); } catch (e) { /* storage blocked */ }
+      sync();
+    });
+    sync();
+  })();
+
   // ---- floating dock: headshot opens an "On this page" menu with scroll-spy ------------
   (function () {
     var btn = document.querySelector('.cs-dock__avatar');
