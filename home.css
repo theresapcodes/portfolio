@@ -146,7 +146,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .avatar--lg { width: 72px; height: 72px; border: 2px solid var(--gray-600); }
 .profile__rule { align-self: stretch; width: 1px; background: var(--green-300); }
 .profile__text { display: flex; flex-direction: column; gap: 2px; color: var(--green-200); }
-.profile__name { font-weight: 700; font-size: 12px; line-height: 16px; }
+.profile__name { font-weight: 700; font-size: 12px; line-height: 16px; color: #f2674b; transition: color 150ms; }
 .profile__title { font-size: 11px; line-height: 16px; }
 .profile__btn:hover .profile__name { color: #fff; }
 .profile__btn[aria-expanded="true"] .avatar--sm { border-color: var(--brand-tertiary); }
