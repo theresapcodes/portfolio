@@ -55,7 +55,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 474px;
+  height: 620px;
   background: linear-gradient(to top, var(--ink) 20.149%, var(--brand-primary));
   pointer-events: none;
 }
