@@ -78,6 +78,18 @@
     if (reduceMotion) video.controls = true;
   });
 
+  // Starting a video (decoding, fetching) in the middle of a scroll makes the scroll hitch, so videos that
+  // come into view while the page is moving start a moment after it stops instead.
+  var scrolling = false, scrollTimer = null;
+  window.addEventListener('scroll', function () {
+    scrolling = true;
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(function () {
+      scrolling = false;
+      inView.forEach(function (v) { if (v.paused) startVideo(v); });
+    }, 140);
+  }, { passive: true });
+
   if ('IntersectionObserver' in window && !reduceMotion) {
     var playObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -86,7 +98,7 @@
           (entry.intersectionRatio >= 0.5 || entry.intersectionRect.height >= window.innerHeight * 0.5);
         if (visible) {
           inView.add(video);
-          startVideo(video);
+          if (!scrolling) startVideo(video);       // mid-scroll it waits for the page to settle (below)
         } else {
           inView.delete(video);
           if (!video.paused) video.pause();
