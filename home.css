@@ -192,6 +192,19 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 }
 .lede { font-weight: 700; font-size: 32px; line-height: 40px; color: var(--text-inverted); }
 .copy { display: flex; flex-direction: column; gap: 24px; color: var(--green-100); }
+/* quiet LinkedIn and email icons under the last sentence, in the same muted tone as the rest of the page */
+.connect { display: flex; gap: 2px; margin: -10px 0 0 -8px; }
+.connect a {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: rgba(238, 243, 240, 0.5);
+  transition: color 150ms, background-color 150ms;
+}
+.connect a:hover { color: rgba(238, 243, 240, 0.92); background: rgba(255, 255, 255, 0.08); }
+.connect svg { display: block; width: 20px; height: 20px; }
 .link {
   text-decoration: underline;
   text-underline-position: from-font;
