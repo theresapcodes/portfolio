@@ -366,3 +366,27 @@ html[data-bg="photo"] .home::before {
 html[data-bg="photo"] .home-theme .icon-sun { display: none; }
 html[data-bg="photo"] .home-theme .icon-moon { display: block; }
 @media (max-width: 720px) { .home-theme { top: 20px; right: 16px; } }
+
+/* ---------- Mode switch: a slow cross-dissolve ---------- */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 900ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* the toggle stays put and swaps its icon in place while the page dissolves behind it */
+.home-theme { view-transition-name: home-theme; }
+::view-transition-group(home-theme) { animation-duration: 0s; }
+/* fallback for browsers without view transitions */
+.theme-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 320ms ease-out;
+}
+.theme-veil.is-on { opacity: 0.85; }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}
