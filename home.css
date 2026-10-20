@@ -199,6 +199,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 }
 .lede { font-weight: 700; font-size: 32px; line-height: 40px; color: var(--text-inverted); }
 .copy { display: flex; flex-direction: column; gap: 24px; color: var(--green-100); }
+.copy__line { display: block; }   /* each sentence on its own line, as before */
 /* quiet LinkedIn and email icons under the last sentence, in the same muted tone as the rest of the page */
 .connect { display: flex; gap: 2px; margin: -10px 0 0 -8px; }
 .connect a {
@@ -372,7 +373,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 @media (max-width: 720px) {
   .home__inner { padding: 28px 0 24px; }
   .home__top { margin-bottom: 48px; }
-  .lede { font-size: 24px; line-height: 32px; }
+  .lede { font-size: 21px; line-height: 28px; }
+  .copy__line + .copy__line { margin-top: 12px; }   /* the two sentences read as two short lines, with air between them */
   .home__bottom { gap: 24px; padding-top: 40px; }
   .signature { margin-bottom: 24px; }
 }
