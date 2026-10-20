@@ -371,8 +371,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .in { animation: rise 900ms var(--ease) both; animation-delay: calc(var(--i, 0) * 110ms); }
 
 @media (max-width: 720px) {
-  .home__inner { padding: 28px 0 24px; }
-  .home__top { margin-bottom: 48px; }
+  .home__inner { padding: 20px 0 24px; }
+  .home__top { margin-bottom: 28px; }   /* shorter header band, so the copy starts higher on a phone */
   .lede { font-size: 21px; line-height: 28px; }
   .eyebrow + .lede { margin-top: -8px; }   /* tighter gap under the eyebrow (20px down to 12px) */
   .copy__line + .copy__line { margin-top: 12px; }   /* the two sentences read as two short lines, with air between them */
