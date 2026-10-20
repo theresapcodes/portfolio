@@ -59,30 +59,57 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   background: linear-gradient(to top, var(--ink) 20.149%, var(--brand-primary));
   pointer-events: none;
 }
-/* Botanical window light: a decorative SVG of cast light and shadows only (no plants, no photograph),
-   above the background and behind all content. Static. */
+/* Botanical window light: decorative cast light and shadows only (no plants, no photograph), above the
+   background and behind all content. Two stacked layers inside one wrapper:
+   - light__panes: the window light, stationary
+   - light__plant: stems and leaf shadows, swaying gently from their own bases */
 .light {
   position: absolute;
   inset: 0;
   z-index: 0;
-  width: 100%;
-  height: 100%;
   pointer-events: none;
   /* quieter behind the main text so reading always wins */
-  -webkit-mask-image: radial-gradient(ellipse 46% 58% at 34% 40%, rgba(0, 0, 0, 0.28) 0%, rgba(0, 0, 0, 0.28) 55%, #000 100%);
-  mask-image: radial-gradient(ellipse 46% 58% at 34% 40%, rgba(0, 0, 0, 0.28) 0%, rgba(0, 0, 0, 0.28) 55%, #000 100%);
+  -webkit-mask-image: radial-gradient(ellipse 46% 58% at 34% 40%, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.3) 55%, #000 100%);
+  mask-image: radial-gradient(ellipse 46% 58% at 34% 40%, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.3) 55%, #000 100%);
+}
+.light__svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* light: clearly lighter than the shaded wall around it */
+.light .wall-shade { fill: rgb(6, 10, 8); fill-opacity: 0.2; }
+.light .pane-diffuse rect { fill: rgb(255, 240, 214); fill-opacity: 0.18; }
+.light .pane-sharp rect { fill: rgb(255, 240, 214); fill-opacity: 0.18; }
+.light .frame rect { fill: rgb(6, 10, 8); fill-opacity: 0.26; }
+
+/* shadows: a core plus fainter wider strokes give a feathered edge without any blur filter,
+   so the moving shapes stay cheap to draw */
+.light .core, .light .halo1, .light .halo2 { fill: none; stroke: rgb(6, 10, 8); stroke-linecap: round; }
+.light .core { stroke-opacity: 0.34; }
+.light .halo1 { stroke-opacity: 0.12; }
+.light .halo2 { stroke-opacity: 0.06; }
+.light .lcore { fill: rgb(6, 10, 8); fill-opacity: 0.36; stroke: none; }
+.light .lcore.soft { fill-opacity: 0.26; }
+.light .lhalo1, .light .lhalo2 { fill: none; stroke: rgb(6, 10, 8); stroke-linejoin: round; }
+.light .lhalo1 { stroke-width: 4; stroke-opacity: 0.13; }
+.light .lhalo2 { stroke-width: 9; stroke-opacity: 0.06; }
+
+/* a light breeze: each stem or leaf group rotates a degree or two about its own base, on its own
+   slow cycle. Only the plant moves; the window light stays put. */
+.light .sway {
+  transform-box: view-box;
+  transform-origin: var(--ox) var(--oy);
+  animation: sway var(--dur) ease-in-out var(--delay) infinite alternate;
+}
+@keyframes sway {
+  from { transform: rotate(var(--a0)); }
+  to { transform: rotate(var(--a1)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .light .sway { animation: none; }
 }
 /* on phones the text runs the full width, so the whole layer sits back instead */
 @media (max-width: 720px) {
-  .light { opacity: 0.55; -webkit-mask-image: none; mask-image: none; }
+  .light { opacity: 0.6; -webkit-mask-image: none; mask-image: none; }
 }
-.light .wall-shade { fill: rgb(6, 10, 8); fill-opacity: 0.16; }
-.light .pane-diffuse rect { fill: rgb(255, 238, 208); fill-opacity: 0.11; }
-.light .pane-sharp rect { fill: rgb(255, 238, 208); fill-opacity: 0.1; }
-.light .frame rect { fill: rgb(6, 10, 8); fill-opacity: 0.17; }
-.light .stem { fill: none; stroke: rgb(6, 10, 8); stroke-opacity: 0.34; stroke-linecap: round; }
-.light .leaf { fill: rgb(6, 10, 8); fill-opacity: 0.36; }
-.light .shade-soft { fill: rgb(6, 10, 8); fill-opacity: 0.26; }
 .home__inner {
   position: relative;
   z-index: 1;
