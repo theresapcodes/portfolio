@@ -273,7 +273,7 @@
 
   // ---- theme toggle (light / dark), remembered between visits ---------------------------
   (function () {
-    var btn = document.querySelector('.cs-dock__theme');
+    var btn = document.querySelector('.cs-theme');
     if (!btn) return;
     var root = document.documentElement;
     function sync() {

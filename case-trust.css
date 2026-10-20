@@ -649,26 +649,31 @@ section[id] { scroll-margin-top: 96px; }
   .cs-back, .cs-dock__avatar, .cs-toc, .cs-toc__list a, .cs-dock__links a { transition: none; }
 }
 
-/* ---------- Theme toggle (in the floating nav) ---------- */
-.cs-dock__theme {
+/* ---------- Theme toggle (top right, mirrors the Back button) ---------- */
+.cs-theme {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 50;
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
-  margin-left: 2px;
+  width: 38px;
+  height: 38px;
   padding: 0;
-  border: 0;
+  border: 1px solid var(--control-border);
   border-radius: 50%;
-  background: transparent;
-  color: var(--text-helper);
+  background: var(--surface-gray);
+  color: var(--text-default);
   cursor: pointer;
-  transition: color 150ms, background-color 150ms, transform 150ms var(--ease);
+  transition: background-color 150ms, transform 150ms var(--ease);
 }
-.cs-dock__theme:hover { color: var(--text-default); background: var(--surface-gray); }
-.cs-dock__theme:active { transform: scale(0.92); }
-.cs-dock__theme .icon-sun { display: none; }
-html[data-theme="dark"] .cs-dock__theme .icon-sun { display: block; }
-html[data-theme="dark"] .cs-dock__theme .icon-moon { display: none; }
+.cs-theme:hover { background: #ececec; }
+.cs-theme:active { transform: scale(0.92); }
+.cs-theme .icon-sun { display: none; }
+html[data-theme="dark"] .cs-theme .icon-sun { display: block; }
+html[data-theme="dark"] .cs-theme .icon-moon { display: none; }
+html[data-theme="dark"] .cs-theme:hover { background: #404040; }
+@media (max-width: 560px) { .cs-theme { top: 16px; right: 16px; } }
 
 /* ---------- Dark mode ----------
    Values come from the Dark mode of the Color collection in the design system
@@ -706,5 +711,5 @@ html[data-theme="dark"] .cs-toc {
 }
 html[data-theme="dark"] .cs-dock__avatar { background: var(--surface-gray); }
 @media (prefers-reduced-motion: reduce) {
-  body, .cs-dock__theme { transition: none; }
+  body, .cs-theme { transition: none; }
 }
