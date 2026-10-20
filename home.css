@@ -397,3 +397,42 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   .home-sound, .home-sound svg, .home-sound::after { transition: none; }
   .home-sound[aria-pressed="true"] svg { animation: none; }
 }
+
+/* ---------- With the sound on: the photograph as the page ----------
+   Turning the bird on also turns on this brighter, sunlit version of the page. A dark wash from the left
+   keeps the text readable and the right stays open so the photo shows. Served at 2x for dense screens. */
+html[data-bg="photo"] .light { display: none; }
+html[data-bg="photo"] .home {
+  background:
+    linear-gradient(90deg, rgba(8, 14, 10, 0.86) 0%, rgba(8, 14, 10, 0.72) 42%, rgba(8, 14, 10, 0.34) 72%, rgba(8, 14, 10, 0.08) 100%),
+    url(Assets/home/reference-photo.jpg) center / cover no-repeat;
+  background:
+    linear-gradient(90deg, rgba(8, 14, 10, 0.86) 0%, rgba(8, 14, 10, 0.72) 42%, rgba(8, 14, 10, 0.34) 72%, rgba(8, 14, 10, 0.08) 100%),
+    image-set(url(Assets/home/reference-photo.jpg) 1x, url(Assets/home/reference-photo@2x.jpg) 2x) center / cover no-repeat;
+}
+html[data-bg="photo"] .home::before {
+  background: linear-gradient(to top, rgba(8, 14, 10, 0.88) 18%, rgba(8, 14, 10, 0) 100%);
+}
+
+/* ---------- The switch is a slow cross-dissolve, not a cut ---------- */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 1100ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.home-sound { view-transition-name: home-sound; }
+::view-transition-group(home-sound) { animation-duration: 0s; }
+/* fallback for browsers without view transitions: a soft dip through black */
+.theme-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 320ms ease-out;
+}
+.theme-veil.is-on { opacity: 0.85; }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}

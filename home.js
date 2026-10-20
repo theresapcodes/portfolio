@@ -254,6 +254,34 @@
   var ctx = null, gain = null, source = null, buffer = null, loading = null;
   var on = false, pending = false;
 
+  var root = document.documentElement;
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // the bird also brings in the photograph (the brighter, sunlit page) and takes it away again
+  function applyLook() {
+    if (on) root.dataset.bg = 'photo'; else delete root.dataset.bg;
+  }
+  function switchLook() {
+    var already = (root.dataset.bg === 'photo') === on;
+    if (already) return;
+    if (reduceMotion) { applyLook(); return; }
+    if (document.startViewTransition) {
+      document.startViewTransition(applyLook);
+      setTimeout(function () { if ((root.dataset.bg === 'photo') !== on) applyLook(); }, 1800);   // if a browser stalls the transition
+    } else {
+      var veil = document.createElement('div');
+      veil.className = 'theme-veil';
+      document.body.appendChild(veil);
+      void veil.offsetWidth;
+      veil.classList.add('is-on');
+      setTimeout(function () {
+        applyLook();
+        veil.classList.remove('is-on');
+        setTimeout(function () { veil.remove(); }, 650);
+      }, 320);
+    }
+  }
+
   function setUi() {
     btn.setAttribute('aria-pressed', String(on));
     btn.setAttribute('aria-label', on ? 'Mute nature sounds' : 'Play nature sounds');
@@ -300,7 +328,7 @@
         source.start(0, 0.03 + Math.random() * Math.max(b.duration - 15, 1));   // a different spot each visit
       }
       ramp(TARGET, FADE_IN);
-    }).catch(function () { on = false; setUi(); remember(); });   // could not load: back to off
+    }).catch(function () { on = false; setUi(); remember(); switchLook(); });   // could not load: back to off, and back to green
   }
   function stop() {
     if (!ctx || !gain) return;
@@ -312,6 +340,7 @@
     on = !on;
     pending = false;
     setUi(); remember();
+    switchLook();
     if (on) start(); else stop();
   });
 
