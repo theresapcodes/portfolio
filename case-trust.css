@@ -165,7 +165,7 @@ strong { font-weight: 700; color: var(--heading); }
 .js .result.is-visible::before { transform: scaleX(1); }
 .js .result:nth-child(2)::before { transition-delay: 270ms; }
 .js .result:nth-child(3)::before { transition-delay: 390ms; }
-.result__figure { font-weight: 700; font-size: 48px; line-height: 56px; padding-top: 8px; color: var(--heading); }
+.result__figure { font-weight: 300; font-size: 48px; line-height: 56px; padding-top: 8px; color: var(--heading); }
 
 /* ---------- Segmented controls ---------- */
 .seg {
