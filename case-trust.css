@@ -643,7 +643,8 @@ html[data-theme="dark"] .cs-theme .icon-moon { display: none; }
 
 .cs-menu {
   position: absolute;
-  right: 0;
+  left: 50%;
+  transform: translateX(-50%);      /* centred over the dock, like the "On this page" menu */
   bottom: calc(100% + 12px);
   width: 273px;
   max-width: calc(100vw - 32px);
@@ -655,6 +656,10 @@ html[data-theme="dark"] .cs-theme .icon-moon { display: none; }
   contain: layout style;
 }
 .cs-menu[hidden] { display: none; }
+/* dims the page behind the open card; sits under the dock (z-index 50) so the dock stays lit */
+.cs-scrim { position: fixed; inset: 0; z-index: 40; background: rgba(10, 10, 10, 0.45); opacity: 0; transition: opacity 250ms var(--ease); }
+.cs-scrim.is-on { opacity: 1; }
+.cs-scrim[hidden] { display: none; }
 .cs-menu__inner { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 20px 0; }
 .cs-menu__inner > * { flex: none; }
 .cs-menu__id { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; padding: 0 20px; text-align: center; }
@@ -671,7 +676,7 @@ html[data-theme="dark"] .cs-theme .icon-moon { display: none; }
 .cs-tile { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 8px; background: var(--gray-800); }
 .cs-tile-full { width: 40px; height: 40px; }
 html[data-theme="dark"] .cs-menu { border-color: var(--gray-700); }
-@media (prefers-reduced-motion: reduce) { .cs-dock__me, .cs-avatar--sm { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .cs-dock__me, .cs-avatar--sm, .cs-scrim { transition: none; } }
 
 /* ---------- Dark mode ----------
    Values come from the Dark mode of the Color collection in the design system

@@ -347,8 +347,9 @@
   (function () {
     var btn = document.querySelector('.cs-dock__me');
     var menu = document.getElementById('cs-profile-menu');
+    var scrim = document.querySelector('[data-cs-scrim]');
     if (!btn || !menu) return;
-    var open = false, anim = null, ready = false, readyPromise = null;
+    var open = false, anim = null, ready = false, readyPromise = null, scrimTimer = null;
 
     // slightly under-damped spring written as a CSS linear() easing (cubic-bezier fallback)
     function springEasing() {
@@ -378,6 +379,15 @@
 
     function currentHeight() { return menu.getBoundingClientRect().height; }
     function stop() { if (anim) { anim.cancel(); anim = null; } }
+    function showScrim() {
+      if (!scrim) return;
+      clearTimeout(scrimTimer); scrim.hidden = false; void scrim.offsetWidth; scrim.classList.add('is-on');
+    }
+    function hideScrim() {
+      if (!scrim) return;
+      scrim.classList.remove('is-on');
+      scrimTimer = setTimeout(function () { if (!open) scrim.hidden = true; }, reduceMotion ? 0 : 260);
+    }
     function grow() {
       if (!open) return;
       var from = menu.hidden ? 0 : currentHeight();
@@ -403,10 +413,11 @@
     }
     function setOpen(next, returnFocus) {
       open = next; btn.setAttribute('aria-expanded', String(open));
-      if (open) { var wait = whenReady(); if (wait) wait.then(grow); else grow(); }
-      else { hide(); if (returnFocus) btn.focus(); }
+      if (open) { showScrim(); var wait = whenReady(); if (wait) wait.then(grow); else grow(); }
+      else { hideScrim(); hide(); if (returnFocus) btn.focus(); }
     }
     btn.addEventListener('click', function () { setOpen(!open); });
+    if (scrim) scrim.addEventListener('click', function () { setOpen(false); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && open) setOpen(false, true); });
     // any click outside the card and its avatar closes it (this includes opening the "On this page" menu)
     document.addEventListener('click', function (e) { if (open && !menu.contains(e.target) && !btn.contains(e.target)) setOpen(false); });
