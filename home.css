@@ -48,15 +48,16 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   background: var(--brand-primary);
   overflow: hidden;
 }
-/* the green fades to near-black across the lower third */
+/* the green fades to near-black across the lower part of the screen. It is pinned to the window rather than
+   to the page, so the green wash is always at the top of what you see, however far you have scrolled. */
 .home::before {
   content: '';
-  position: absolute;
+  position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 620px;
-  background: linear-gradient(to top, var(--ink) 20.149%, var(--brand-primary));
+  height: min(620px, 62vh);
+  background: linear-gradient(to top, var(--ink) 20.149%, rgba(44, 70, 54, 0));
   pointer-events: none;
 }
 /* Window light and cast plant shadows, derived from the reference photograph's light and shadow only
