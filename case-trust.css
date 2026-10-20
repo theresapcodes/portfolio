@@ -698,19 +698,6 @@ html[data-theme="dark"] {
   --control-border: #4d4d4d;
 }
 html[data-theme="dark"] .seg:not(.seg--glass) .seg__tab:hover { color: var(--text-default); }
-/* Dark mode exploration: the primary green as the page background. Preview with ?bg=green */
-html[data-theme="dark"][data-variant="green"] {
-  --surface: #2c4636;
-  --surface-gray: #3b5746;
-  --text-helper: #b7c8bd;
-  --border: #5a7566;
-  --control-bg: #34503f;
-  --control-border: #4f6b59;
-  --table-rule: #6b8576;
-}
-html[data-theme="dark"][data-variant="green"] .cs-back:hover,
-html[data-theme="dark"][data-variant="green"] .cs-theme:hover { background: #47654f; }
-html[data-theme="dark"][data-variant="green"] .cs-dock__pill { background: rgba(44, 70, 54, 0.85); }
 body { transition: background-color 250ms var(--ease), color 250ms var(--ease); }
 html[data-theme="dark"] .quote { color: var(--gray-300); }
 html[data-theme="dark"] .cs-back:hover { background: #404040; }
