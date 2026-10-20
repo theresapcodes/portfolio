@@ -237,3 +237,102 @@
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && active) hide(); });
   window.addEventListener('blur', hide);
 })();
+
+
+/* Nature sounds: opt-in, since browsers do not allow sound that starts on its own. A short recording of
+   birds, cleaned up and joined into a seamless loop, fades in quietly and out again. Played through the
+   browser's audio engine (not an audio tag) so the loop has no gap. The choice is remembered. */
+(function () {
+  'use strict';
+  var btn = document.querySelector('.home-sound');
+  if (!btn) return;
+  var AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) { btn.hidden = true; return; }
+
+  var URL_SRC = 'Assets/home/birds-loop.mp3';
+  var TARGET = 0.3, FADE_IN = 2.4, FADE_OUT = 1.2;
+  var ctx = null, gain = null, source = null, buffer = null, loading = null;
+  var on = false, pending = false;
+
+  function setUi() {
+    btn.setAttribute('aria-pressed', String(on));
+    btn.setAttribute('aria-label', on ? 'Mute nature sounds' : 'Play nature sounds');
+  }
+  function remember() { try { localStorage.setItem('home-sound', on ? 'on' : 'off'); } catch (e) { /* storage blocked */ } }
+  function engine() {
+    if (!ctx) {
+      ctx = new AC();
+      gain = ctx.createGain();
+      gain.gain.value = 0;
+      gain.connect(ctx.destination);
+    }
+    return ctx;
+  }
+  function load() {
+    if (buffer) return Promise.resolve(buffer);
+    if (!loading) {
+      loading = fetch(URL_SRC)
+        .then(function (r) { if (!r.ok) throw new Error('audio'); return r.arrayBuffer(); })
+        .then(function (data) { return new Promise(function (ok, no) { ctx.decodeAudioData(data, ok, no); }); })
+        .then(function (b) { buffer = b; return b; })
+        .catch(function (e) { loading = null; throw e; });
+    }
+    return loading;
+  }
+  function ramp(to, seconds) {
+    var t = ctx.currentTime;
+    gain.gain.cancelScheduledValues(t);
+    gain.gain.setValueAtTime(gain.gain.value, t);
+    gain.gain.linearRampToValueAtTime(to, t + seconds);
+  }
+  function start() {
+    engine();
+    if (ctx.state === 'suspended') ctx.resume();
+    return load().then(function (b) {
+      if (!on) return;
+      if (!source) {
+        source = ctx.createBufferSource();
+        source.buffer = b;
+        source.loop = true;
+        source.loopStart = 0.03;                       // stay clear of the encoder's padding
+        source.loopEnd = Math.max(b.duration - 0.03, 0.2);
+        source.connect(gain);
+        source.start(0, 0.03 + Math.random() * Math.max(b.duration - 15, 1));   // a different spot each visit
+      }
+      ramp(TARGET, FADE_IN);
+    }).catch(function () { on = false; setUi(); remember(); });   // could not load: back to off
+  }
+  function stop() {
+    if (!ctx || !gain) return;
+    ramp(0, FADE_OUT);
+    setTimeout(function () { if (!on && ctx.state === 'running') ctx.suspend(); }, FADE_OUT * 1000 + 100);
+  }
+
+  btn.addEventListener('click', function () {
+    on = !on;
+    pending = false;
+    setUi(); remember();
+    if (on) start(); else stop();
+  });
+
+  // quiet when the tab is in the background
+  document.addEventListener('visibilitychange', function () {
+    if (!ctx || !on) return;
+    if (document.hidden) ctx.suspend(); else ctx.resume();
+  });
+
+  // a remembered "on" shows as on, and starts at the visitor's first tap, click or key press
+  var saved = null;
+  try { saved = localStorage.getItem('home-sound'); } catch (e) { /* storage blocked */ }
+  if (saved === 'on') {
+    on = true; pending = true; setUi();
+    var first = function () {
+      document.removeEventListener('pointerdown', first, true);
+      document.removeEventListener('keydown', first, true);
+      if (on && pending) { pending = false; start(); }
+    };
+    document.addEventListener('pointerdown', first, true);
+    document.addEventListener('keydown', first, true);
+  }
+  setUi();
+})();

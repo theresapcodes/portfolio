@@ -345,3 +345,55 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
 /* the signature is white at 20% opacity */
 .signature--white { opacity: 0.2; }
+
+
+/* ---------- Nature sounds toggle (upper right): the bird ---------- */
+.home-sound {
+  position: fixed;
+  top: 28px;
+  right: 24px;
+  z-index: 4;                      /* under the menu's dim, like the rest of the page */
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: rgba(238, 243, 240, 0.55);
+  transition: color 250ms, border-color 250ms, background-color 250ms, transform 150ms var(--ease);
+}
+.home-sound svg { display: block; transition: transform 300ms var(--ease); }
+.home-sound:hover { color: rgba(238, 243, 240, 0.9); background: rgba(255, 255, 255, 0.12); }
+.home-sound:active { transform: scale(0.94); }
+/* off: a soft slash across the bird. on: the bird turns lime and now and then tilts, as if listening. */
+.home-sound::after {
+  content: '';
+  position: absolute;
+  width: 22px;
+  height: 1.5px;
+  border-radius: 1px;
+  background: currentColor;
+  transform: rotate(-45deg);
+  transition: opacity 250ms, width 250ms;
+}
+.home-sound[aria-pressed="true"]::after { opacity: 0; width: 0; }
+.home-sound[aria-pressed="true"] {
+  color: var(--brand-tertiary);
+  border-color: rgba(204, 236, 150, 0.45);
+  background: rgba(204, 236, 150, 0.1);
+}
+.home-sound[aria-pressed="true"] svg { animation: listen 7s ease-in-out infinite; }
+@keyframes listen {
+  0%, 82%, 100% { transform: rotate(0deg); }
+  86% { transform: rotate(-9deg) translateY(-1px); }
+  91% { transform: rotate(5deg); }
+  95% { transform: rotate(0deg); }
+}
+@media (max-width: 720px) { .home-sound { top: 20px; right: 16px; } }
+@media (prefers-reduced-motion: reduce) {
+  .home-sound, .home-sound svg, .home-sound::after { transition: none; }
+  .home-sound[aria-pressed="true"] svg { animation: none; }
+}
