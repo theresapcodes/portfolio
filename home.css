@@ -386,7 +386,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .signature--white { opacity: 0.2; }
 
 
-/* ---------- Nature sounds toggle (upper right): the bird ---------- */
+/* ---------- Nature sounds toggle (upper right): a speaker ---------- */
 .home-sound {
   position: fixed;
   top: 28px;
@@ -407,7 +407,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .home-sound svg { display: block; transition: transform 300ms var(--ease); }
 .home-sound:hover { color: rgba(238, 243, 240, 0.9); background: rgba(255, 255, 255, 0.12); }
 .home-sound:active { transform: scale(0.94); }
-/* off: a soft slash across the bird. on: the bird turns lime and now and then tilts, as if listening. */
+/* off: a soft slash across the speaker. on: it turns lime and its sound waves gently pulse. */
 .home-sound::after {
   content: '';
   position: absolute;
@@ -424,21 +424,17 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   border-color: rgba(204, 236, 150, 0.45);
   background: rgba(204, 236, 150, 0.1);
 }
-.home-sound[aria-pressed="true"] svg { animation: listen 7s ease-in-out infinite; }
-@keyframes listen {
-  0%, 82%, 100% { transform: rotate(0deg); }
-  86% { transform: rotate(-9deg) translateY(-1px); }
-  91% { transform: rotate(5deg); }
-  95% { transform: rotate(0deg); }
-}
+.home-sound[aria-pressed="true"] .home-sound__wave { animation: wave 2.6s ease-in-out infinite; }
+.home-sound[aria-pressed="true"] .home-sound__wave--2 { animation-delay: 0.35s; }
+@keyframes wave { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
 @media (max-width: 720px) { .home-sound { top: 20px; right: 16px; } }
 @media (prefers-reduced-motion: reduce) {
   .home-sound, .home-sound svg, .home-sound::after { transition: none; }
-  .home-sound[aria-pressed="true"] svg { animation: none; }
+  .home-sound[aria-pressed="true"] .home-sound__wave { animation: none; }
 }
 
 /* ---------- With the sound on: the photograph as the page ----------
-   Turning the bird on also turns on this brighter, sunlit version of the page. A dark wash from the left
+   Turning the sound on also turns on this brighter, sunlit version of the page. A dark wash from the left
    keeps the text readable and the right stays open so the photo shows. Served at 2x for dense screens. */
 html[data-bg="photo"] .light { display: none; }
 html[data-bg="photo"] .home {
