@@ -226,6 +226,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .home__bottom { margin-top: auto; padding-top: 25px; display: flex; flex-direction: column; gap: 24px; }
 .signature {
   display: block;
+  aspect-ratio: 1024 / 286;          /* keeps its space while it waits to be shown */
   width: calc(100% * 5123 / 5043);   /* the artwork has a small margin; this lines the ink up with the column */
   max-width: none;
   height: auto;

@@ -494,3 +494,22 @@
   }
   setUi();
 })();
+
+/* Signature: its write-on animation runs inside the image, so it used to play at page load, out of sight, when it sits
+   below the first screen (phones). Hold the image back until it is on screen, then let it write itself out there. */
+(function () {
+  'use strict';
+  var sig = document.querySelector('.signature');
+  if (!sig || !('IntersectionObserver' in window)) return;
+  var src = sig.getAttribute('src');
+  if (!src) return;
+  var r = sig.getBoundingClientRect();
+  if (r.top < window.innerHeight * 0.9) return;          // already on screen at load: it writes itself right away
+  sig.removeAttribute('src');
+  var io = new IntersectionObserver(function (entries) {
+    if (!entries[0].isIntersecting) return;
+    io.disconnect();
+    sig.setAttribute('src', src);
+  }, { threshold: 0.25 });
+  io.observe(sig);
+})();
