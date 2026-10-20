@@ -120,3 +120,120 @@
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && open) setOpen(false, true); });
   document.addEventListener('click', function (e) { if (open && !root.contains(e.target)) setOpen(false); });
 })();
+
+/* Link preview: hovering (or keyboard-focusing) a link marked data-peek floats a small preview card.
+   - appears after a short pause (~110ms) so sweeping the pointer across text does not flicker
+   - sits above the link, follows the pointer sideways with a little easing, flips below near the top
+   - never intercepts the pointer, so the link stays clickable
+   - mouse and keyboard only: on touch screens a tap simply opens the page
+   - the image is fetched and decoded up front so the card never pops in half drawn */
+(function () {
+  'use strict';
+  var card = document.querySelector('.peek');
+  var links = Array.prototype.slice.call(document.querySelectorAll('[data-peek]'));
+  if (!card || !links.length) return;
+
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mouseOk = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var img = card.querySelector('.peek__img');
+  var labelEl = card.querySelector('.peek__label');
+  var titleEl = card.querySelector('.peek__title');
+  var W = 320, GAP = 14, MARGIN = 12, EASE = reduceMotion ? 1 : 0.18;
+
+  var active = null, showTimer = null, hideTimer = null, raf = null;
+  var px = 0, py = 0, curX = null;
+  var warmed = {};
+
+  function warm(link) {
+    var src = link.getAttribute('data-peek-img');
+    if (!src) return Promise.resolve();
+    if (!warmed[src]) {
+      var pre = new Image();
+      pre.src = src;
+      warmed[src] = pre.decode ? pre.decode().catch(function () {}) : Promise.resolve();
+    }
+    return warmed[src];
+  }
+  function warmAll() { links.forEach(warm); }
+  function whenIdle() {
+    if ('requestIdleCallback' in window) requestIdleCallback(warmAll, { timeout: 2500 });
+    else setTimeout(warmAll, 1500);
+  }
+  if (document.readyState === 'complete') whenIdle(); else window.addEventListener('load', whenIdle);
+
+  // links can wrap onto two lines; use the line under the pointer
+  function lineRect(link) {
+    var rects = link.getClientRects();
+    if (!rects.length) return link.getBoundingClientRect();
+    for (var i = 0; i < rects.length; i++) {
+      if (py >= rects[i].top - 2 && py <= rects[i].bottom + 2) return rects[i];
+    }
+    return rects[0];
+  }
+
+  function place(first) {
+    if (!active) return;
+    var r = lineRect(active);
+    var h = card.offsetHeight;
+    var targetX = Math.max(MARGIN, Math.min(window.innerWidth - W - MARGIN, px - W / 2));
+    var y = r.top - h - GAP;
+    var below = y < MARGIN;
+    if (below) y = r.bottom + GAP;
+    card.classList.toggle('is-below', below);
+    curX = (first || curX === null) ? targetX : curX + (targetX - curX) * EASE;
+    card.style.transform = 'translate3d(' + curX.toFixed(1) + 'px,' + Math.round(y) + 'px,0)';
+  }
+  function loop() {
+    place(false);
+    raf = active ? requestAnimationFrame(loop) : null;
+  }
+
+  function show(link) {
+    clearTimeout(hideTimer);
+    if (active === link && card.classList.contains('is-on')) return;
+    active = link;
+    warm(link).then(function () {
+      if (active !== link) return;
+      var src = link.getAttribute('data-peek-img');
+      if (img.getAttribute('src') !== src) img.setAttribute('src', src);
+      labelEl.textContent = link.getAttribute('data-peek-label') || '';
+      titleEl.textContent = link.getAttribute('data-peek-title') || '';
+      card.hidden = false;
+      curX = null;
+      place(true);
+      void card.offsetWidth;                // register the start state so the entrance transition runs
+      card.classList.add('is-on');
+      if (!raf) raf = requestAnimationFrame(loop);
+    });
+  }
+
+  function hide() {
+    clearTimeout(showTimer);
+    active = null;
+    card.classList.remove('is-on');
+    hideTimer = setTimeout(function () { if (!active) card.hidden = true; }, reduceMotion ? 140 : 280);
+  }
+
+  links.forEach(function (link) {
+    if (mouseOk) {
+      link.addEventListener('mouseenter', function (e) {
+        px = e.clientX; py = e.clientY;
+        clearTimeout(hideTimer); clearTimeout(showTimer);
+        warm(link);
+        showTimer = setTimeout(function () { show(link); }, 110);
+      });
+      link.addEventListener('mousemove', function (e) { px = e.clientX; py = e.clientY; });
+      link.addEventListener('mouseleave', function () { clearTimeout(showTimer); hideTimer = setTimeout(hide, 60); });
+    }
+    link.addEventListener('focus', function () {
+      if (!link.matches(':focus-visible')) return;     // keyboard focus only, not a click
+      var r = link.getBoundingClientRect();
+      px = r.left + r.width / 2; py = r.top + r.height / 2;
+      show(link);
+    });
+    link.addEventListener('blur', hide);
+    link.addEventListener('click', hide);
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && active) hide(); });
+  window.addEventListener('blur', hide);
+})();
