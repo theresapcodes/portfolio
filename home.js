@@ -139,6 +139,7 @@
   var labelEl = card.querySelector('.peek__label');
   var titleEl = card.querySelector('.peek__title');
   var W = 320, GAP = 14, MARGIN = 12, EASE = reduceMotion ? 1 : 0.18;
+  var NUDGE_LIFT = 56;                    // the nudge sits a little above the link's line
 
   var active = null, showTimer = null, hideTimer = null, raf = null;
   var px = 0, py = 0, curX = null;
@@ -177,7 +178,7 @@
     var h = card.offsetHeight;
     if (nudging && nudgeX !== null) {
       // the nudge rests in the empty space to the right of the text, level with the link, so it covers no copy
-      var sy = Math.max(MARGIN, Math.min(window.innerHeight - h - MARGIN, r.top + r.height / 2 - h / 2));
+      var sy = Math.max(MARGIN, Math.min(window.innerHeight - h - MARGIN, r.top + r.height / 2 - h / 2 - NUDGE_LIFT));
       card.classList.remove('is-below');
       card.classList.add('is-side');
       curX = nudgeX;
