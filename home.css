@@ -95,7 +95,13 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   from { transform: translate3d(-3.4%, 0.8%, 0) rotate(-0.45deg); }
   to { transform: translate3d(3.6%, -0.6%, 0) rotate(0.5deg); }
 }
-.light__window { left: 0; top: 0; width: 100%; height: 100%; }
+.light__window {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: url(Assets/home/light-window.webp) 0 0 / 100% 100% no-repeat;
+}
 .light__plant {
   will-change: transform;
   transform-origin: var(--ox) var(--oy);
@@ -323,3 +329,37 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   .profile__btn::before, .profile__btn .avatar--sm, .scrim { animation: none; transition: none; }
   .peek__card, .peek.is-below .peek__card { transition: opacity 120ms linear; transform: none; }
 }
+
+/* ---------- Light mode (preview with ?theme=light) ----------
+   The green page becomes a soft off-white; headings go to the brand green, the accent leans on the soft
+   green and coral, and the window light and plant shadows read as shade on a bright wall. The menu and
+   hover cards stay dark: they are small floating objects, and the Email and LinkedIn icons are drawn on dark tiles. */
+html[data-theme="light"] {
+  --brand-primary: #f5f5f5;      /* page background */
+  --ink: #d5dfd8;                /* the soft fade at the bottom */
+  --text-inverted: #2c4636;      /* headline */
+  --green-100: #1a1a1a;          /* body copy */
+  --green-200: #2c4636;          /* profile name and title */
+}
+html[data-theme="light"] :focus-visible { outline-color: #2c4636; }
+html[data-theme="light"] .profile__btn:hover .profile__name { color: #111; }
+html[data-theme="light"] .profile__btn[aria-expanded="true"] .avatar--sm { border-color: #f2674b; }
+html[data-theme="light"] .profile__btn::before { background: radial-gradient(circle, rgba(242, 103, 75, 0.22), rgba(242, 103, 75, 0) 70%); }
+html[data-theme="light"] .scrim { background: rgba(17, 17, 17, 0.32); }
+html[data-theme="light"] .eyebrow { color: #3d5a49; }
+html[data-theme="light"] .link:hover { color: #f2674b; }
+html[data-theme="light"] .touch { color: #3d5a49; }
+html[data-theme="light"] .touch strong { color: rgba(17, 17, 17, 0.75); }
+html[data-theme="light"] .touch a:hover { color: #111; }
+html[data-theme="light"] .copyright { color: #3d5a49; }
+html[data-theme="light"] .peek__title { color: #fff; }
+/* the light-mode background is a still: the same scene graded as a bright, sunlit wall, in the same
+   position as dark mode, with the plant's shadow baked in (so no sway and no drift here) */
+html[data-theme="light"] .light {
+  /* the still fades toward the page behind the headline and copy, so the shadow never competes with the text */
+  -webkit-mask-image: radial-gradient(ellipse 50% 62% at 34% 40%, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.45) 55%, #000 100%);
+  mask-image: radial-gradient(ellipse 50% 62% at 34% 40%, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.45) 55%, #000 100%);
+}
+html[data-theme="light"] .light__window { background-image: url(Assets/home/light-day.jpg); }
+html[data-theme="light"] .light__plant { display: none; }
+html[data-theme="light"] .light__drift { animation: none; transform: none; }
