@@ -672,10 +672,11 @@ html[data-theme="dark"] .cs-dock__theme .icon-moon { display: none; }
 /* ---------- Dark mode ----------
    Values come from the Dark mode of the Color collection in the design system
    (background base = gray/900, surface = gray/800, border = gray/700,
-   text = gray/100 to gray/400). Brand colors stay as they are in both modes;
-   headings switch to the tertiary lime because the green is too dark on dark. */
+   text = gray/100 to gray/400). Headings and bold copy turn white because the
+   green is too dark on dark, and the coral accent is swapped for the tertiary lime. */
 html[data-theme="dark"] {
-  --heading: var(--brand-tertiary);
+  --heading: #ffffff;
+  --brand-secondary: var(--brand-tertiary);   /* accent becomes the lime in dark mode */
   --text-default: #f5f5f5;
   --text-secondary: #e5e5e5;
   --text-helper: #aaaaaa;
