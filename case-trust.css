@@ -125,7 +125,7 @@ strong { font-weight: 700; color: var(--heading); }
 .cs-hero__titles { display: flex; flex-direction: column; gap: 8px; }
 .cs-hero__subhead { font-weight: 700; font-size: 16px; line-height: 24px; color: var(--text-helper); }
 
-.chips { display: flex; flex-wrap: wrap; gap: 24px; }
+.chips { display: flex; flex-wrap: wrap; gap: 12px 24px; }   /* tighter between rows when the chips wrap */
 .chip {
   border: 1px solid var(--text-helper);
   border-radius: 4px;
