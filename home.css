@@ -119,13 +119,14 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .link-icon { display: inline-block; width: 16px; height: 16px; margin-left: 4px; vertical-align: -3px; opacity: 0.7; }
 
 /* ---------- Bottom ---------- */
-.home__bottom { margin-top: auto; display: flex; flex-direction: column; gap: 40px; }
+/* the top flourish of the signature needs real air between it and the paragraph above */
+.home__bottom { margin-top: auto; padding-top: 24px; display: flex; flex-direction: column; gap: 24px; }
 .signature {
   display: block;
   width: calc(100% * 5123 / 5043);   /* the artwork has a small margin; this lines the ink up with the column */
   max-width: none;
   height: auto;
-  margin: -8.3% 0 0 -0.8%;           /* the flourishes rise above and drop below the line */
+  margin: 0 0 0 -0.8%;
   user-select: none;
   pointer-events: none;
 }
