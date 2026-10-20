@@ -323,3 +323,15 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   .profile__btn::before, .profile__btn .avatar--sm, .scrim { animation: none; transition: none; }
   .peek__card, .peek.is-below .peek__card { transition: opacity 120ms linear; transform: none; }
 }
+
+/* Preview: the reference photograph itself as the page background (?bg=photo).
+   A dark wash from the left keeps the white text readable; the right stays open so the photo shows. */
+html[data-bg="photo"] .light { display: none; }
+html[data-bg="photo"] .home {
+  background:
+    linear-gradient(90deg, rgba(8, 14, 10, 0.86) 0%, rgba(8, 14, 10, 0.72) 42%, rgba(8, 14, 10, 0.34) 72%, rgba(8, 14, 10, 0.08) 100%),
+    url(Assets/home/reference-photo.jpg) center / cover no-repeat;
+}
+html[data-bg="photo"] .home::before {
+  background: linear-gradient(to top, rgba(8, 14, 10, 0.88) 18%, rgba(8, 14, 10, 0) 100%);
+}
