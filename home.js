@@ -175,6 +175,16 @@
     if (!active) return;
     var r = lineRect(active);
     var h = card.offsetHeight;
+    if (nudging && nudgeX !== null) {
+      // the nudge rests in the empty space to the right of the text, level with the link, so it covers no copy
+      var sy = Math.max(MARGIN, Math.min(window.innerHeight - h - MARGIN, r.top + r.height / 2 - h / 2));
+      card.classList.remove('is-below');
+      card.classList.add('is-side');
+      curX = nudgeX;
+      card.style.transform = 'translate3d(' + nudgeX.toFixed(1) + 'px,' + Math.round(sy) + 'px,0)';
+      return;
+    }
+    card.classList.remove('is-side');
     var targetX = Math.max(MARGIN, Math.min(window.innerWidth - W - MARGIN, px - W / 2));
     var y = r.top - h - GAP;
     var below = y < MARGIN;
@@ -243,7 +253,7 @@
   var NUDGE_KEY = 'peek-nudged';
   var hoverOk = window.matchMedia && window.matchMedia('(hover: hover)').matches;
   var nudgeLink = links[0];
-  var nudgeTimer = null, holdTimer = null, nudging = false, nudgedThisPage = false;
+  var nudgeTimer = null, holdTimer = null, nudging = false, nudgedThisPage = false, nudgeX = null;
 
   function nudgeSeen() {
     if (nudgedThisPage) return true;
@@ -255,7 +265,7 @@
   }
   function endNudge() {
     clearTimeout(holdTimer);
-    nudging = false;
+    nudging = false; nudgeX = null;
     card.classList.remove('is-on');
     active = null;
     clearTimeout(hideTimer);
@@ -266,7 +276,7 @@
     clearTimeout(nudgeTimer); nudgeTimer = null;
     if (!nudging) return;
     clearTimeout(holdTimer);
-    nudging = false;
+    nudging = false; nudgeX = null;
     card.classList.remove('is-nudge');      // normal hover timing from here on
   }
   function playNudge() {
@@ -274,7 +284,12 @@
     if (nudgeSeen() || nudging || active || nudgeLink.matches(':hover') || document.activeElement === nudgeLink) return;
     var rects = nudgeLink.getClientRects();
     var r = rects.length ? rects[0] : nudgeLink.getBoundingClientRect();
-    px = r.left + r.width / 2; py = r.top + r.height / 2;       // no cursor to follow: rest centred over the link
+    px = r.left + r.width / 2; py = r.top + r.height / 2;
+    // no cursor to follow: rest beside the text column if there is room there, otherwise tucked to the right edge
+    var col = nudgeLink.closest('.home__intro');
+    var sideX = (col ? col.getBoundingClientRect().right : r.right) + 24;
+    if (sideX + W + MARGIN <= window.innerWidth) nudgeX = sideX;
+    else { nudgeX = null; px = window.innerWidth; }
     markNudged();
     nudging = true;
     card.classList.add('is-nudge');
