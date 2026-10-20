@@ -179,6 +179,16 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   pointer-events: none;
 }
 .profile__btn[aria-expanded="true"]::before { opacity: 1; animation: glow 3s ease-in-out infinite; }
+
+/* hover: the photo lifts and the picture inside zooms a touch, the ring lights up, and a soft glow comes in */
+.avatar img { transition: transform 600ms var(--ease); transform-origin: 50% 38%; }
+@media (hover: hover) {
+  .profile__btn:hover .avatar--sm { transform: scale(1.12); border-color: var(--brand-tertiary); }
+  .profile__btn:hover .avatar img { transform: scale(1.1); }
+  .profile__btn:hover::before { opacity: 0.8; }
+}
+.profile__btn:focus-visible .avatar--sm { transform: scale(1.12); border-color: var(--brand-tertiary); }
+.profile__btn:focus-visible .avatar img { transform: scale(1.1); }
 @keyframes glow { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
 
 /* ---------- Intro ---------- */
@@ -334,6 +344,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 @media (prefers-reduced-motion: reduce) {
   .in { animation: none; }
   .profile__btn::before, .profile__btn .avatar--sm, .scrim { animation: none; transition: none; }
+  .avatar img { transition: none; }
   .peek__card, .peek.is-below .peek__card { transition: opacity 120ms linear; transform: none; }
 }
 
