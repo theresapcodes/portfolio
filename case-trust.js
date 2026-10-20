@@ -292,7 +292,7 @@
 
   // ---- floating dock: headshot opens an "On this page" menu with scroll-spy ------------
   (function () {
-    var btn = document.querySelector('.cs-dock__avatar');
+    var btn = document.querySelector('.cs-dock__nav');
     var toc = document.getElementById('cs-toc');
     if (!btn || !toc) return;
     var open = false;
