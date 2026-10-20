@@ -809,8 +809,58 @@ document.addEventListener('DOMContentLoaded', () => {
   initCaseJumpNav();
   initArchiveModal();
   initLightbox();
+  initBeforeAfter();
   initScrollPlayVideos();
   initAutoplayVideos();
   // initCapabilitiesAccordion(); // section held back from production for now, re-enable when it goes live
   initExperienceAccordion();
 });
+
+
+function initBeforeAfter() {
+  document.querySelectorAll('[data-before-after]').forEach((root) => {
+    const tabs = [...root.querySelectorAll('.segmented__tab')];
+    const videos = {};
+    root.querySelectorAll('.before-after__video').forEach((video) => {
+      videos[video.id.replace('ba-panel-', '')] = video;
+    });
+    if (tabs.length < 2) return;
+
+    function select(view, focus) {
+      tabs.forEach((tab) => {
+        const active = tab.dataset.view === view;
+        tab.classList.toggle('is-active', active);
+        tab.setAttribute('aria-selected', String(active));
+        tab.tabIndex = active ? 0 : -1;
+        if (active && focus) tab.focus();
+      });
+      root.querySelectorAll('.before-after__caption').forEach((caption) => {
+        caption.hidden = caption.dataset.caption !== view;
+      });
+      Object.entries(videos).forEach(([name, video]) => {
+        if (name === view) {
+          video.hidden = false;
+          video.preload = 'auto';
+          video.currentTime = 0;
+        } else {
+          video.pause();
+          video.hidden = true;
+        }
+      });
+    }
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => select(tab.dataset.view, false));
+      tab.addEventListener('keydown', (event) => {
+        let next = null;
+        if (event.key === 'ArrowRight') next = tabs[(index + 1) % tabs.length];
+        if (event.key === 'ArrowLeft') next = tabs[(index - 1 + tabs.length) % tabs.length];
+        if (event.key === 'Home') next = tabs[0];
+        if (event.key === 'End') next = tabs[tabs.length - 1];
+        if (!next) return;
+        event.preventDefault();
+        select(next.dataset.view, true);
+      });
+    });
+  });
+}

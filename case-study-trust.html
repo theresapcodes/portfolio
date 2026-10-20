@@ -239,8 +239,18 @@
 
         <p>That evidence made <strong>Match</strong> possible. By mid-2025 and early 2026, following Gigpro&rsquo;s acquisition of Qwick, those efforts came together in <strong>Match</strong>. The platform fills shifts with qualified Pros, and businesses can still review selections, remove someone, or use Direct Offers for a specific person. Pros went from applying and waiting to confirming a shift they were matched to, and no longer felt like they were shouting into the void.</p>
 
-        <video class="case-image-full case-image-crop" src="Assets/match_biz_new.mp4" poster="Assets/match_biz_new.jpg" muted loop playsinline webkit-playsinline="true" preload="metadata" aria-label="Business-side shift view showing 8 of 10 confirmed Pros for an Event Server shift, each with rating, gigs completed, and confirmation status" data-reveal></video>
-        <p class="case-figcaption-standalone"><strong>Match</strong> fills shifts while businesses keep the option to review.</p>
+        <div class="before-after" data-before-after data-reveal>
+          <div class="segmented" role="tablist" aria-label="Compare the hiring experience before and after Match">
+            <button class="segmented__tab" type="button" role="tab" id="ba-tab-before" aria-controls="ba-panel-before" aria-selected="false" tabindex="-1" data-view="before">Before</button>
+            <button class="segmented__tab is-active" type="button" role="tab" id="ba-tab-after" aria-controls="ba-panel-after" aria-selected="true" data-view="after">After</button>
+          </div>
+          <div class="before-after__stage">
+            <video class="before-after__video" id="ba-panel-before" role="tabpanel" aria-labelledby="ba-tab-before" src="Assets/Selection.mp4" poster="Assets/Selection.jpg" muted loop playsinline webkit-playsinline="true" preload="none" hidden aria-label="Before: a business reviewing a list of applicants for a Line Cook shift and selecting Pros one at a time, with Bio and Work history expanded for each"></video>
+            <video class="before-after__video" id="ba-panel-after" role="tabpanel" aria-labelledby="ba-tab-after" src="Assets/Match.mp4" poster="Assets/Match.jpg" muted loop playsinline webkit-playsinline="true" preload="metadata" aria-label="After: Match searching for Pros and filling the open slots on an Event Server shift, each confirmed Pro showing rating, gigs completed, and confirmation status"></video>
+          </div>
+          <p class="case-figcaption-standalone before-after__caption" data-caption="before" aria-live="polite" hidden><strong>Manual selection:</strong> Businesses review the applicant pool and send multiple offers to improve the odds of filling a shift, then wait for Pros to confirm.</p>
+          <p class="case-figcaption-standalone before-after__caption" data-caption="after" aria-live="polite"><strong>Match</strong> selects best-fit Pros for each shift on behalf of the business. Businesses can remove any Pros they don&rsquo;t want from the roster.</p>
+        </div>
 
         <video class="case-image-full" src="Assets/Pro_accept.mp4" poster="Assets/Pro_accept.jpg" preload="metadata" muted loop playsinline aria-label="Qwick Pro-side app showing matched shifts sorted by new shifts, each with pay rate, distance, and schedule" data-reveal></video>
         <p class="case-figcaption-standalone">Pros confirm a matched shift instantly.</p>
