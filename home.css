@@ -69,37 +69,40 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   z-index: 0;
   pointer-events: none;
   background:
-    /* broad ambient lift from the upper left, very faint */
-    radial-gradient(95% 75% at 18% -8%, rgba(255, 247, 235, 0.05), rgba(255, 247, 235, 0.02) 45%, rgba(255, 247, 235, 0) 72%),
-    /* main shaft of light */
+    /* broad ambient lift from the upper left */
+    radial-gradient(95% 75% at 18% -8%, rgba(255, 247, 235, 0.09), rgba(255, 247, 235, 0.04) 45%, rgba(255, 247, 235, 0) 72%),
+    /* main shaft of light: clear shape, soft edges */
     linear-gradient(108deg,
-      rgba(255, 247, 235, 0) 6%,
-      rgba(255, 247, 235, 0.02) 14%,
-      rgba(255, 247, 235, 0.05) 23%,
-      rgba(255, 247, 235, 0.065) 30%,
-      rgba(255, 247, 235, 0.045) 36%,
-      rgba(255, 247, 235, 0.018) 44%,
-      rgba(255, 247, 235, 0) 52%),
-    /* gentle shadow that falls beside it */
+      rgba(255, 247, 235, 0) 9%,
+      rgba(255, 247, 235, 0.035) 15%,
+      rgba(255, 247, 235, 0.1) 21%,
+      rgba(255, 247, 235, 0.14) 26%,
+      rgba(255, 247, 235, 0.14) 33%,
+      rgba(255, 247, 235, 0.09) 38%,
+      rgba(255, 247, 235, 0.035) 43%,
+      rgba(255, 247, 235, 0) 48%),
+    /* the shadow that falls beside it, a little crisper on the light side */
     linear-gradient(106deg,
       rgba(6, 10, 8, 0) 40%,
-      rgba(6, 10, 8, 0.07) 47%,
-      rgba(6, 10, 8, 0.14) 54%,
-      rgba(6, 10, 8, 0.1) 60%,
-      rgba(6, 10, 8, 0.035) 67%,
+      rgba(6, 10, 8, 0.1) 45%,
+      rgba(6, 10, 8, 0.26) 50%,
+      rgba(6, 10, 8, 0.3) 56%,
+      rgba(6, 10, 8, 0.2) 62%,
+      rgba(6, 10, 8, 0.08) 68%,
       rgba(6, 10, 8, 0) 74%),
-    /* a second, fainter shaft further right */
+    /* a second shaft further right */
     linear-gradient(113deg,
       rgba(255, 247, 235, 0) 64%,
-      rgba(255, 247, 235, 0.02) 71%,
-      rgba(255, 247, 235, 0.04) 77%,
-      rgba(255, 247, 235, 0.025) 83%,
-      rgba(255, 247, 235, 0) 90%),
+      rgba(255, 247, 235, 0.04) 69%,
+      rgba(255, 247, 235, 0.105) 74%,
+      rgba(255, 247, 235, 0.105) 79%,
+      rgba(255, 247, 235, 0.04) 85%,
+      rgba(255, 247, 235, 0) 91%),
     /* the far edge settles into shade */
     linear-gradient(118deg,
-      rgba(6, 10, 8, 0) 82%,
-      rgba(6, 10, 8, 0.08) 92%,
-      rgba(6, 10, 8, 0.15) 100%);
+      rgba(6, 10, 8, 0) 80%,
+      rgba(6, 10, 8, 0.16) 90%,
+      rgba(6, 10, 8, 0.3) 100%);
 }
 .home__inner {
   position: relative;
