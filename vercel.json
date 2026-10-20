@@ -5,6 +5,17 @@
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=86400" }
       ]
+    },
+    {
+      "source": "/legacy/(.*)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
+      ]
     }
+  ],
+  "redirects": [
+    { "source": "/case-study-artlas.html", "destination": "/legacy/case-study-artlas.html", "permanent": false },
+    { "source": "/case-study-brand.html", "destination": "/legacy/case-study-brand.html", "permanent": false },
+    { "source": "/experience.html", "destination": "/legacy/experience.html", "permanent": false }
   ]
 }
