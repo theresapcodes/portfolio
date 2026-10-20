@@ -172,7 +172,6 @@
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (entries) {
         visible = entries[0].isIntersecting;
-        root.classList.toggle('is-inview', visible);   // lets the pen underline draw once the quote is on screen
         sync();
       }, { threshold: 0.3 }).observe(root);
     } else {
@@ -290,31 +289,6 @@
     });
     sync();
   })();
-
-  // ---- sign-off: the signature writes itself in when it scrolls into view -------------------
-  Array.prototype.forEach.call(document.querySelectorAll('[data-sign]'), function (host) {
-    var started = false;
-    function start() {
-      if (started) return;
-      started = true;
-      fetch(host.getAttribute('data-sign'))
-        .then(function (r) { return r.text(); })
-        .then(function (svg) {
-          // take the colour from the page so it follows light and dark mode
-          svg = svg.replace(/fill="#ffffff"/g, 'fill="currentColor"').replace(/fill="#577161" fill-opacity="\.5"/g, 'fill="currentColor"');
-          host.innerHTML = svg;
-        })
-        .catch(function () { /* decorative: fail quietly */ });
-    }
-    if ('IntersectionObserver' in window) {
-      var obs = new IntersectionObserver(function (entries) {
-        if (entries[0].isIntersecting) { start(); obs.disconnect(); }
-      }, { threshold: 0.9, rootMargin: '0px 0px -8% 0px' });
-      obs.observe(host);
-    } else {
-      start();
-    }
-  });
 
   // ---- floating dock: headshot opens an "On this page" menu with scroll-spy ------------
   (function () {
