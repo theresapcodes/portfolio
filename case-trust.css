@@ -692,7 +692,7 @@ html[data-theme="dark"] {
 }
 html[data-theme="dark"] .seg:not(.seg--glass) .seg__tab:hover { color: var(--text-default); }
 body { transition: background-color 250ms var(--ease), color 250ms var(--ease); }
-html[data-theme="dark"] .quote { color: #9bb8a4; }
+html[data-theme="dark"] .quote { color: var(--gray-300); }
 html[data-theme="dark"] .cs-back:hover { background: #404040; }
 html[data-theme="dark"] .cs-dock__pill {
   background: rgba(26, 26, 26, 0.82);
