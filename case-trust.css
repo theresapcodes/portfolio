@@ -9,7 +9,7 @@
   --brand-primary: #2c4636;
   --brand-secondary: #f2674b;
   --brand-tertiary: #ccec96;
-  --table-rule: var(--gray-600);   /* approach table lines, same grey in light and dark */
+  --table-rule: var(--text-helper);   /* approach table lines: same grey as the table headers */
   --heading: var(--brand-primary);   /* headings, bold copy, key figures (switches in dark mode) */
   --gray-100: #f5f5f5;
   --gray-200: #e5e5e5;
@@ -677,6 +677,7 @@ html[data-theme="dark"] .cs-dock__theme .icon-moon { display: none; }
    green is too dark on dark, and the coral accent is swapped for the tertiary lime. */
 html[data-theme="dark"] {
   --heading: #ffffff;
+  --table-rule: var(--gray-600);   /* quieter than the bright header text in dark mode */
   --brand-secondary: var(--brand-tertiary);   /* accent becomes the lime in dark mode */
   --text-default: #f5f5f5;
   --text-secondary: #e5e5e5;
