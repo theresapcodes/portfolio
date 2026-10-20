@@ -196,6 +196,7 @@
       if (active !== link) return;
       var src = link.getAttribute('data-peek-img');
       if (img.getAttribute('src') !== src) img.setAttribute('src', src);
+      img.setAttribute('alt', link.getAttribute('data-peek-alt') || '');
       labelEl.textContent = link.getAttribute('data-peek-label') || '';
       titleEl.textContent = link.getAttribute('data-peek-title') || '';
       card.hidden = false;
@@ -217,6 +218,7 @@
   links.forEach(function (link) {
     if (mouseOk) {
       link.addEventListener('mouseenter', function (e) {
+        cancelNudge();
         px = e.clientX; py = e.clientY;
         clearTimeout(hideTimer); clearTimeout(showTimer);
         warm(link);
@@ -226,14 +228,78 @@
       link.addEventListener('mouseleave', function () { clearTimeout(showTimer); hideTimer = setTimeout(hide, 60); });
     }
     link.addEventListener('focus', function () {
+      cancelNudge();
       if (!link.matches(':focus-visible')) return;     // keyboard focus only, not a click
       var r = link.getBoundingClientRect();
       px = r.left + r.width / 2; py = r.top + r.height / 2;
       show(link);
     });
     link.addEventListener('blur', hide);
-    link.addEventListener('click', hide);
+    link.addEventListener('click', function () { cancelNudge(); hide(); });
   });
+
+  // ---- one-time nudge: when the featured link's paragraph is mostly in view, show its preview for a moment
+  //      (once per session), so visitors learn the link has one. Hover, focus, click or scrolling away cancels it.
+  var NUDGE_KEY = 'peek-nudged';
+  var hoverOk = window.matchMedia && window.matchMedia('(hover: hover)').matches;
+  var nudgeLink = links[0];
+  var nudgeTimer = null, holdTimer = null, nudging = false, nudgedThisPage = false;
+
+  function nudgeSeen() {
+    if (nudgedThisPage) return true;
+    try { return sessionStorage.getItem(NUDGE_KEY) === '1'; } catch (e) { return false; }
+  }
+  function markNudged() {
+    nudgedThisPage = true;
+    try { sessionStorage.setItem(NUDGE_KEY, '1'); } catch (e) { /* storage blocked: the page flag still stops repeats */ }
+  }
+  function endNudge() {
+    clearTimeout(holdTimer);
+    nudging = false;
+    card.classList.remove('is-on');
+    active = null;
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(function () { if (!active) { card.hidden = true; card.classList.remove('is-nudge'); } }, 340);
+  }
+  // visitor took over (hover, focus, click) or the link left the screen
+  function cancelNudge() {
+    clearTimeout(nudgeTimer); nudgeTimer = null;
+    if (!nudging) return;
+    clearTimeout(holdTimer);
+    nudging = false;
+    card.classList.remove('is-nudge');      // normal hover timing from here on
+  }
+  function playNudge() {
+    nudgeTimer = null;
+    if (nudgeSeen() || nudging || active || nudgeLink.matches(':hover') || document.activeElement === nudgeLink) return;
+    var rects = nudgeLink.getClientRects();
+    var r = rects.length ? rects[0] : nudgeLink.getBoundingClientRect();
+    px = r.left + r.width / 2; py = r.top + r.height / 2;       // no cursor to follow: rest centred over the link
+    markNudged();
+    nudging = true;
+    card.classList.add('is-nudge');
+    show(nudgeLink);
+    holdTimer = setTimeout(endNudge, 300 + 2000);                // ~300ms fade in, then hold ~2s, then fade out
+  }
+
+  if (nudgeLink && hoverOk && !reduceMotion && !nudgeSeen() && 'IntersectionObserver' in window) {
+    var holder = nudgeLink.closest('p') || nudgeLink;
+    var io = new IntersectionObserver(function (entries) {
+      var e = entries[entries.length - 1];
+      if (e.intersectionRatio >= 0.6) {
+        if (nudgeTimer || nudging || nudgeSeen()) return;
+        // about 800ms after it comes into view, but not while the page's own entrance animation is still running
+        var wait = Math.max(800, 1600 - performance.now());
+        nudgeTimer = setTimeout(playNudge, wait);
+      } else {
+        // scrolled away: drop the pending nudge, or hide it right now if it is on screen
+        var wasNudging = nudging;
+        cancelNudge();
+        if (wasNudging) { hide(); card.classList.remove('is-nudge'); }
+      }
+    }, { threshold: [0, 0.6] });
+    io.observe(holder);
+  }
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && active) hide(); });
   window.addEventListener('blur', hide);
 })();
