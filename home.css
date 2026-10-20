@@ -339,10 +339,10 @@ html[data-bg="photo"] .home {
 html[data-bg="photo"] .home::before {
   background: linear-gradient(to top, rgba(8, 14, 10, 0.88) 18%, rgba(8, 14, 10, 0) 100%);
 }
-/* the signature is solid white on the photograph */
+/* the signature is white on the photograph, at 20% */
 .signature--white { display: none; }
 html[data-bg="photo"] .signature--green { display: none; }
-html[data-bg="photo"] .signature--white { display: block; }
+html[data-bg="photo"] .signature--white { display: block; opacity: 0.2; }
 
 /* ---------- Light / dark toggle (upper right) ---------- */
 .home-theme {
