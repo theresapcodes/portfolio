@@ -18,6 +18,22 @@
 
   <script>try{var q=location.search,r=document.documentElement;if(/[?&]bg=photo\b/.test(q)||(localStorage.getItem('home-sound')==='on'&&!/[?&]bg=green\b/.test(q)))r.dataset.bg='photo';}catch(e){}</script>
   <link rel="stylesheet" href="home.css" />
+  <script>
+    // tell the page transition which way we're travelling (home -> case study, or back)
+    (function () {
+      function tag(vt, url) {
+        if (!vt || !url) return;
+        var toCase = /case-study/.test(new URL(url, location.href).pathname);
+        vt.types.add(toCase ? 'to-case' : 'to-home');
+      }
+      window.addEventListener('pageswap', function (e) {
+        if (e.viewTransition && e.activation) tag(e.viewTransition, e.activation.entry && e.activation.entry.url);
+      });
+      window.addEventListener('pagereveal', function (e) {
+        if (e.viewTransition && window.navigation && navigation.activation) tag(e.viewTransition, navigation.activation.entry.url);
+      });
+    })();
+  </script>
 </head>
 <body>
 

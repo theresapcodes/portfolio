@@ -17,6 +17,22 @@
 
   <script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('cs-theme');if(t==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
   <link rel="stylesheet" href="case-trust.css" />
+  <script>
+    // tell the page transition which way we're travelling (home -> case study, or back)
+    (function () {
+      function tag(vt, url) {
+        if (!vt || !url) return;
+        var toCase = /case-study/.test(new URL(url, location.href).pathname);
+        vt.types.add(toCase ? 'to-case' : 'to-home');
+      }
+      window.addEventListener('pageswap', function (e) {
+        if (e.viewTransition && e.activation) tag(e.viewTransition, e.activation.entry && e.activation.entry.url);
+      });
+      window.addEventListener('pagereveal', function (e) {
+        if (e.viewTransition && window.navigation && navigation.activation) tag(e.viewTransition, navigation.activation.entry.url);
+      });
+    })();
+  </script>
 </head>
 <body>
 
