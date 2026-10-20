@@ -59,51 +59,30 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   background: linear-gradient(to top, var(--ink) 20.149%, var(--brand-primary));
   pointer-events: none;
 }
-/* Soft window light across a wall: a decorative layer above the background and behind all content.
-   Broad, diffused diagonal bands of translucent warm white and dark neutral (no new colors, no hard
-   edges, low alpha), so the green stays dominant. Static; text sits above it and is untouched. */
-.home::after {
-  content: '';
+/* Botanical window light: a decorative SVG of cast light and shadows only (no plants, no photograph),
+   above the background and behind all content. Static. */
+.light {
   position: absolute;
   inset: 0;
   z-index: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
-  background:
-    /* broad ambient lift from the upper left */
-    radial-gradient(95% 75% at 18% -8%, rgba(255, 247, 235, 0.09), rgba(255, 247, 235, 0.04) 45%, rgba(255, 247, 235, 0) 72%),
-    /* main shaft of light: clear shape, soft edges */
-    linear-gradient(108deg,
-      rgba(255, 247, 235, 0) 9%,
-      rgba(255, 247, 235, 0.035) 15%,
-      rgba(255, 247, 235, 0.1) 21%,
-      rgba(255, 247, 235, 0.14) 26%,
-      rgba(255, 247, 235, 0.14) 33%,
-      rgba(255, 247, 235, 0.09) 38%,
-      rgba(255, 247, 235, 0.035) 43%,
-      rgba(255, 247, 235, 0) 48%),
-    /* the shadow that falls beside it, a little crisper on the light side */
-    linear-gradient(106deg,
-      rgba(6, 10, 8, 0) 40%,
-      rgba(6, 10, 8, 0.1) 45%,
-      rgba(6, 10, 8, 0.26) 50%,
-      rgba(6, 10, 8, 0.3) 56%,
-      rgba(6, 10, 8, 0.2) 62%,
-      rgba(6, 10, 8, 0.08) 68%,
-      rgba(6, 10, 8, 0) 74%),
-    /* a second shaft further right */
-    linear-gradient(113deg,
-      rgba(255, 247, 235, 0) 64%,
-      rgba(255, 247, 235, 0.04) 69%,
-      rgba(255, 247, 235, 0.105) 74%,
-      rgba(255, 247, 235, 0.105) 79%,
-      rgba(255, 247, 235, 0.04) 85%,
-      rgba(255, 247, 235, 0) 91%),
-    /* the far edge settles into shade */
-    linear-gradient(118deg,
-      rgba(6, 10, 8, 0) 80%,
-      rgba(6, 10, 8, 0.16) 90%,
-      rgba(6, 10, 8, 0.3) 100%);
+  /* quieter behind the main text so reading always wins */
+  -webkit-mask-image: radial-gradient(ellipse 46% 58% at 34% 40%, rgba(0, 0, 0, 0.28) 0%, rgba(0, 0, 0, 0.28) 55%, #000 100%);
+  mask-image: radial-gradient(ellipse 46% 58% at 34% 40%, rgba(0, 0, 0, 0.28) 0%, rgba(0, 0, 0, 0.28) 55%, #000 100%);
 }
+/* on phones the text runs the full width, so the whole layer sits back instead */
+@media (max-width: 720px) {
+  .light { opacity: 0.55; -webkit-mask-image: none; mask-image: none; }
+}
+.light .wall-shade { fill: rgb(6, 10, 8); fill-opacity: 0.16; }
+.light .pane-diffuse rect { fill: rgb(255, 238, 208); fill-opacity: 0.11; }
+.light .pane-sharp rect { fill: rgb(255, 238, 208); fill-opacity: 0.1; }
+.light .frame rect { fill: rgb(6, 10, 8); fill-opacity: 0.17; }
+.light .stem { fill: none; stroke: rgb(6, 10, 8); stroke-opacity: 0.34; stroke-linecap: round; }
+.light .leaf { fill: rgb(6, 10, 8); fill-opacity: 0.36; }
+.light .shade-soft { fill: rgb(6, 10, 8); fill-opacity: 0.26; }
 .home__inner {
   position: relative;
   z-index: 1;
