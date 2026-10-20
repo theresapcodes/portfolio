@@ -21,16 +21,38 @@
         setPoster(entry.target);
         posterObserver.unobserve(entry.target);
       });
-    }, { rootMargin: '1200px 0px' });
+    }, { rootMargin: '1200px' });   // all four sides: carousel slides wait off to the side
     pending.forEach(function (v) { posterObserver.observe(v); });
-    // a video in a hidden tab (the "After" of Before/After) gets its poster once the page has settled
-    function idle() {
-      pending.forEach(function (v) {
-        var panel = v.closest('[role="tabpanel"]');
-        if (panel && panel.hidden) { setPoster(v); posterObserver.unobserve(v); }
+    // Once the page has settled, quietly fetch the rest (nearest first, two at a time) so no video box is ever
+    // blank by the time you scroll or jump to it. The first paint is still just what is near the top.
+    function warm(url) {
+      return new Promise(function (resolve) {
+        var im = new Image();
+        im.onload = im.onerror = resolve;
+        im.src = url;
       });
     }
-    function later() { if ('requestIdleCallback' in window) requestIdleCallback(idle, { timeout: 4000 }); else setTimeout(idle, 2500); }
+    function fetchRest() {
+      var mid = window.innerHeight / 2;
+      var queue = pending.filter(function (v) { return v.getAttribute('data-poster'); });
+      queue.sort(function (a, b) {
+        var ra = a.getBoundingClientRect(), rb = b.getBoundingClientRect();
+        return Math.abs(ra.top + ra.height / 2 - mid) - Math.abs(rb.top + rb.height / 2 - mid);
+      });
+      function next() {
+        var v = queue.shift();
+        if (!v) return;
+        var url = v.getAttribute('data-poster');
+        if (!url) { next(); return; }
+        warm(url).then(function () { setPoster(v); posterObserver.unobserve(v); next(); });
+      }
+      next(); next();
+    }
+    function later() {
+      setTimeout(function () {
+        if ('requestIdleCallback' in window) requestIdleCallback(fetchRest, { timeout: 3000 }); else fetchRest();
+      }, 600);
+    }
     if (document.readyState === 'complete') later(); else window.addEventListener('load', later);
   })();
 

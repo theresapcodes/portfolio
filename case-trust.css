@@ -73,6 +73,7 @@ body {
 }
 
 img, video { display: block; max-width: 100%; }
+video { background: var(--surface-gray); }   /* a soft panel, not a hole, in the instant before a poster frame arrives */
 p, h1, h2, ul, dl, dd, figure, blockquote { margin: 0; }
 ul { padding: 0; list-style: none; }
 strong { font-weight: 700; color: var(--heading); }
