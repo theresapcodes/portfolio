@@ -386,6 +386,42 @@ body { overflow-x: clip; }
 }
 .js .quote-cycle > .quote.is-active { opacity: 1; transform: translateY(0); }
 
+/* A pen-drawn underline on the phrase that matters. It draws itself, slightly uneven, as the quote
+   comes forward, and quietly resets after the quote has faded out. */
+.pen { position: relative; white-space: nowrap; }
+.pen__line {
+  position: absolute;
+  left: -2%;
+  bottom: -0.3em;
+  width: 104%;
+  height: 0.52em;
+  overflow: visible;
+  pointer-events: none;
+}
+.pen__line path {
+  fill: none;
+  stroke: var(--brand-secondary);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 0s linear 700ms;
+}
+.quote-cycle.is-inview .quote.is-active .pen__line path {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 1000ms cubic-bezier(0.4, 0, 0.2, 1) 450ms;
+}
+
+/* The sign-off at the end of the Reflection: the home page signature, writing itself in as it scrolls into view */
+.sign {
+  width: min(300px, 72%);
+  margin-top: 8px;
+  color: var(--heading);
+  min-height: 84px;
+}
+.sign svg { display: block; width: 100%; height: auto; overflow: visible; }
+
 /* ---------- Approach table ---------- */
 .approach { display: flex; flex-direction: column; gap: 20px; }
 .approach__lead { display: flex; flex-direction: column; gap: 8px; max-width: 669px; }
@@ -497,6 +533,7 @@ body { overflow-x: clip; }
   .js [data-reveal] { opacity: 1; transform: none; transition: none; }
   .js .table tbody th, .js .table tbody td { opacity: 1; transform: none; transition: none; }
   .js .quote-cycle > .quote { transition: none; transform: none; }
+  .pen__line path { stroke-dashoffset: 0; transition: none; }
   .js .result::before { transform: none; transition: none; }
 }
 
