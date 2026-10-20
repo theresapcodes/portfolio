@@ -414,8 +414,17 @@
     on = false; pending = true; setUi(); switchLook(); armFirstGesture();
   }
   function start() {
+    // iPhones keep Web Audio silent while the ringer switch is off unless the page asks for a "playback" session
+    try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) { /* unsupported */ }
     engine();
-    var resumed = ctx.state === 'suspended' ? ctx.resume() : Promise.resolve();
+    // phones only unlock audio from inside a tap: resume the engine and play one silent sample right away
+    try {
+      var blip = ctx.createBufferSource();
+      blip.buffer = ctx.createBuffer(1, 1, 22050);
+      blip.connect(ctx.destination);
+      blip.start(0);
+    } catch (e) { /* not needed everywhere */ }
+    var resumed = ctx.state !== 'running' ? ctx.resume() : Promise.resolve();
     var settled = Promise.race([resumed.catch(function () {}), new Promise(function (r) { setTimeout(r, 800); })]);
     return Promise.all([load(), settled]).then(function (res) {
       var b = res[0];
@@ -463,7 +472,7 @@
     if (!(on === false && pending)) return;
     var t = e && e.target;
     if (t && t.closest && (t.closest('a') || t.closest('.home-sound'))) return;
-    document.removeEventListener('pointerdown', first, true);
+    document.removeEventListener('click', first, true);
     document.removeEventListener('keydown', first, true);
     firstArmed = false;
     on = true; pending = false;
@@ -472,7 +481,7 @@
   function armFirstGesture() {
     if (firstArmed) return;
     firstArmed = true;
-    document.addEventListener('pointerdown', first, true);
+    document.addEventListener('click', first, true);     // a finished tap: phones do not count a finger-down as permission
     document.addEventListener('keydown', first, true);
   }
   var saved = null;
