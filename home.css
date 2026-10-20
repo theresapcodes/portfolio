@@ -99,7 +99,18 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .profile__btn[aria-expanded="true"] .avatar--sm { border-color: var(--brand-tertiary); }
 .profile__btn .avatar--sm { transition: transform 300ms var(--ease), border-color 150ms; }
 .profile__btn[aria-expanded="true"] .avatar--sm { transform: scale(1.08); }
-.profile__btn { position: relative; }
+.profile__btn { position: relative; z-index: 6; }
+/* dims the page behind the open menu */
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  background: rgba(8, 16, 11, 0.55);
+  opacity: 0;
+  transition: opacity 250ms var(--ease);
+}
+.scrim.is-on { opacity: 1; }
+.scrim[hidden] { display: none; }
 .profile__btn::before {
   content: '';
   position: absolute;
@@ -166,7 +177,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   overflow: hidden;                 /* the card grows out of the button; this clips it while it does */
   border-radius: 13px;
   background: var(--gray-900);
-  filter: drop-shadow(0 4px 2px rgba(0, 0, 0, 0.25));
+  box-shadow: 0 4px 2px rgba(0, 0, 0, 0.25);
+  contain: layout style;
 }
 .menu[hidden] { display: none; }
 .menu__inner {
@@ -226,5 +238,5 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 }
 @media (prefers-reduced-motion: reduce) {
   .in { animation: none; }
-  .profile__btn::before, .profile__btn .avatar--sm { animation: none; transition: none; }
+  .profile__btn::before, .profile__btn .avatar--sm, .scrim { animation: none; transition: none; }
 }
