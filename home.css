@@ -308,7 +308,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .peek[hidden] { display: none; }
 .peek__card {
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 3px;              /* only faintly rounded */
   background: var(--gray-900);
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 28px 56px -14px rgba(0, 0, 0, 0.6), 0 6px 16px rgba(0, 0, 0, 0.3);
@@ -320,7 +320,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .peek.is-below .peek__card { transform: translateY(-10px) scale(0.94); transform-origin: 50% 0; }
 .peek.is-on .peek__card { opacity: 1; transform: none; }
 .peek__img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; background: #0d0d0f; }
-.peek__meta { display: flex; flex-direction: column; gap: 2px; padding: 10px 14px 12px; }
+.peek__meta { display: none; }   /* image only: no label or title under the thumbnail */
 .peek__label { font-family: var(--font-mono); font-size: 11px; line-height: 16px; text-transform: uppercase; color: var(--brand-tertiary); }
 .peek__title { font-weight: 700; font-size: 13px; line-height: 18px; color: var(--text-inverted); }
 
