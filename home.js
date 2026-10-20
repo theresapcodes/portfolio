@@ -313,11 +313,20 @@
     gain.gain.setValueAtTime(gain.gain.value, t);
     gain.gain.linearRampToValueAtTime(to, t + seconds);
   }
+  // The icon only shows "on" (no slash) while the sound really is playing. If the browser refuses to start
+  // audio without a tap, fall back to the off look and start at the visitor's first tap or key press.
+  function degrade() {
+    if (!on) return;
+    on = false; pending = true; setUi(); switchLook(); armFirstGesture();
+  }
   function start() {
     engine();
-    if (ctx.state === 'suspended') ctx.resume();
-    return load().then(function (b) {
+    var resumed = ctx.state === 'suspended' ? ctx.resume() : Promise.resolve();
+    var settled = Promise.race([resumed.catch(function () {}), new Promise(function (r) { setTimeout(r, 800); })]);
+    return Promise.all([load(), settled]).then(function (res) {
+      var b = res[0];
       if (!on) return;
+      if (ctx.state !== 'running' && !document.hidden) { degrade(); return; }
       if (!source) {
         source = ctx.createBufferSource();
         source.buffer = b;
@@ -344,24 +353,41 @@
     if (on) start(); else stop();
   });
 
-  // quiet when the tab is in the background
+  // quiet when the tab is in the background; if audio will not come back when the tab does, show off
   document.addEventListener('visibilitychange', function () {
     if (!ctx || !on) return;
-    if (document.hidden) ctx.suspend(); else ctx.resume();
+    if (document.hidden) { ctx.suspend(); return; }
+    var back = ctx.resume();
+    setTimeout(function () { if (on && !document.hidden && ctx.state !== 'running') degrade(); }, 900);
+    if (back && back.catch) back.catch(function () {});
   });
 
-  // a remembered "on" shows as on, and starts at the visitor's first tap, click or key press
+  // a remembered "on": start straight away where the browser allows sound, otherwise show off (slashed) and
+  // start at the visitor's first tap, click or key press. A tap on a link or on the bird itself does not count.
+  var firstArmed = false;
+  function first(e) {
+    if (!(on === false && pending)) return;
+    var t = e && e.target;
+    if (t && t.closest && (t.closest('a') || t.closest('.home-sound'))) return;
+    document.removeEventListener('pointerdown', first, true);
+    document.removeEventListener('keydown', first, true);
+    firstArmed = false;
+    on = true; pending = false;
+    setUi(); switchLook(); start();
+  }
+  function armFirstGesture() {
+    if (firstArmed) return;
+    firstArmed = true;
+    document.addEventListener('pointerdown', first, true);
+    document.addEventListener('keydown', first, true);
+  }
   var saved = null;
   try { saved = localStorage.getItem('home-sound'); } catch (e) { /* storage blocked */ }
   if (saved === 'on') {
-    on = true; pending = true; setUi();
-    var first = function () {
-      document.removeEventListener('pointerdown', first, true);
-      document.removeEventListener('keydown', first, true);
-      if (on && pending) { pending = false; start(); }
-    };
-    document.addEventListener('pointerdown', first, true);
-    document.addEventListener('keydown', first, true);
+    var allowed = false;
+    try { allowed = !!(navigator.getAutoplayPolicy && navigator.getAutoplayPolicy('audiocontext') === 'allowed'); } catch (e) { /* unsupported */ }
+    if (allowed) { on = true; setUi(); switchLook(); start(); }
+    else { pending = true; armFirstGesture(); }
   }
   setUi();
 })();
