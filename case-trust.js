@@ -343,6 +343,75 @@
     mark('overview');
   })();
 
+  // ---- dock avatar: opens the profile card above the dock, growing up out of the avatar with a spring ---
+  (function () {
+    var btn = document.querySelector('.cs-dock__me');
+    var menu = document.getElementById('cs-profile-menu');
+    if (!btn || !menu) return;
+    var open = false, anim = null, ready = false, readyPromise = null;
+
+    // slightly under-damped spring written as a CSS linear() easing (cubic-bezier fallback)
+    function springEasing() {
+      var zeta = 0.76, w0 = 20.6, wd = w0 * Math.sqrt(1 - zeta * zeta), dur = 0.62, n = 48, pts = [];
+      for (var i = 0; i <= n; i++) {
+        var t = (i / n) * dur;
+        var x = 1 - Math.exp(-zeta * w0 * t) * (Math.cos(wd * t) + (zeta * w0 / wd) * Math.sin(wd * t));
+        pts.push(i === n ? 1 : +x.toFixed(4));
+      }
+      var easing = 'linear(' + pts.join(', ') + ')';
+      return (window.CSS && CSS.supports && CSS.supports('animation-timing-function', easing)) ? easing : 'cubic-bezier(0.34, 1.26, 0.64, 1)';
+    }
+    var SPRING = springEasing();
+
+    // decode the card's images before the first open so nothing pops in mid-animation
+    function whenReady() {
+      if (ready) return null;
+      if (!readyPromise) {
+        var imgs = Array.prototype.slice.call(menu.querySelectorAll('img'));
+        var decoded = Promise.all(imgs.map(function (img) { return img.decode ? img.decode().catch(function () {}) : Promise.resolve(); }))
+          .then(function () { ready = true; });
+        readyPromise = Promise.race([decoded, new Promise(function (r) { setTimeout(r, 300); })]);
+      }
+      return readyPromise;
+    }
+    if (document.readyState === 'complete') whenReady(); else window.addEventListener('load', whenReady);
+
+    function currentHeight() { return menu.getBoundingClientRect().height; }
+    function stop() { if (anim) { anim.cancel(); anim = null; } }
+    function grow() {
+      if (!open) return;
+      var from = menu.hidden ? 0 : currentHeight();
+      stop(); menu.hidden = false; menu.style.height = '';
+      var full = menu.scrollHeight;
+      if (reduceMotion || !menu.animate) return;
+      anim = menu.animate(
+        [{ height: from + 'px', opacity: from ? 1 : 0 }, { height: from + 'px', opacity: 1, offset: 0.06 }, { height: full + 'px', opacity: 1 }],
+        { duration: 620, easing: SPRING, fill: 'both' }
+      );
+      var mine = anim;
+      mine.onfinish = function () { if (anim === mine) { mine.cancel(); anim = null; } };
+      setTimeout(function () { if (anim === mine) { mine.cancel(); anim = null; } }, 700);
+    }
+    function hide() {
+      var from = menu.hidden ? 0 : currentHeight();
+      stop();
+      if (reduceMotion || !menu.animate || menu.hidden) { menu.hidden = true; return; }
+      anim = menu.animate([{ height: from + 'px', opacity: 1 }, { height: '0px', opacity: 0 }], { duration: 200, easing: 'cubic-bezier(0.4, 0, 1, 1)', fill: 'both' });
+      var mine = anim;
+      function done() { if (anim !== mine) return; mine.cancel(); anim = null; if (!open) menu.hidden = true; }
+      mine.onfinish = done; setTimeout(done, 280);
+    }
+    function setOpen(next, returnFocus) {
+      open = next; btn.setAttribute('aria-expanded', String(open));
+      if (open) { var wait = whenReady(); if (wait) wait.then(grow); else grow(); }
+      else { hide(); if (returnFocus) btn.focus(); }
+    }
+    btn.addEventListener('click', function () { setOpen(!open); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && open) setOpen(false, true); });
+    // any click outside the card and its avatar closes it (this includes opening the "On this page" menu)
+    document.addEventListener('click', function (e) { if (open && !menu.contains(e.target) && !btn.contains(e.target)) setOpen(false); });
+  })();
+
   // ---- segmented control + panels ---------------------------------------------------
   Array.prototype.forEach.call(document.querySelectorAll('[data-switcher]'), function (root) {
     var tabs = Array.prototype.slice.call(root.querySelectorAll('[role="tab"]'));
