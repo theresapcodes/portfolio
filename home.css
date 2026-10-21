@@ -355,13 +355,6 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .peek.is-nudge .peek__go:hover .peek__go-icon { transform: scale(1); }
 @media (prefers-reduced-motion: reduce) { .peek__go, .peek__go-icon { transition: none; } }
 
-/* touch screens have no hover, so the featured case study is shown inline under its paragraph instead */
-.feature { display: none; }
-@media (hover: none) {
-  .feature { display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 420px; text-decoration: none; }
-  .feature__label { font-family: var(--font-mono); font-size: 11px; line-height: 16px; text-transform: uppercase; color: var(--brand-tertiary); }
-  .feature__img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 3px; border: 1px solid rgba(255, 255, 255, 0.12); background: #0d0d0f; }
-}
 .peek__img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; background: #0d0d0f; }
 .peek__meta { display: none; }   /* image only: no label or title under the thumbnail */
 .peek__label { font-family: var(--font-mono); font-size: 11px; line-height: 16px; text-transform: uppercase; color: var(--brand-tertiary); }
