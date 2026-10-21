@@ -353,6 +353,32 @@
     sync();
   })();
 
+  // ---- Back and light/dark tuck away while you scroll down and come back as soon as you scroll up ------
+  (function () {
+    var root = document.documentElement;
+    var lastY = Math.max(0, window.scrollY), hidden = false, ticking = false;
+    function set(h) {
+      if (h === hidden) return;
+      hidden = h;
+      root.classList.toggle('cs-chrome-hidden', h);
+    }
+    function update() {
+      ticking = false;
+      var y = Math.max(0, window.scrollY);          // phones can report a negative value while bouncing at the top
+      var d = y - lastY;
+      if (y < 80) { set(false); lastY = y; return; }
+      if (d > 8) { set(true); lastY = y; }
+      else if (d < -8) { set(false); lastY = y; }
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+    // keyboard users tabbing to them bring them back
+    document.addEventListener('focusin', function (e) {
+      if (e.target.closest && e.target.closest('.cs-back, .cs-theme')) set(false);
+    });
+  })();
+
   // ---- floating dock: headshot opens an "On this page" menu with scroll-spy ------------
   (function () {
     var btn = document.querySelector('.cs-fab__btn');
