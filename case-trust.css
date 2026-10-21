@@ -497,38 +497,10 @@ body { overflow-x: clip; }
   .js .result::before { transform: none; transition: none; }
 }
 
-/* ---------- Floating dock ---------- */
-
-.cs-dock {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: calc(28px + env(safe-area-inset-bottom, 0px));
-  z-index: 50;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  pointer-events: none;
-}
-.cs-dock > * { pointer-events: auto; }
-.cs-dock__inner { position: relative; }
-.cs-dock__pill {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 8px;
-  border: 1px solid var(--control-border);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.95);     /* no live backdrop blur: re-blurring moving content and video every frame made scrolling heavy */
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.22), 0 1px 2px rgba(0, 0, 0, 0.06);
-  will-change: transform;
-}
-
-/* "On this page" menu that flies up from the dock */
+/* "On this page" menu that flies up from the button at the bottom right */
 .cs-toc {
   position: absolute;
-  left: 50%;
+  right: 0;
   bottom: calc(100% + 12px);
   width: 248px;
   padding: 16px 8px 8px;
@@ -539,11 +511,11 @@ body { overflow-x: clip; }
   backdrop-filter: blur(14px);
   box-shadow: 0 18px 40px -14px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(0, 0, 0, 0.06);
   opacity: 0;
-  transform: translate(-50%, 8px) scale(0.98);
-  transform-origin: bottom center;
+  transform: translateY(8px) scale(0.98);
+  transform-origin: bottom right;
   transition: opacity 180ms var(--ease), transform 220ms var(--ease);
 }
-.cs-toc.is-open { opacity: 1; transform: translate(-50%, 0); }
+.cs-toc.is-open { opacity: 1; transform: none; }
 .cs-toc[hidden] { display: none; }
 .cs-toc .eyebrow { padding: 0 8px 8px; }
 .cs-toc__list { list-style: none; margin: 0; padding: 0; }
@@ -587,34 +559,56 @@ section[id] { scroll-margin-top: 96px; }
 
 @media (max-width: 560px) {
   .cs-page { padding-top: 96px; }
-  .cs-dock { bottom: calc(20px + env(safe-area-inset-bottom, 0px)); }
+  .cs-back { top: 16px; left: 16px; }
+  .cs-theme { top: 16px; right: 16px; }
+  .cs-fab { right: 16px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); }
       .cs-toc { width: min(280px, calc(100vw - 32px)); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .cs-dock__btn, .cs-toc, .cs-toc__list a { transition: none; }
+  .cs-back, .cs-theme, .cs-fab__btn, .cs-toc, .cs-toc__list a { transition: none; }
 }
 
-/* ---------- Dock buttons: back, on this page, light / dark ---------- */
-.cs-dock__btn {
+/* ---------- Back (top left), light / dark (top right), on this page (bottom right) ---------- */
+.cs-back {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  z-index: 50;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px 8px 12px;
+  border: 1px solid var(--control-border);
+  border-radius: 999px;
+  background: var(--surface-gray);
+  color: var(--text-default);
+  font-size: 14px;
+  line-height: 20px;
+  text-decoration: none;
+  transition: background-color 150ms, transform 150ms var(--ease);
+}
+.cs-theme, .cs-fab__btn {
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
   padding: 0;
-  border: 0;
+  border: 1px solid var(--control-border);
   border-radius: 50%;
-  background: transparent;
-  color: var(--text-helper);
+  background: var(--surface-gray);
+  color: var(--text-default);
   cursor: pointer;
-  text-decoration: none;
-  transition: background-color 150ms, color 150ms, transform 150ms var(--ease);
+  transition: background-color 150ms, transform 150ms var(--ease);
 }
-.cs-dock__btn:hover { background: var(--surface-gray); color: var(--text-default); }
-.cs-dock__btn:active { transform: scale(0.92); }
-.cs-dock__nav[aria-expanded="true"] { background: var(--surface-gray); color: var(--text-default); }
+.cs-theme { position: fixed; top: 24px; right: 24px; z-index: 50; width: 38px; height: 38px; }
+.cs-fab { position: fixed; right: 24px; bottom: calc(28px + env(safe-area-inset-bottom, 0px)); z-index: 50; }
+.cs-fab__btn { position: relative; width: 44px; height: 44px; box-shadow: 0 8px 22px -8px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(0, 0, 0, 0.08); }
+.cs-back:hover, .cs-theme:hover, .cs-fab__btn:hover, .cs-fab__btn[aria-expanded="true"] { background: #ececec; }
+.cs-back:active { transform: scale(0.95); }
+.cs-theme:active, .cs-fab__btn:active { transform: scale(0.92); }
 .cs-theme .icon-sun { display: none; }
 html[data-theme="dark"] .cs-theme .icon-sun { display: block; }
 html[data-theme="dark"] .cs-theme .icon-moon { display: none; }
+html[data-theme="dark"] .cs-back:hover, html[data-theme="dark"] .cs-theme:hover,
+html[data-theme="dark"] .cs-fab__btn:hover, html[data-theme="dark"] .cs-fab__btn[aria-expanded="true"] { background: #404040; }
 
 /* ---------- Dark mode ----------
    Values come from the Dark mode of the Color collection in the design system
@@ -641,10 +635,6 @@ html[data-theme="dark"] {
 html[data-theme="dark"] .seg:not(.seg--glass) .seg__tab:hover { color: var(--text-default); }
 body { transition: background-color 250ms var(--ease), color 250ms var(--ease); }
 html[data-theme="dark"] .quote { color: var(--gray-300); }
-html[data-theme="dark"] .cs-dock__pill {
-  background: rgba(26, 26, 26, 0.95);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7), 0 1px 2px rgba(0, 0, 0, 0.4);
-}
 html[data-theme="dark"] .cs-toc {
   background: rgba(26, 26, 26, 0.94);
   box-shadow: 0 18px 40px -14px rgba(0, 0, 0, 0.8), 0 1px 2px rgba(0, 0, 0, 0.4);
