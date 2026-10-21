@@ -198,7 +198,6 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   color: var(--brand-tertiary);
 }
 .lede { font-weight: 700; font-size: 32px; line-height: 40px; color: var(--text-inverted); }
-.copy p, .lede { text-wrap: pretty; }   /* where supported, the browser also avoids leaving a short last line */
 .copy { display: flex; flex-direction: column; gap: 24px; color: var(--green-100); }
 .copy__line { display: block; }   /* each sentence on its own line, as before */
 /* quiet LinkedIn and email icons under the last sentence, in the same muted tone as the rest of the page */
