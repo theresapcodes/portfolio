@@ -220,6 +220,10 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   transition: color 150ms;
 }
 .link:hover { color: var(--brand-tertiary); }
+/* a small up-and-right arrow at the end of the case study link, nudging out on hover */
+.link__arrow { display: inline-block; margin-left: 2px; vertical-align: -1px; transition: transform 200ms var(--ease); }
+.link:hover .link__arrow, .link:focus-visible .link__arrow { transform: translate(1.5px, -1.5px); }
+@media (prefers-reduced-motion: reduce) { .link__arrow { transition: none; } }
 
 /* ---------- Bottom ---------- */
 /* the top flourish of the signature needs real air between it and the paragraph above */
