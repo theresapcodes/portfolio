@@ -335,7 +335,8 @@
 
 /* Nature sounds: opt-in, since browsers do not allow sound that starts on its own. A short recording of
    birds, cleaned up and joined into a seamless loop, fades in quietly and out again. Played through the
-   browser's audio engine (not an audio tag) so the loop has no gap. The choice is remembered. */
+   browser's audio engine (not an audio tag) so the loop has no gap. The choice is not remembered: every visit
+   starts quiet. A small "Sound on?" hint shows once so people know what the speaker does. */
 (function () {
   'use strict';
   var btn = document.querySelector('.home-sound');
@@ -346,7 +347,7 @@
   var URL_SRC = 'Assets/home/birds-loop.mp3';
   var TARGET = 0.3, FADE_IN = 2.4, FADE_OUT = 1.2;
   var ctx = null, gain = null, source = null, buffer = null, loading = null;
-  var on = false, pending = false;
+  var on = false;
 
   var root = document.documentElement;
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -400,7 +401,6 @@
     btn.setAttribute('aria-pressed', String(on));
     btn.setAttribute('aria-label', on ? 'Mute nature sounds' : 'Play nature sounds');
   }
-  function remember() { try { localStorage.setItem('home-sound', on ? 'on' : 'off'); } catch (e) { /* storage blocked */ } }
   function engine() {
     if (!ctx) {
       ctx = new AC();
@@ -427,11 +427,11 @@
     gain.gain.setValueAtTime(gain.gain.value, t);
     gain.gain.linearRampToValueAtTime(to, t + seconds);
   }
-  // The icon only shows "on" (no slash) while the sound really is playing. If the browser refuses to start
-  // audio without a tap, fall back to the off look and start at the visitor's first tap or key press.
+  // The icon only shows "on" (no slash) while the sound really is playing. If the browser will not start or
+  // resume the audio, the icon goes back to off (and the page back to green).
   function degrade() {
     if (!on) return;
-    on = false; pending = true; setUi(); switchLook(); armFirstGesture();
+    on = false; setUi(); switchLook();
   }
   function start() {
     // iPhones keep Web Audio silent while the ringer switch is off unless the page asks for a "playback" session
@@ -460,7 +460,7 @@
         source.start(0, 0.03 + Math.random() * Math.max(b.duration - 15, 1));   // a different spot each visit
       }
       ramp(TARGET, FADE_IN);
-    }).catch(function () { on = false; setUi(); remember(); switchLook(); });   // could not load: back to off, and back to green
+    }).catch(function () { on = false; setUi(); switchLook(); });   // could not load: back to off, and back to green
   }
   function stop() {
     if (!ctx || !gain) return;
@@ -470,9 +470,9 @@
 
   btn.addEventListener('click', function () {
     on = !on;
-    pending = false;
-    setUi(); remember();
+    setUi();
     switchLook();
+    dismissHint(true);
     if (on) start(); else stop();
   });
 
@@ -485,32 +485,30 @@
     if (back && back.catch) back.catch(function () {});
   });
 
-  // a remembered "on": start straight away where the browser allows sound, otherwise show off (slashed) and
-  // start at the visitor's first tap, click or key press. A tap on a link or on the bird itself does not count.
-  var firstArmed = false;
-  function first(e) {
-    if (!(on === false && pending)) return;
-    var t = e && e.target;
-    if (t && t.closest && (t.closest('a') || t.closest('.home-sound'))) return;
-    document.removeEventListener('click', first, true);
-    document.removeEventListener('keydown', first, true);
-    firstArmed = false;
-    on = true; pending = false;
-    setUi(); switchLook(); start();
+  // the old remembered choice is no longer used
+  try { localStorage.removeItem('home-sound'); } catch (e) { /* storage blocked */ }
+
+  // A small "Sound on?" hint beside the speaker, shown once per browser, so people know what the button does.
+  // It goes away by itself, or as soon as the speaker is touched. Add ?hint to the address to see it again.
+  var hint = document.querySelector('.home-sound-hint');
+  var HINT_KEY = 'home-sound-hint', hintTimer = null;
+  function hintSeen() { try { return localStorage.getItem(HINT_KEY) === '1'; } catch (e) { return false; } }
+  function dismissHint(markSeen) {
+    if (!hint || hint.hidden) return;
+    clearTimeout(hintTimer);
+    hint.classList.remove('is-on');
+    setTimeout(function () { hint.hidden = true; }, reduceMotion ? 0 : 600);
   }
-  function armFirstGesture() {
-    if (firstArmed) return;
-    firstArmed = true;
-    document.addEventListener('click', first, true);     // a finished tap: phones do not count a finger-down as permission
-    document.addEventListener('keydown', first, true);
-  }
-  var saved = null;
-  try { saved = localStorage.getItem('home-sound'); } catch (e) { /* storage blocked */ }
-  if (saved === 'on') {
-    var allowed = false;
-    try { allowed = !!(navigator.getAutoplayPolicy && navigator.getAutoplayPolicy('audiocontext') === 'allowed'); } catch (e) { /* unsupported */ }
-    if (allowed) { on = true; setUi(); switchLook(); start(); }
-    else { pending = true; armFirstGesture(); }
+  if (hint && (/[?&]hint\b/.test(location.search) || !hintSeen())) {
+    setTimeout(function () {
+      if (document.hidden || on) return;
+      try { localStorage.setItem(HINT_KEY, '1'); } catch (e) { /* storage blocked */ }
+      hint.hidden = false;
+      void hint.offsetWidth;
+      hint.classList.add('is-on');
+      hintTimer = setTimeout(dismissHint, 7000);
+    }, 2600);
+    ['pointerenter', 'focus', 'touchstart'].forEach(function (evt) { btn.addEventListener(evt, function () { dismissHint(); }, { passive: true }); });
   }
   setUi();
 })();

@@ -434,6 +434,35 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .home-sound[aria-pressed="true"] .home-sound__wave--2 { animation-delay: 0.35s; }
 @keyframes wave { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
 @media (max-width: 720px) { .home-sound { top: 20px; right: 16px; } }
+/* a small hint beside the speaker, shown once */
+.home-sound-hint {
+  position: fixed;
+  top: 28px;
+  right: 72px;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  height: 38px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: rgba(238, 243, 240, 0.82);
+  font-size: 12px;
+  line-height: 16px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(8px);
+  transition: opacity 600ms ease, transform 600ms var(--ease);
+}
+.home-sound-hint.is-on { opacity: 1; transform: none; }
+.home-sound-hint[hidden] { display: none; }
+@media (max-width: 720px) { .home-sound-hint { top: 20px; right: 62px; } }
+@media (max-width: 359px) { .home-sound-hint { display: none; } }   /* too narrow: it would run into the name */
+@media (prefers-reduced-motion: reduce) { .home-sound-hint { transition: none; transform: none; } }
 @media (prefers-reduced-motion: reduce) {
   .home-sound, .home-sound svg, .home-sound::after { transition: none; }
   .home-sound[aria-pressed="true"] .home-sound__wave { animation: none; }

@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:ital,wght@0,300..700;1,300..700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-  <script>try{var q=location.search,r=document.documentElement;if(/[?&]bg=photo\b/.test(q)||(localStorage.getItem('home-sound')==='on'&&navigator.getAutoplayPolicy&&navigator.getAutoplayPolicy('audiocontext')==='allowed'&&!/[?&]bg=green\b/.test(q)))r.dataset.bg='photo';}catch(e){}</script>
+  <script>try{var q=location.search,r=document.documentElement;if(/[?&]bg=photo\b/.test(q))r.dataset.bg='photo';}catch(e){}</script>
   <link rel="stylesheet" href="home.css" />
   <script>
     // tell the page transition which way we're travelling (home -> case study, or back)
@@ -56,6 +56,7 @@
         <button class="home-sound" type="button" aria-pressed="false" aria-label="Play nature sounds" title="Nature sounds">
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path class="home-sound__wave home-sound__wave--1" d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path class="home-sound__wave home-sound__wave--2" d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
         </button>
+        <span class="home-sound-hint" aria-hidden="true" hidden>Sound on?</span>
         <div class="profile" data-profile>
           <button class="profile__btn" type="button" aria-expanded="false" aria-controls="profile-menu" aria-haspopup="true">
             <span class="avatar avatar--sm"><img src="Assets/home/avatar.webp" alt="" width="72" height="96" /></span>
