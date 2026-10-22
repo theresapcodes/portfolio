@@ -564,3 +564,26 @@
   document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); else start(); });
   setTimeout(start, 1500);
 })();
+
+/* A bird's shadow flies across the page once per visit, a moment after arrival. Add ?bird to the address to see it
+   again. It does not play for visitors who prefer reduced motion. */
+(function () {
+  'use strict';
+  var bird = document.querySelector('.bird');
+  if (!bird) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var KEY = 'home-bird', forced = /[?&]bird\b/.test(location.search);
+  try { if (!forced && sessionStorage.getItem(KEY) === '1') return; } catch (e) { /* storage blocked: it just plays */ }
+
+  function fly() {
+    try { sessionStorage.setItem(KEY, '1'); } catch (e) { /* ignore */ }
+    bird.classList.add('is-flying');
+    bird.addEventListener('animationend', function (e) {
+      if (e.target !== bird) return;
+      bird.classList.remove('is-flying');
+      bird.style.display = 'none';
+    });
+  }
+  function go() { setTimeout(function () { if (!document.hidden) fly(); else document.addEventListener('visibilitychange', function once() { if (!document.hidden) { document.removeEventListener('visibilitychange', once); fly(); } }); }, 1600); }
+  if (document.readyState === 'complete') go(); else window.addEventListener('load', go);
+})();
