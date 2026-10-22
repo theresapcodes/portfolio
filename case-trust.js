@@ -432,6 +432,48 @@
     mark('overview');
   })();
 
+  // ---- summary: a link under the tags (and a menu entry) opens a short read in place ---------------------
+  (function () {
+    var link = document.querySelector('.cs-summary-link');
+    var panel = document.getElementById('cs-summary');
+    if (!link || !panel) return;
+    var open = false;
+
+    function setOpen(next, opts) {
+      opts = opts || {};
+      open = next;
+      panel.classList.toggle('is-open', open);
+      if (open) panel.removeAttribute('inert'); else panel.setAttribute('inert', '');
+      link.setAttribute('aria-expanded', String(open));
+      if (open && opts.scroll) panel.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+      if (!open && opts.focusLink) {
+        var r = link.getBoundingClientRect();
+        if (r.top < 0 || r.bottom > window.innerHeight) link.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+        link.focus({ preventScroll: true });
+      }
+    }
+
+    link.addEventListener('click', function () { setOpen(!open, { scroll: !open }); });
+    var close = panel.querySelector('.cs-summary__close');
+    if (close) close.addEventListener('click', function () { setOpen(false, { focusLink: true }); });
+    var more = panel.querySelector('.cs-summary__more');
+    if (more) more.addEventListener('click', function (e) {
+      e.preventDefault();
+      // collapse straight away (no animation) so the target's position is already final when we scroll to it
+      panel.classList.add('is-instant');
+      setOpen(false);
+      void panel.offsetHeight;
+      var target = document.querySelector(more.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+      setTimeout(function () { panel.classList.remove('is-instant'); }, 60);
+    });
+    var menuItem = document.querySelector('[data-open-summary]');
+    if (menuItem) menuItem.addEventListener('click', function (e) { e.preventDefault(); setOpen(true, { scroll: true }); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && open && panel.contains(document.activeElement)) setOpen(false, { focusLink: true });
+    });
+  })();
+
   // ---- segmented control + panels ---------------------------------------------------
   Array.prototype.forEach.call(document.querySelectorAll('[data-switcher]'), function (root) {
     var tabs = Array.prototype.slice.call(root.querySelectorAll('[role="tab"]'));

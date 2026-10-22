@@ -629,6 +629,65 @@ html[data-theme="dark"] .cs-fab__btn:hover, html[data-theme="dark"] .cs-fab__btn
   transition: background-color 150ms, transform 220ms var(--ease), opacity 200ms, visibility 0s linear 200ms;
 }
 
+/* ---------- Summary: a quiet link under the tags opens a short read in place ---------- */
+.cs-summary-link {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-helper);
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: var(--control-border);
+  text-underline-offset: 4px;
+  transition: color 150ms, text-decoration-color 150ms;
+}
+.cs-summary-link:hover { color: var(--text-default); text-decoration-color: currentColor; }
+.cs-summary-link svg { transition: transform 300ms var(--ease); }
+.cs-summary-link[aria-expanded="true"] svg { transform: rotate(180deg); }
+
+.cs-summary {
+  display: grid;
+  grid-template-rows: 0fr;
+  margin-top: -40px;                    /* cancels the hero's row gap while it is closed, so it takes no space */
+  scroll-margin-top: 96px;
+  transition: grid-template-rows 420ms var(--ease), margin-top 420ms var(--ease);
+}
+.cs-summary.is-open { grid-template-rows: 1fr; margin-top: 0; }
+.cs-summary.is-instant, .cs-summary.is-instant .cs-summary__box { transition: none; }
+.cs-summary__clip { min-height: 0; overflow: hidden; }
+.cs-summary__box {
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 28px 32px 32px;
+  border: 1px solid var(--control-border);
+  border-radius: 12px;
+  background: var(--surface-gray);
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 300ms var(--ease), transform 420ms var(--ease);
+}
+.cs-summary.is-open .cs-summary__box { opacity: 1; transform: none; }
+.cs-summary__step { margin-top: 8px; font-weight: 700; font-size: 16px; line-height: 24px; color: var(--heading); }
+.cs-summary__step + p { margin-top: -8px; }   /* a step title sits close to its first paragraph */
+.cs-summary__foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; margin-top: 8px; padding-top: 16px; border-top: 1px solid var(--control-border); font-size: 14px; line-height: 20px; }
+.cs-summary__more { color: var(--text-default); font-weight: 600; text-underline-offset: 4px; }
+.cs-summary__more:hover { color: var(--brand-secondary); }
+.cs-summary__close { padding: 0; border: 0; background: none; font: inherit; color: var(--text-helper); cursor: pointer; text-decoration: underline; text-underline-offset: 4px; }
+.cs-summary__close:hover { color: var(--text-default); }
+@media (max-width: 560px) { .cs-summary__box { padding: 20px 20px 24px; } }
+@media (prefers-reduced-motion: reduce) {
+  .cs-summary, .cs-summary__box, .cs-summary-link svg { transition: none; }
+}
+
 /* ---------- Dark mode ----------
    Values come from the Dark mode of the Color collection in the design system
    (background base = gray/900, surface = gray/800, border = gray/700,
