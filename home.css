@@ -64,7 +64,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 /* Window light and cast plant shadows, derived from the reference photograph's light and shadow only
    (no colour, no leaf texture): decorative, above the background and behind all content.
    - light__window: the sunlit panes and frame shadows, stationary
-   - light__plant: the plant's shadow in three pieces, each swaying a degree or two from its own base */
+   - light__plant: the plant's shadow in three pieces, now still (the whole layer drifts slowly instead) */
 .light {
   position: absolute;
   inset: 0;
@@ -98,17 +98,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   to { transform: translate3d(3.6%, -0.6%, 0) rotate(0.5deg); }
 }
 .light__window { left: 0; top: 0; width: 100%; height: 100%; }
-.light__plant {
-  will-change: transform;
-  transform-origin: var(--ox) var(--oy);
-  animation: sway var(--dur) ease-in-out var(--delay) infinite alternate;
-}
-@keyframes sway {
-  from { transform: rotate(var(--a0)); }
-  to { transform: rotate(var(--a1)); }
-}
 @media (prefers-reduced-motion: reduce) {
-  .light__plant, .light__drift, .photo__drift { animation: none; }
+  .light__drift, .photo__drift { animation: none; }
 }
 /* on phones the text runs the full width, so the whole layer sits back instead */
 @media (max-width: 720px) {
