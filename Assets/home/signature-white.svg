@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-40.2 -946.2 5124 1432" role="img" aria-label="Theresa Pettingill">
 <style>
-.p{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1 10;stroke-dashoffset:1.02;animation:draw var(--d) var(--e,linear) var(--t) forwards}
-@keyframes draw{to{stroke-dashoffset:0}}
+.p{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1 10;stroke-dashoffset:0;animation:draw var(--d) var(--e,linear) var(--t) backwards}
+@keyframes draw{from{stroke-dashoffset:1.02}to{stroke-dashoffset:0}}
 @media (prefers-reduced-motion:reduce){.p{animation:none;stroke-dashoffset:0}}
 </style>
 <defs><mask id="reveal" maskUnits="userSpaceOnUse" x="-40.2" y="-946.2" width="5124" height="1432">

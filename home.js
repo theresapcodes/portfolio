@@ -525,7 +525,8 @@
   if (!src) return;
   var r = sig.getBoundingClientRect();
   if (r.top < window.innerHeight * 0.9) return;          // already on screen at load: it writes itself right away
-  sig.removeAttribute('src');
+  // a tiny transparent placeholder (not an empty src) keeps the image a normal, sized picture in every browser
+  sig.setAttribute('src', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
   var io = new IntersectionObserver(function (entries) {
     if (!entries[0].isIntersecting) return;
     io.disconnect();
