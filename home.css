@@ -202,7 +202,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   transition: opacity 800ms ease;
 }
 .voices__item.is-active { opacity: 1; }
-.voices blockquote { margin: 0; font-size: 14px; line-height: 21px; color: rgba(238, 243, 240, 0.72); }
+.voices blockquote { margin: 0; font-size: 14px; line-height: 21px; font-style: italic; color: rgba(238, 243, 240, 0.72); }
 .voices figcaption { margin-top: 8px; font-family: var(--font-mono); font-size: 11px; line-height: 16px; text-transform: uppercase; color: #9a9a9a; }
 @media (prefers-reduced-motion: reduce) { .voices__item { transition: none; } }
 /* quiet LinkedIn and email icons under the last sentence, in the same muted tone as the rest of the page */
