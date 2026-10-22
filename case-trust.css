@@ -568,7 +568,16 @@ section[id] { scroll-margin-top: 96px; }
   .cs-back, .cs-theme, .cs-fab__btn, .cs-toc, .cs-toc__list a { transition: none; }
 }
 
-/* ---------- Back (top left), light / dark (top right), on this page (bottom right) ---------- */
+/* ---------- Back (top left), light / dark (top right), on this page (bottom right) ----------
+   Frosted glass: a translucent fill, a soft blur of whatever scrolls behind, and a fine light edge.
+   They are small, so the blur is cheap; the two at the top are tucked away while scrolling down. */
+.cs-back, .cs-theme, .cs-fab__btn {
+  background: rgba(255, 255, 255, 0.5);
+  -webkit-backdrop-filter: blur(12px) saturate(1.6);
+  backdrop-filter: blur(12px) saturate(1.6);
+  border: 1px solid rgba(17, 17, 17, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 4px 14px -6px rgba(0, 0, 0, 0.2);
+}
 .cs-back {
   position: fixed;
   top: 24px;
@@ -578,9 +587,7 @@ section[id] { scroll-margin-top: 96px; }
   align-items: center;
   gap: 8px;
   padding: 8px 14px 8px 12px;
-  border: 1px solid var(--control-border);
   border-radius: 999px;
-  background: var(--surface-gray);
   color: var(--text-default);
   font-size: 14px;
   line-height: 20px;
@@ -591,24 +598,27 @@ section[id] { scroll-margin-top: 96px; }
   display: grid;
   place-items: center;
   padding: 0;
-  border: 1px solid var(--control-border);
   border-radius: 50%;
-  background: var(--surface-gray);
   color: var(--text-default);
   cursor: pointer;
   transition: background-color 150ms, transform 220ms var(--ease), opacity 200ms, visibility 0s;
 }
 .cs-theme { position: fixed; top: 24px; right: 24px; z-index: 50; width: 38px; height: 38px; }
 .cs-fab { position: fixed; right: 24px; bottom: calc(28px + env(safe-area-inset-bottom, 0px)); z-index: 50; }
-.cs-fab__btn { position: relative; width: 44px; height: 44px; box-shadow: 0 8px 22px -8px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(0, 0, 0, 0.08); }
-.cs-back:hover, .cs-theme:hover, .cs-fab__btn:hover, .cs-fab__btn[aria-expanded="true"] { background: #ececec; }
+.cs-fab__btn { position: relative; width: 44px; height: 44px; }
+.cs-back:hover, .cs-theme:hover, .cs-fab__btn:hover, .cs-fab__btn[aria-expanded="true"] { background: rgba(255, 255, 255, 0.72); }
 .cs-back:active { transform: scale(0.95); }
 .cs-theme:active, .cs-fab__btn:active { transform: scale(0.92); }
 .cs-theme .icon-sun { display: none; }
 html[data-theme="dark"] .cs-theme .icon-sun { display: block; }
 html[data-theme="dark"] .cs-theme .icon-moon { display: none; }
+html[data-theme="dark"] .cs-back, html[data-theme="dark"] .cs-theme, html[data-theme="dark"] .cs-fab__btn {
+  background: rgba(38, 38, 38, 0.5);
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 4px 14px -6px rgba(0, 0, 0, 0.6);
+}
 html[data-theme="dark"] .cs-back:hover, html[data-theme="dark"] .cs-theme:hover,
-html[data-theme="dark"] .cs-fab__btn:hover, html[data-theme="dark"] .cs-fab__btn[aria-expanded="true"] { background: #404040; }
+html[data-theme="dark"] .cs-fab__btn:hover, html[data-theme="dark"] .cs-fab__btn[aria-expanded="true"] { background: rgba(70, 70, 70, 0.62); }
 
 /* scrolling down tucks the top two buttons away; scrolling up (or being near the top) brings them back */
 .cs-chrome-hidden .cs-back, .cs-chrome-hidden .cs-theme {
