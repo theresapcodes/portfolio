@@ -426,6 +426,15 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   .home-sound[aria-pressed="true"] .home-sound__wave { animation: none; }
 }
 
+/* ---------- Experiment: ?look=black ----------
+   The page in black and white (black base, neutral grays, no green), so that turning the sound on is what
+   brings in colour and light. Only active when the address has ?look=black. */
+html[data-look="black"] { --brand-primary: #101010; --ink: #060606; --green-100: #ededed; --green-200: #d2d2d2; --green-300: #595959; }
+html[data-look="black"] .eyebrow { color: #a3a3a3; }
+html[data-look="black"] .link:hover { color: #ffffff; }
+@media (hover: hover) { html[data-look="black"] .profile__btn:hover .avatar--sm { border-color: #ffffff; } }
+html[data-look="black"] .profile__btn:focus-visible .avatar--sm, html[data-look="black"] .profile__btn[aria-expanded="true"] .avatar--sm { border-color: #ffffff; }
+
 /* ---------- With the sound on: the photograph as the page ----------
    Turning the sound on also turns on this brighter, sunlit version of the page. A dark wash from the left
    keeps the text readable and the right stays open so the photo shows. Served at 2x for dense screens. */
