@@ -432,42 +432,6 @@
     mark('overview');
   })();
 
-  // ---- summary: a link under the tags (and a menu entry) opens a short popover -----------------------------
-  (function () {
-    var link = document.querySelector('.cs-summary-link');
-    var pop = document.getElementById('cs-summary');
-    if (!link || !pop) return;
-    var open = false;
-
-    function setOpen(next, returnFocus) {
-      open = next;
-      pop.classList.toggle('is-open', open);
-      if (open) pop.removeAttribute('inert'); else pop.setAttribute('inert', '');
-      link.setAttribute('aria-expanded', String(open));
-      if (!open && returnFocus) link.focus({ preventScroll: true });
-    }
-
-    link.addEventListener('click', function () { setOpen(!open); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && open) setOpen(false, true); });
-    document.addEventListener('click', function (e) {
-      if (open && !pop.contains(e.target) && !link.contains(e.target)) setOpen(false);
-    });
-    var more = pop.querySelector('.cs-pop__more');
-    if (more) more.addEventListener('click', function (e) {
-      e.preventDefault();
-      setOpen(false);
-      var target = document.querySelector(more.getAttribute('href'));
-      if (target) target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
-    });
-    // the "Summary" entry in the page menu brings the link into view and opens the popover
-    var menuItem = document.querySelector('[data-open-summary]');
-    if (menuItem) menuItem.addEventListener('click', function (e) {
-      e.preventDefault();
-      link.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
-      setTimeout(function () { setOpen(true); }, reduceMotion ? 0 : 350);
-    });
-  })();
-
   // ---- segmented control + panels ---------------------------------------------------
   Array.prototype.forEach.call(document.querySelectorAll('[data-switcher]'), function (root) {
     var tabs = Array.prototype.slice.call(root.querySelectorAll('[role="tab"]'));
