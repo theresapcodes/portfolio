@@ -61,41 +61,6 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   pointer-events: none;
   z-index: 1;
 }
-/* A very faint mesh of soft green glows, slowly drifting behind everything. Only the brand greens, a few percent
-   lighter or darker than the page, so it adds life without changing the look. Slides only (no blur, scale or
-   spin), so it stays cheap. One knob: --mesh-intensity (0 = off, 1 = as drawn). */
-.mesh {
-  --mesh-intensity: 0.45;
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-  opacity: var(--mesh-intensity);
-}
-.mesh__blob {
-  position: absolute;
-  width: var(--size);
-  height: var(--size);
-  border-radius: 50%;
-  background: radial-gradient(closest-side, var(--glow) 0%, rgba(0, 0, 0, 0) 100%);
-  will-change: transform;
-  animation: mesh-drift var(--dur) ease-in-out infinite alternate;
-}
-@keyframes mesh-drift {
-  from { transform: translate3d(calc(var(--dx) * -1), calc(var(--dy) * -1), 0); }
-  to   { transform: translate3d(var(--dx), var(--dy), 0); }
-}
-.mesh__blob--a { --size: 76vmax; --glow: rgba(96, 142, 110, 0.55); --dx: 12vw; --dy: 9vh;  --dur: 71s; left: -14vmax; top: -22vmax; }
-.mesh__blob--b { --size: 82vmax; --glow: rgba(70, 108, 84, 0.5);   --dx: -14vw; --dy: 11vh; --dur: 89s; right: -26vmax; top: 6%; }
-.mesh__blob--c { --size: 72vmax; --glow: rgba(18, 32, 24, 0.55);   --dx: 10vw; --dy: -8vh; --dur: 63s; left: -10vmax; bottom: -28vmax; }
-.mesh__blob--d { --size: 62vmax; --glow: rgba(88, 132, 116, 0.4);  --dx: -9vw; --dy: -10vh; --dur: 97s; left: 30%; top: 24%; }
-/* the photograph already has its own life, so the mesh steps aside in photo mode */
-html[data-bg="photo"] .mesh { opacity: 0; visibility: hidden; }
-/* phones: fewer glows */
-@media (max-width: 720px) { .mesh__blob--c, .mesh__blob--d { display: none; } }
-@media (prefers-reduced-motion: reduce) { .mesh__blob { animation: none; } }
-
 /* Window light and cast plant shadows, derived from the reference photograph's light and shadow only
    (no colour, no leaf texture): decorative, above the background and behind all content.
    - light__window: the sunlit panes and frame shadows, stationary
