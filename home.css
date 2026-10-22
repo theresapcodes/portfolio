@@ -192,6 +192,19 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .lede { font-weight: 700; font-size: 32px; line-height: 40px; color: var(--text-inverted); }
 .copy { display: flex; flex-direction: column; gap: 24px; color: var(--green-100); }
 .copy__line { display: block; }   /* each sentence on its own line, as before */
+/* Words from people I have worked with: one at a time, slow cross-fade only. All of them are stacked in one
+   spot, so the space is always the height of the longest and nothing moves when they change. */
+.voices { display: grid; max-width: 460px; margin-top: 4px; }
+.voices__item {
+  grid-area: 1 / 1;
+  margin: 0;
+  opacity: 0;
+  transition: opacity 800ms ease;
+}
+.voices__item.is-active { opacity: 1; }
+.voices blockquote { margin: 0; font-size: 14px; line-height: 21px; color: rgba(238, 243, 240, 0.72); }
+.voices figcaption { margin-top: 8px; font-family: var(--font-mono); font-size: 11px; line-height: 16px; text-transform: uppercase; color: #9a9a9a; }
+@media (prefers-reduced-motion: reduce) { .voices__item { transition: none; } }
 /* quiet LinkedIn and email icons under the last sentence, in the same muted tone as the rest of the page */
 .connect { display: flex; gap: 2px; margin: -10px 0 0 -8px; }
 .connect a {

@@ -533,3 +533,33 @@
   }, { threshold: 0.25 });
   io.observe(sig);
 })();
+
+/* Testimonials: one at a time, a slow cross-fade. Pauses while hovered, focused or when the tab is hidden, and
+   stays on the first one for visitors who prefer reduced motion. */
+(function () {
+  'use strict';
+  var box = document.querySelector('.voices');
+  if (!box) return;
+  var items = Array.prototype.slice.call(box.querySelectorAll('.voices__item'));
+  if (items.length < 2) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var i = 0, timer = null, held = false;
+
+  function show(n) {
+    items[i].classList.remove('is-active');
+    items[i].setAttribute('aria-hidden', 'true');
+    i = n;
+    items[i].classList.add('is-active');
+    items[i].removeAttribute('aria-hidden');
+  }
+  function tick() { if (!held && !document.hidden) show((i + 1) % items.length); }
+  function start() { if (!timer) timer = setInterval(tick, 8000); }
+  function stop() { clearInterval(timer); timer = null; }
+
+  box.addEventListener('mouseenter', function () { held = true; });
+  box.addEventListener('mouseleave', function () { held = false; });
+  box.addEventListener('focusin', function () { held = true; });
+  box.addEventListener('focusout', function () { held = false; });
+  document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); else start(); });
+  setTimeout(start, 3000);
+})();
