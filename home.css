@@ -59,6 +59,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   height: min(620px, 62vh);
   background: linear-gradient(to top, var(--ink) 20.149%, rgba(44, 70, 54, 0));
   pointer-events: none;
+  z-index: 1;
 }
 /* Window light and cast plant shadows, derived from the reference photograph's light and shadow only
    (no colour, no leaf texture): decorative, above the background and behind all content.
@@ -107,7 +108,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   to { transform: rotate(var(--a1)); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .light__plant, .light__drift { animation: none; }
+  .light__plant, .light__drift, .photo__drift { animation: none; }
 }
 /* on phones the text runs the full width, so the whole layer sits back instead */
 @media (max-width: 720px) {
@@ -437,15 +438,42 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 /* ---------- With the sound on: the photograph as the page ----------
    Turning the sound on also turns on this brighter, sunlit version of the page. A dark wash from the left
    keeps the text readable and the right stays open so the photo shows. Served at 2x for dense screens. */
-html[data-bg="photo"] .light { display: none; }
-html[data-bg="photo"] .home {
-  background:
-    linear-gradient(90deg, rgba(8, 14, 10, 0.86) 0%, rgba(8, 14, 10, 0.72) 42%, rgba(8, 14, 10, 0.34) 72%, rgba(8, 14, 10, 0.08) 100%),
-    url(Assets/home/reference-photo.jpg) center / cover no-repeat;
-  background:
-    linear-gradient(90deg, rgba(8, 14, 10, 0.86) 0%, rgba(8, 14, 10, 0.72) 42%, rgba(8, 14, 10, 0.34) 72%, rgba(8, 14, 10, 0.08) 100%),
-    image-set(url(Assets/home/reference-photo.jpg) 1x, url(Assets/home/reference-photo@2x.jpg) 2x) center / cover no-repeat;
+/* The photograph is a layer with exactly the same size, position and drift as the shadow layer (.light__stage /
+   .light__drift), so the plant in the photo sits where the plant's shadow sits and the switch between the two
+   looks like one plant, not two. It is always in the page (hidden), so its drift stays in step with the shadows. */
+.photo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  container-type: size;
+  opacity: 0;
+  visibility: hidden;
 }
+.photo__stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(112cqw, calc(112cqh * 1.50094));
+  aspect-ratio: 1600 / 1066;
+  transform: translate(-50%, -50%);
+}
+.photo__drift { position: absolute; inset: 0; will-change: transform; animation: drift 120s ease-in-out infinite alternate; }
+/* the dark wash from the left keeps the text readable and leaves the right open so the photo shows */
+.photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(8, 14, 10, 0.86) 0%, rgba(8, 14, 10, 0.72) 42%, rgba(8, 14, 10, 0.34) 72%, rgba(8, 14, 10, 0.08) 100%);
+}
+html[data-bg="photo"] .photo { opacity: 1; visibility: visible; }
+html[data-bg="photo"] .photo__drift {
+  background: url(Assets/home/reference-photo.jpg) center / cover no-repeat;
+  background: image-set(url(Assets/home/reference-photo.jpg) 1x, url(Assets/home/reference-photo@2x.jpg) 2x) center / cover no-repeat;
+}
+/* hidden, not removed, so the shadows keep drifting in step with the photo */
+html[data-bg="photo"] .light { visibility: hidden; }
 html[data-bg="photo"] .home::before {
   background: linear-gradient(to top, rgba(8, 14, 10, 0.88) 18%, rgba(8, 14, 10, 0) 100%);
 }

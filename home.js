@@ -355,10 +355,30 @@
   function applyLook() {
     if (on) root.dataset.bg = 'photo'; else delete root.dataset.bg;
   }
+  // The photograph is fetched and decoded before the switch starts, so the dissolve fades to a finished picture
+  // instead of an empty frame that then pops in. It is warmed up as soon as the speaker button is approached.
+  var photoReady = null;
+  function preloadPhoto() {
+    if (photoReady) return photoReady;
+    var img = new Image();
+    img.src = 'Assets/home/reference-photo' + ((window.devicePixelRatio || 1) >= 1.5 ? '@2x' : '') + '.jpg';
+    photoReady = (img.decode ? img.decode() : new Promise(function (r) { img.onload = img.onerror = r; })).catch(function () {});
+    return photoReady;
+  }
+  ['pointerenter', 'focus', 'touchstart'].forEach(function (evt) { btn.addEventListener(evt, preloadPhoto, { passive: true }); });
+
   function switchLook() {
     var already = (root.dataset.bg === 'photo') === on;
     if (already) return;
     if (reduceMotion) { applyLook(); return; }
+    if (on) {   // heading for the photo: give it a moment (never long) to be ready first
+      Promise.race([preloadPhoto(), new Promise(function (r) { setTimeout(r, 900); })]).then(runSwitch);
+    } else {
+      runSwitch();
+    }
+  }
+  function runSwitch() {
+    if ((root.dataset.bg === 'photo') === on) return;     // already in the right look by now
     if (document.startViewTransition) {
       document.startViewTransition(applyLook);
       setTimeout(function () { if ((root.dataset.bg === 'photo') !== on) applyLook(); }, 1800);   // if a browser stalls the transition
