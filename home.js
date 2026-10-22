@@ -553,7 +553,7 @@
     items[i].removeAttribute('aria-hidden');
   }
   function tick() { if (!held && !document.hidden) show((i + 1) % items.length); }
-  function start() { if (!timer) timer = setInterval(tick, 8000); }
+  function start() { if (!timer) timer = setInterval(tick, 4000); }
   function stop() { clearInterval(timer); timer = null; }
 
   box.addEventListener('mouseenter', function () { held = true; });
@@ -561,5 +561,5 @@
   box.addEventListener('focusin', function () { held = true; });
   box.addEventListener('focusout', function () { held = false; });
   document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); else start(); });
-  setTimeout(start, 3000);
+  setTimeout(start, 1500);
 })();
