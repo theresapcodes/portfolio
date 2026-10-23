@@ -205,6 +205,39 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .voices blockquote { margin: 0; font-size: 14px; line-height: 21px; font-style: italic; color: rgba(238, 243, 240, 0.58); }
 .voices figcaption { margin-top: 8px; font-family: var(--font-mono); font-size: 11px; line-height: 16px; text-transform: uppercase; color: rgba(238, 243, 240, 0.42); }
 @media (prefers-reduced-motion: reduce) { .voices__item { transition: none; } }
+/* Two clear next steps under the words from colleagues: say hello (the main one) and read the case study. */
+.cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; margin-top: 2px; }
+.cta__primary {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 22px;
+  border-radius: 999px;
+  background: var(--brand-tertiary);
+  color: #14231a;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 180ms, transform 180ms var(--ease);
+}
+.cta__primary:hover { background: #dcf3b0; transform: translateY(-1px); }
+.cta__primary:active { transform: scale(0.97); }
+.cta__secondary {
+  color: rgba(238, 243, 240, 0.88);
+  font-size: 14px;
+  line-height: 20px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: rgba(238, 243, 240, 0.35);
+  transition: color 150ms, text-decoration-color 150ms;
+}
+.cta__secondary:hover { color: var(--brand-tertiary); text-decoration-color: currentColor; }
+.cta__arrow { display: inline-block; margin-left: 4px; vertical-align: -1px; transition: transform 200ms var(--ease); }
+.cta__secondary:hover .cta__arrow, .cta__secondary:focus-visible .cta__arrow { transform: translate(1.5px, -1.5px); }
+@media (prefers-reduced-motion: reduce) { .cta__primary, .cta__arrow { transition: none; } .cta__primary:hover { transform: none; } }
+.cta + .connect { margin-top: 6px; }
+
 /* quiet LinkedIn and email icons under the last sentence, in the same muted tone as the rest of the page */
 .connect { display: flex; gap: 2px; margin: -10px 0 0 -8px; }
 .connect a {
