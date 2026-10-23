@@ -469,3 +469,63 @@
   document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); else start(); });
   setTimeout(start, 1500);
 })();
+
+/* The headline arrives word by word: each word rises out of a soft blur. It runs once on load, and not at all for
+   visitors who prefer reduced motion (they just see the text). */
+(function () {
+  'use strict';
+  var h = document.querySelector('.lede');
+  if (!h) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var text = h.textContent.replace(/\s+/g, ' ').trim();
+  if (!text) return;
+  var frag = document.createDocumentFragment();
+  text.split(' ').forEach(function (word, i, all) {
+    var span = document.createElement('span');
+    span.className = 'w';
+    span.style.setProperty('--k', i);
+    span.textContent = word;
+    frag.appendChild(span);
+    if (i < all.length - 1) frag.appendChild(document.createTextNode(' '));
+  });
+  h.setAttribute('aria-label', text);     // read as one sentence, not word by word
+  h.textContent = '';
+  h.appendChild(frag);
+  h.classList.add('is-split');
+})();
+
+/* Depth and light: the window light and plant shadow shift a few pixels against the pointer, as if you were
+   looking at a real wall from a slightly different spot, and a faint pool of light drifts after the cursor.
+   Mouse only; still for touch screens and for reduced motion. */
+(function () {
+  'use strict';
+  var fine = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!fine || calm) return;
+  var stages = Array.prototype.slice.call(document.querySelectorAll('.light__stage, .photo__stage'));
+  var glow = document.querySelector('.glow');
+  var MAX = 12;                                   // furthest the wall moves, in pixels
+  var tx = 0, ty = 0, cx = 0, cy = 0;             // parallax target and current
+  var gx = 0, gy = 0, gtx = 0, gty = 0;           // glow target and current
+  var raf = null, started = false;
+
+  function frame() {
+    cx += (tx - cx) * 0.07; cy += (ty - cy) * 0.07;
+    gx += (gtx - gx) * 0.09; gy += (gty - gy) * 0.09;
+    var shift = 'translate(-50%, -50%) translate3d(' + cx.toFixed(2) + 'px,' + cy.toFixed(2) + 'px,0)';
+    stages.forEach(function (el) { el.style.transform = shift; });
+    if (glow) glow.style.transform = 'translate3d(' + gx.toFixed(1) + 'px,' + gy.toFixed(1) + 'px,0)';
+    var still = Math.abs(tx - cx) < 0.05 && Math.abs(ty - cy) < 0.05 && Math.abs(gtx - gx) < 0.5 && Math.abs(gty - gy) < 0.5;
+    raf = still ? null : requestAnimationFrame(frame);
+  }
+  window.addEventListener('pointermove', function (e) {
+    if (e.pointerType && e.pointerType !== 'mouse') return;
+    var w = window.innerWidth, h = window.innerHeight;
+    tx = -((e.clientX / w) - 0.5) * 2 * MAX;
+    ty = -((e.clientY / h) - 0.5) * 2 * MAX;
+    gtx = e.clientX; gty = e.clientY;
+    if (!started) { started = true; gx = gtx; gy = gty; if (glow) glow.classList.add('is-on'); }
+    if (!raf) raf = requestAnimationFrame(frame);
+  }, { passive: true });
+  document.addEventListener('mouseleave', function () { if (glow) glow.classList.remove('is-on'); started = false; tx = 0; ty = 0; if (!raf) raf = requestAnimationFrame(frame); });
+})();

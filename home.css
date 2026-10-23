@@ -227,6 +227,21 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   transition: background-color 180ms, border-color 180ms, transform 180ms var(--ease);
 }
 .cta__primary:hover { background: rgba(255, 255, 255, 0.16); border-color: rgba(255, 255, 255, 0.34); transform: translateY(-1px); }
+/* a soft sweep of light across the glass on hover or keyboard focus */
+.cta__primary { position: relative; overflow: hidden; }
+.cta__primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 60%;
+  background: linear-gradient(105deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.26) 50%, rgba(255, 255, 255, 0) 100%);
+  transform: translateX(-130%) skewX(-12deg);
+  pointer-events: none;
+}
+.cta__primary:hover::after, .cta__primary:focus-visible::after { transform: translateX(260%) skewX(-12deg); transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1); }
+@media (prefers-reduced-motion: reduce) { .cta__primary::after { display: none; } }
 .cta__primary:active { transform: scale(0.97); }
 .cta__secondary {
   color: rgba(238, 243, 240, 0.88);
@@ -459,6 +474,39 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   .home-sound, .home-sound svg, .home-sound::after { transition: none; }
   .home-sound[aria-pressed="true"] .home-sound__wave { animation: none; }
 }
+
+/* ---------- A little life: the headline arrives word by word, the light follows the pointer ---------- */
+/* each word of the headline rises out of a soft blur, one after another (set up by home.js; plain text without it) */
+.lede.is-split { animation: none; opacity: 1; transform: none; }
+.lede .w {
+  display: inline-block;
+  opacity: 0;
+  transform: translate3d(0, 0.3em, 0);
+  filter: blur(6px);
+  animation: word-in 900ms var(--ease) forwards;
+  animation-delay: calc(180ms + var(--k) * 48ms);
+}
+@keyframes word-in { to { opacity: 1; transform: none; filter: blur(0); } }
+@media (prefers-reduced-motion: reduce) { .lede .w { animation: none; opacity: 1; transform: none; filter: none; } }
+
+/* a very soft pool of light that drifts after the pointer (mouse only) */
+.glow {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 620px;
+  height: 620px;
+  margin: -310px 0 0 -310px;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(238, 243, 240, 0.075), rgba(238, 243, 240, 0));
+  opacity: 0;
+  transition: opacity 900ms ease;
+  will-change: transform;
+}
+.glow.is-on { opacity: 1; }
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) { .glow { display: none; } }
 
 /* ---------- With the sound on: the photograph as the page ----------
    Turning the sound on also turns on this brighter, sunlit version of the page. A dark wash from the left
