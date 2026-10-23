@@ -212,16 +212,21 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   align-items: center;
   height: 40px;
   padding: 0 22px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 999px;
-  background: var(--brand-tertiary);
-  color: #14231a;
+  /* frosted glass: a see-through fill, a soft blur of what is behind, and a fine light edge */
+  background: rgba(255, 255, 255, 0.09);
+  -webkit-backdrop-filter: blur(10px) saturate(1.5);
+  backdrop-filter: blur(10px) saturate(1.5);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 6px 18px -8px rgba(0, 0, 0, 0.5);
+  color: rgba(244, 247, 245, 0.95);
   font-size: 14px;
   line-height: 20px;
-  font-weight: 600;
+  font-weight: 500;
   text-decoration: none;
-  transition: background-color 180ms, transform 180ms var(--ease);
+  transition: background-color 180ms, border-color 180ms, transform 180ms var(--ease);
 }
-.cta__primary:hover { background: #dcf3b0; transform: translateY(-1px); }
+.cta__primary:hover { background: rgba(255, 255, 255, 0.16); border-color: rgba(255, 255, 255, 0.34); transform: translateY(-1px); }
 .cta__primary:active { transform: scale(0.97); }
 .cta__secondary {
   color: rgba(238, 243, 240, 0.88);
